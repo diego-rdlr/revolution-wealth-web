@@ -18,7 +18,7 @@ El original de Marisol es `jS424JGWQITz5Lx9SPIRTs`.
 ## Contenido que falta
 
 - [ ] **Respuestas 02 a 12 del FAQ.** En Figma solo existe la 01. Son las del sitio actual revolutionwm.com
-      (no accesible desde el entorno). Mientras estén vacías no se muestran. Se llenan en `preguntas.items`.
+      (la red del entorno bloquea ese dominio: agregarlo en Allowed domains). Mientras estén vacías no se muestran. Se llenan en `preguntas.items`.
 - [ ] **Fotos del equipo:** las del Figma están en blanco y negro; Marisol las va a cambiar por las oficiales.
       Jesús Paz no tiene foto (sale "FOTO PENDIENTE").
 - [ ] Fotos de Pablo Sánchez: el original de Figma mide 522 px; pedir una de ~900 px.
@@ -33,8 +33,10 @@ El original de Marisol es `jS424JGWQITz5Lx9SPIRTs`.
 
 ## Diseño
 
-- [ ] Figma pide **Source Serif 4** en títulos de tarjeta, nombres de fundadores y marcas del ecosistema.
-      Se usó Feature para no sumar otra fuente; confirmar con diseño.
+- [x] **Source Serif 4** (OFL, vía `@fontsource/source-serif-4`) en títulos de tarjeta, nombres de fundadores,
+      marcas del ecosistema y cifras de Servicios, como pide Figma.
+- [ ] Nombres del carrusel de equipo: Figma los define en Feature Display Light 30/32 (así están en el sitio),
+      pero el archivo los pinta con una fuente de sustitución sin serifa. Confirmar con Marisol cuál quiere.
 - [ ] Licencia web de Feature: confirmar que cubre el dominio final (igual que en Capital).
 
 ## Antes de publicar
