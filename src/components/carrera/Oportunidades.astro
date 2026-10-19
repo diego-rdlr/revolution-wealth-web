@@ -1,0 +1,212 @@
+---
+// Subpágina /carrera · 03 "Oportunidades abiertas" (Figma 574:444). Tema oscuro.
+// Mismo fondo que "Servicios" (luz + resplandor azul + grano) y tarjetas de vidrio,
+// una por vacante, con botón "Ver perfil" al formulario de "Únete al equipo".
+import Kicker from '../Kicker.astro';
+import Title from '../Title.astro';
+import Button from '../Button.astro';
+import { carreraPagina } from '../../data/wealth';
+
+const { oportunidades } = carreraPagina;
+---
+
+<section id="oportunidades" class="section theme-dark coport" aria-labelledby="oportunidades-title">
+  <div class="atmos" aria-hidden="true">
+    <img
+      class="atmos__photo coport__luz"
+      src="/img/servicios-fondo-luz-1600.webp"
+      srcset="/img/servicios-fondo-luz-900.webp 900w, /img/servicios-fondo-luz-1600.webp 1600w"
+      sizes="100vw"
+      alt=""
+      width="1600"
+      height="900"
+      loading="lazy"
+    />
+    <img class="atmos__glow coport__glow" src="/img/servicios-resplandor.svg" alt="" width="1340" height="1240" />
+    <div class="atmos__grain coport__grano"></div>
+  </div>
+
+  <div class="container">
+    <header class="coport__head">
+      <Kicker text={oportunidades.kicker} />
+      <Title lines={oportunidades.title} size="h1" id="oportunidades-title" />
+      <p class="coport__lead" data-reveal>{oportunidades.lead}</p>
+    </header>
+
+    <ul class="coport__lista" data-reveal>
+      {
+        oportunidades.vacantes.map((v, i) => (
+          <li class="vacante" style={`--i: ${i}`}>
+            <div class="vacante__cabecera">
+              <span class="vacante__num" aria-hidden="true">
+                {String(i + 1).padStart(2, '0')}
+              </span>
+              <img class="vacante__icono" src={v.icon} alt="" width="52" height="52" loading="lazy" />
+            </div>
+            <span class="vacante__regla" aria-hidden="true" />
+            <h3 class="t-h3 vacante__titulo">{v.title}</h3>
+            <p class="vacante__texto">{v.text}</p>
+            <p class="vacante__tag t-micro">{v.tag}</p>
+            <Button href={v.cta.href} label={v.cta.label} variant="secondary" class="vacante__cta" />
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .coport {
+    /* Mismo degradado que Servicios (fuera de la paleta) */
+    background: linear-gradient(180deg, #1b2433, #0e131b 60%, var(--ink));
+    padding-block: 120px;
+  }
+  .coport__luz {
+    opacity: 0.385;
+  }
+  .coport__glow {
+    width: 1340px;
+    left: calc(50% - 120px);
+    top: -420px;
+  }
+  .coport__grano {
+    opacity: 0.05;
+  }
+
+  .coport__head {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 28px;
+    margin-bottom: 72px;
+  }
+  .coport__lead {
+    max-width: 760px;
+    margin-top: 8px;
+    font-size: clamp(1.0625rem, 1rem + 0.25vw, 1.25rem);
+    line-height: 1.5;
+    color: var(--silver);
+  }
+
+  .coport__lista {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+  }
+  .vacante {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 32px 32px 36px;
+    border: 1px solid rgba(164, 194, 212, 0.16);
+    border-radius: var(--radius);
+    background: linear-gradient(131deg, rgba(42, 52, 70, 0.85), rgba(17, 23, 33, 0.9));
+    transition: border-color 0.35s ease;
+  }
+  .vacante__cabecera {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    width: 100%;
+    padding-bottom: 72px;
+  }
+  .vacante__num {
+    font-family: var(--f-serif);
+    font-weight: 300;
+    font-size: 42px;
+    line-height: 48px;
+    letter-spacing: -0.019em;
+    color: #a4c2d4; /* igual que las cifras de Servicios */
+  }
+  .vacante__icono {
+    width: 52px;
+    height: 52px;
+    object-fit: contain;
+  }
+  .vacante__regla {
+    width: 40px;
+    height: 1px;
+    background: var(--steel);
+    transition: width 0.5s cubic-bezier(0.2, 0.7, 0.1, 1);
+  }
+  .vacante__titulo {
+    color: var(--paper);
+  }
+  .vacante__texto {
+    font-size: var(--t-small);
+    line-height: 1.667;
+    color: var(--mist);
+  }
+  .vacante__tag {
+    padding-top: 12px;
+    color: var(--steel);
+  }
+  .vacante :global(.vacante__cta) {
+    margin-top: 14px;
+  }
+  @media (hover: hover) {
+    .vacante:hover {
+      border-color: rgba(164, 194, 212, 0.34);
+    }
+    .vacante:hover .vacante__regla {
+      width: 72px;
+    }
+  }
+
+  :global(html.motion) .coport__lead,
+  :global(html.motion) .coport__lista .vacante {
+    opacity: 0;
+    transform: translateY(24px);
+    transition:
+      opacity 0.8s var(--ease-out),
+      transform 0.9s var(--ease-out),
+      border-color 0.35s ease;
+  }
+  :global(html.motion) .coport__lead {
+    transition-delay: 0.25s;
+  }
+  :global(html.motion) .coport__lista .vacante {
+    transition-delay: calc(var(--i) * 110ms);
+  }
+  :global(html.motion) .coport__lead.is-in,
+  :global(html.motion) .coport__lista.is-in .vacante {
+    opacity: 1;
+    transform: none;
+  }
+
+  @media (max-width: 1180px) {
+    .coport {
+      padding-block: var(--section-y);
+    }
+    .coport__head {
+      margin-bottom: 48px;
+    }
+  }
+  @media (max-width: 900px) {
+    .coport__lista {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+    .vacante__cabecera {
+      padding-bottom: 32px;
+    }
+  }
+  @media (max-width: 600px) {
+    .vacante {
+      padding: 28px 24px 30px;
+    }
+    .vacante__num {
+      font-size: 36px;
+      line-height: 42px;
+    }
+    .vacante :global(.vacante__cta) {
+      width: 100%;
+      justify-content: center;
+    }
+    .coport__glow {
+      left: -300px;
+      top: -500px;
+    }
+  }
+</style>

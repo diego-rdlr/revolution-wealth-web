@@ -1,0 +1,46 @@
+---
+// Subpágina /carrera · 02 "Lo que nos distingue" (Figma 574:405). Tema claro.
+import Kicker from '../Kicker.astro';
+import Title from '../Title.astro';
+import Pilares from './Pilares.astro';
+import { carreraPagina } from '../../data/wealth';
+
+const { distingue } = carreraPagina;
+---
+
+<section id="distingue" class="section theme-light cdist" aria-labelledby="distingue-title">
+  <div class="container">
+    <header class="cdist__head">
+      <Kicker text={distingue.kicker} />
+      <Title lines={distingue.title} size="h1" id="distingue-title" />
+      <p class="t-lead cdist__lead" data-reveal>{distingue.lead}</p>
+    </header>
+    <Pilares items={distingue.pilares} />
+  </div>
+</section>
+
+<style>
+  .cdist {
+    padding-block: 120px;
+  }
+  .cdist__head {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 28px;
+    margin-bottom: 72px;
+  }
+  .cdist__lead {
+    max-width: 760px;
+    margin-top: 8px; /* Figma: 36 entre titular y bajada */
+    color: var(--ink);
+  }
+  @media (max-width: 1180px) {
+    .cdist {
+      padding-block: var(--section-y);
+    }
+    .cdist__head {
+      margin-bottom: 48px;
+    }
+  }
+</style>

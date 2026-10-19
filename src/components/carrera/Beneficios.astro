@@ -1,0 +1,70 @@
+---
+// Subpágina /carrera · 04 "Beneficios" (Figma 574:979). Tema claro.
+import Kicker from '../Kicker.astro';
+import Title from '../Title.astro';
+import Button from '../Button.astro';
+import Pilares from './Pilares.astro';
+import { carreraPagina } from '../../data/wealth';
+
+const { beneficios } = carreraPagina;
+---
+
+<section id="beneficios" class="section theme-light cben" aria-labelledby="beneficios-title">
+  <div class="container">
+    <header class="cben__head">
+      <Kicker text={beneficios.kicker} />
+      <Title lines={beneficios.title} size="h1" inline id="beneficios-title" />
+      <div class="cben__bajada" data-reveal>
+        <p class="t-lead cben__lead">{beneficios.lead}</p>
+        <div class="cben__ctas">
+          <Button href={beneficios.primary.href} label={beneficios.primary.label} />
+          <Button href={beneficios.secondary.href} label={beneficios.secondary.label} variant="secondary" />
+        </div>
+      </div>
+    </header>
+    <Pilares items={beneficios.pilares} />
+  </div>
+</section>
+
+<style>
+  .cben {
+    padding-block: 120px;
+  }
+  .cben__head {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 28px;
+    margin-bottom: 72px;
+  }
+  .cben__bajada {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 32px;
+    max-width: 760px;
+    margin-top: 8px;
+  }
+  .cben__lead {
+    color: var(--ink);
+  }
+  .cben__ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px 28px;
+  }
+  @media (max-width: 1180px) {
+    .cben {
+      padding-block: var(--section-y);
+    }
+    .cben__head {
+      margin-bottom: 48px;
+    }
+  }
+  @media (max-width: 600px) {
+    .cben__ctas :global(.btn) {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+</style>

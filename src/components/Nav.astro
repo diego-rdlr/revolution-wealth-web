@@ -1,7 +1,13 @@
 ---
 import Brand from './Brand.astro';
 import Button from './Button.astro';
-import { nav } from '../data/wealth';
+import { nav as navPrincipal } from '../data/wealth';
+
+interface Props {
+  /** Enlaces y botón del menú; por defecto los de la página principal. */
+  nav?: { links: { label: string; href: string }[]; cta: { label: string; href: string } };
+}
+const { nav = navPrincipal } = Astro.props;
 ---
 
 <header class="nav" data-nav>

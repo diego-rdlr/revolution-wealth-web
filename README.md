@@ -26,7 +26,8 @@ Es la misma base que `revolution-capital-web` y `wealth-nation-web`.
 | `src/styles/tokens.css` | Colores, tipografías, tamaños y márgenes (los "tokens" del diseño). |
 | `src/styles/global.css` | Estilos base y utilidades compartidas. |
 | `src/components/` | Un archivo por sección + piezas compartidas (`Kicker`, `Title`, `Button`, `Brand`, `Nav`). |
-| `src/pages/index.astro` | La página: junta las secciones en orden. |
+| `src/pages/index.astro` | La página principal: junta las secciones en orden. |
+| `src/pages/carrera.astro` | Subpágina `/carrera` ("Súmate al equipo"); sus secciones viven en `src/components/carrera/` y su texto en `carreraPagina` de `src/data/wealth.ts`. Para abrir o cerrar una vacante: `carreraPagina.oportunidades.vacantes`. |
 | `public/` | Archivos que se sirven tal cual: íconos, robots.txt, fuentes e imágenes. |
 | `docs/PENDIENTES.md` | Lo que falta traer de Figma o decidir. |
 

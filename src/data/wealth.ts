@@ -14,7 +14,9 @@ export const links = {
   /** "Agenda tu sesión" / "Comenzar mi análisis patrimonial": el Microsoft Form del sitio actual (revolutionwm.com). */
   agenda:
     'https://forms.office.com/pages/responsepage.aspx?id=SsUEMUpKMked1DTOMJunxEL0r7geOTNOhEcZMIHL08NUMzUxNlhTUk4yVUZURTZGUkZMU09aTEc1TS4u&route=shorturl',
-  /** "Ver oportunidades": formulario de Google de "Únete al equipo" (el de revolutionwm.com/carrera). */
+  /** "Ver oportunidades" de la página principal: la subpágina de carrera. */
+  carrera: '/carrera',
+  /** "Ver perfil" de cada vacante: formulario de Google de "Únete al equipo" (el de revolutionwm.com/carrera). */
   vacantes: 'https://docs.google.com/forms/d/e/1FAIpQLSeTssne4LEUf0Ar8CD6KhtNOa5hFwEIKJK2eWeKgm6GRMEyMA/viewform',
   /** "Conoce más": página principal de Revolution. */
   revolution: 'https://revolution.inc',
@@ -408,7 +410,7 @@ export const carrera = {
   kicker: '09 · CARRERA',
   title: ['Súmate a', 'nuestro equipo.'] as Title,
   body: 'Lo que nos distingue son nuestras personas: un equipo apasionado por proteger y hacer crecer el patrimonio de nuestros clientes. Si eres extraordinario en lo que haces y compartes nuestra misión, hay un lugar para ti.',
-  cta: { label: 'VER OPORTUNIDADES', href: links.vacantes },
+  cta: { label: 'VER OPORTUNIDADES', href: links.carrera },
 };
 
 /** Figma 426:654 · "12 · Comienza hoy" */
@@ -427,10 +429,10 @@ export const footer = {
     {
       title: 'REVOLUTION WEALTH',
       links: [
-        { label: 'Servicios', href: '#servicios' },
-        { label: 'Proceso', href: '#proceso' },
-        { label: 'Filosofía Core-X', href: '#filosofia' },
-        { label: 'Fundadores', href: '#fundadores' },
+        { label: 'Servicios', href: '/#servicios' },
+        { label: 'Proceso', href: '/#proceso' },
+        { label: 'Filosofía Core-X', href: '/#filosofia' },
+        { label: 'Fundadores', href: '/#fundadores' },
       ],
     },
     {
@@ -447,8 +449,8 @@ export const footer = {
       title: 'CONTACTO',
       links: [
         { label: 'Agenda tu sesión', href: links.agenda, external: true },
-        { label: 'Preguntas frecuentes', href: '#preguntas' },
-        { label: 'Carrera', href: '#carrera' },
+        { label: 'Preguntas frecuentes', href: '/#preguntas' },
+        { label: 'Carrera', href: links.carrera },
         { label: 'Aviso de privacidad', href: '#' }, // PENDIENTE: página del aviso de privacidad
       ],
     },
@@ -458,3 +460,106 @@ export const footer = {
   copyright: `© ${brand.year} REVOLUTION WEALTH MANAGEMENT`,
   areas: ['MEDIA', 'EDUCATION', 'WEALTH', 'CAPITAL'],
 };
+
+/* ——————————————————————————————————————————————————————————————
+ * Subpágina /carrera · "Súmate al equipo"
+ * Figma: página "04c Wealth · Sumate a el equipo", frame 574:337.
+ * —————————————————————————————————————————————————————————————— */
+
+export const carreraPagina = {
+  meta: {
+    title: 'Carrera · Revolution Wealth',
+    description:
+      'Súmate al equipo de Revolution Wealth: asesores y líderes que protegen y hacen crecer el patrimonio de sus clientes. Conoce las oportunidades abiertas y los beneficios.',
+  },
+  nav: {
+    links: [
+      { label: 'Lo que nos distingue', href: '#distingue' },
+      { label: 'Oportunidades', href: '#oportunidades' },
+      { label: 'Beneficios', href: '#beneficios' },
+    ],
+    cta: { label: 'Agenda tu sesión', href: links.agenda },
+  },
+  /** Figma 578:379 · "01 · Hero" */
+  hero: {
+    title: ['Lo que nos distingue', 'son nuestras personas.'] as Title,
+    card: 'Somos un equipo de profesionales apasionados por proteger y hacer crecer el patrimonio de nuestros clientes. Si eres extraordinario en lo que haces y compartes nuestra misión, hay un lugar para ti aquí.',
+    cta: { label: 'VER OPORTUNIDADES', href: '#oportunidades' },
+    credentials: [
+      { value: '+800', label: 'CLIENTES PREMIUM' },
+      { value: '2+', label: 'OFICINAS · CDMX & GDL' },
+      { value: '∞', label: 'IMPACTO EN EL PATRIMONIO' },
+      { value: 'GBM', label: 'SOCIO ESTRATÉGICO' },
+    ],
+  },
+  /** Figma 574:405 · "02 · Lo que nos distingue" */
+  distingue: {
+    kicker: '01 · LO QUE NOS DISTINGUE',
+    title: ['Somos guardianes del patrimonio', 'de nuestros clientes.'] as Title,
+    lead: 'En Revolution Wealth creemos que la riqueza bien gestionada tiene el poder de transformar vidas, familias y generaciones enteras. Eso nos exige ser más que asesores — ser aliados de largo plazo, custodios de confianza y expertos que nunca dejan de aprender.',
+    pilares: [
+      {
+        title: 'Nuestra filosofía de inversión',
+        text: 'Nuestra filosofía de inversión parte de primeros principios: cada portafolio se construye desde el perfil, horizonte y objetivos vitales del cliente — no desde índices ni tendencias del momento. Preservar el capital primero, crecer después. La disciplina conductual, no el oportunismo, es nuestra ventaja de largo plazo.',
+        icon: '/img/expertos-icono-estrategia.png',
+      },
+      {
+        title: 'El asesor patrimonial moderno',
+        text: 'El asesor patrimonial moderno va más allá de los números. Integramos diagnóstico integral, plan financiero personalizado, ejecución institucional vía GBM y acompañamiento proactivo. El resultado es una relación activa — no reactiva — que convierte la volatilidad en oportunidad y el patrimonio de hoy en legado de mañana.',
+        icon: '/img/expertos-icono-asesoria.png',
+      },
+    ],
+  },
+  /** Figma 574:444 · "03 · Oportunidades abiertas" */
+  oportunidades: {
+    kicker: '02 · OPORTUNIDADES ABIERTAS',
+    // PENDIENTE: titular exacto del Figma (nodo 581:353); se usa el del kicker mientras.
+    title: ['Oportunidades', 'abiertas.'] as Title,
+    lead: 'Proteger el patrimonio de nuestros clientes hoy, mañana y por generaciones requiere un equipo multidisciplinario de profesionales de excelencia. Estas son las áreas donde estamos creciendo.',
+    /** Vacantes. Para abrir una nueva: agrega un objeto; para cerrarla: bórralo. */
+    vacantes: [
+      {
+        title: 'Wealth Guardian — Asesor Patrimonial',
+        text: 'El corazón del modelo Revolution Wealth. Acompaña a clientes de alto y ultra-alto patrimonio en sus decisiones de inversión con profundidad técnica y relación de largo plazo. Requiere Figura 3 AMIB.',
+        tag: 'ADVISORY',
+        icon: '/img/servicios-icono-gestion.png', // PENDIENTE: ícono del Figma (574:459)
+        cta: { label: 'VER PERFIL', href: links.vacantes },
+      },
+      {
+        title: 'Director de Advisory',
+        text: 'Lidera y desarrolla al equipo de asesores. Traduce la estrategia de RWM en resultados medibles, impulsa la cultura de excelencia y participa en el crecimiento patrimonial de la firma.',
+        tag: 'LIDERAZGO',
+        icon: '/img/servicios-icono-plan.png', // PENDIENTE: ícono del Figma (574:468)
+        cta: { label: 'VER PERFIL', href: links.vacantes },
+      },
+    ],
+  },
+  /** Figma 574:979 · "04 · Beneficios" */
+  beneficios: {
+    kicker: '03 · TU CARRERA',
+    // PENDIENTE: titular exacto del Figma (nodo 584:351).
+    title: ['Una carrera', 'con propósito.'] as Title,
+    lead: 'Ofrecemos compensación anclada en benchmarks de mercado, bonos por crecimiento, participación en el éxito de la firma, y la oportunidad de construir algo que trasciende. No solo un trabajo — una carrera con propósito.',
+    // PENDIENTE: etiquetas exactas de los dos botones del Figma (574:988 y 574:3610).
+    primary: { label: 'POSTÚLATE', href: links.vacantes },
+    secondary: { label: 'VACANTES', href: '#oportunidades' },
+    pilares: [
+      {
+        title: 'Compensación competitiva',
+        text: 'Sueldo base + variable trimestral + bono de generación, todo calibrado con estándares WTW de mercado.',
+        icon: '/img/expertos-icono-comunicacion.png', // PENDIENTE: ícono del Figma (574:993)
+      },
+      {
+        title: 'Participación real en el crecimiento',
+        text: 'Para roles de liderazgo, estructura de equity en S.A.P.I. de C.V. con vesting a 4 años.',
+        icon: '/img/expertos-icono-revision.png', // PENDIENTE: ícono del Figma (574:1000)
+      },
+      {
+        title: 'Misión y cultura claras',
+        text: 'Empresa en plena construcción, con visión de largo plazo, liderazgo accesible y estándares de clase mundial.',
+        icon: '/img/expertos-icono-asesoria.png', // PENDIENTE: ícono del Figma (574:1007)
+      },
+    ],
+  },
+};
+

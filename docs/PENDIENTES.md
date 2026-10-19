@@ -31,6 +31,18 @@ El original de Marisol es `jS424JGWQITz5Lx9SPIRTs`.
 - [ ] Aviso de privacidad (footer).
 - [x] Wealth Club y Wealth Mastery con sus URLs de revoluciondelariqueza.com; Revolution Media va a revolution.inc.
 
+## Subpágina /carrera (Figma `04c Wealth · Sumate a el equipo`, frame 574:337)
+
+Construida con la estructura y los textos del Figma. A media construcción Figma cortó el acceso
+(límite de consultas del plan Starter), así que estos detalles van provisionales y marcados `PENDIENTE` en `carreraPagina`:
+
+- [ ] Titular de "Oportunidades abiertas" (nodo 581:353). Hoy: "Oportunidades abiertas."
+- [ ] Titular de "Beneficios" (nodo 584:351). Hoy: "Una carrera con propósito."
+- [ ] Etiquetas de los dos botones de "Beneficios" (574:988 y 574:3610). Hoy: "Postúlate" y "Vacantes".
+- [ ] Íconos de las vacantes y de los beneficios (se reusan íconos del sitio).
+- [ ] Fondo de "Oportunidades": se usa el mismo de Servicios; confirmar que es el del Figma.
+- [ ] Ambas vacantes llevan al mismo Google Form; si cada una tiene su formulario, cambiar `cta.href` de cada una.
+
 ## Diseño
 
 - [x] **Source Serif 4** (OFL, vía `@fontsource/source-serif-4`) en títulos de tarjeta, nombres de fundadores,

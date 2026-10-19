@@ -1,0 +1,198 @@
+---
+// Subpágina /carrera · 01 Hero (Figma 578:379).
+// Banner con la foto del equipo, logo + titular a la izquierda, tarjeta de vidrio
+// a la derecha y la fila de credenciales debajo (mismo componente que el hero principal).
+import Title from '../Title.astro';
+import Button from '../Button.astro';
+import Credentials from '../Credentials.astro';
+import { carreraPagina } from '../../data/wealth';
+
+const { hero } = carreraPagina;
+---
+
+<section class="hcar theme-dark" aria-labelledby="carrera-hero-title">
+  <div class="hcar__stage">
+    <div class="hcar__frame" aria-hidden="true">
+      <img
+        class="hcar__photo"
+        src="/img/carrera-equipo-1568.webp"
+        srcset="/img/carrera-equipo-900.webp 900w, /img/carrera-equipo-1568.webp 1568w"
+        sizes="100vw"
+        alt=""
+        width="1568"
+        height="700"
+        fetchpriority="high"
+      />
+      <div class="hcar__veil hcar__veil--left"></div>
+      <div class="hcar__veil hcar__veil--bottom"></div>
+    </div>
+
+    <div class="container hcar__content">
+      <div class="hcar__titular">
+        <img class="hcar__logo" src="/img/logo-rwm-blanco.png" alt="Revolution Wealth" width="300" height="30" />
+        <Title lines={hero.title} as="h1" size="h1" id="carrera-hero-title" class="hcar__title" />
+      </div>
+      <div class="hcar__card" data-reveal>
+        <p>{hero.card}</p>
+        <Button href={hero.cta.href} label={hero.cta.label} />
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <Credentials items={hero.credentials} />
+  </div>
+</section>
+
+<style>
+  .hcar {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    padding-top: var(--nav-h);
+    padding-bottom: 64px;
+  }
+  .hcar__stage {
+    position: relative;
+    min-height: 700px;
+    display: flex;
+    align-items: flex-end;
+  }
+  .hcar__frame {
+    position: absolute;
+    inset: 1px 16px 0;
+    z-index: -1;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 20px;
+    /* Bordes difuminados, igual que el hero principal */
+    -webkit-mask-image:
+      linear-gradient(180deg, transparent 0, #000 5%, #000 80%, transparent 100%),
+      linear-gradient(90deg, transparent 0, #000 4%, #000 96%, transparent 100%);
+    -webkit-mask-composite: source-in;
+    mask-image:
+      linear-gradient(180deg, transparent 0, #000 5%, #000 80%, transparent 100%),
+      linear-gradient(90deg, transparent 0, #000 4%, #000 96%, transparent 100%);
+    mask-composite: intersect;
+  }
+  .hcar__photo {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .hcar__veil {
+    position: absolute;
+    inset: 0;
+  }
+  .hcar__veil--left {
+    background: linear-gradient(90deg, rgba(10, 10, 10, 0.8), rgba(10, 10, 10, 0.25) 55%, rgba(10, 10, 10, 0));
+  }
+  .hcar__veil--bottom {
+    background: linear-gradient(0deg, rgba(10, 10, 10, 0.88), rgba(10, 10, 10, 0.35) 50%, rgba(10, 10, 10, 0));
+  }
+
+  .hcar__content {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 48px;
+    padding-bottom: 56px;
+  }
+  .hcar__titular {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    min-width: 0;
+    padding-bottom: 29px; /* Figma: el titular termina 29 px arriba del pie de la tarjeta */
+  }
+  .hcar__logo {
+    width: 300px;
+    height: 30px;
+    object-fit: contain;
+    object-position: left center;
+  }
+  .hcar__title {
+    max-width: 900px;
+    color: var(--paper);
+  }
+
+  /* Tarjeta de vidrio */
+  .hcar__card {
+    flex: none;
+    width: 430px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 26px;
+    padding: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: var(--radius);
+    background: linear-gradient(154deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.05) 71%);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+  }
+  .hcar__card p {
+    font-size: 18px;
+    line-height: 28px;
+    color: var(--paper);
+  }
+
+  :global(html.motion) .hcar__card {
+    opacity: 0;
+    transform: translateY(24px);
+    transition:
+      opacity 0.8s var(--ease-out),
+      transform 0.9s var(--ease-out);
+    transition-delay: 0.35s;
+  }
+  :global(html.motion) .hcar__card.is-in {
+    opacity: 1;
+    transform: none;
+  }
+
+  @media (max-width: 1180px) {
+    .hcar__stage {
+      min-height: 0;
+    }
+    .hcar__content {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 32px;
+      padding-top: 280px; /* deja ver la foto arriba del texto */
+    }
+    .hcar__titular {
+      padding-bottom: 0;
+    }
+    .hcar__card {
+      width: 100%;
+      max-width: 520px;
+    }
+  }
+  @media (max-width: 600px) {
+    .hcar__frame {
+      inset-inline: 8px;
+      border-radius: 16px;
+    }
+    .hcar__content {
+      padding-top: 220px;
+      padding-bottom: 32px;
+    }
+    .hcar__logo {
+      width: 220px;
+      height: 22px;
+    }
+    .hcar__card {
+      padding: 24px 20px;
+    }
+    .hcar__card p {
+      font-size: 16px;
+      line-height: 26px;
+    }
+    .hcar__card :global(.btn) {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+</style>
