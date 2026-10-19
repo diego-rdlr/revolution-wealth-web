@@ -1,0 +1,39 @@
+---
+// Titular de dos partes: la segunda va en el color de acento.
+// `inline` las deja en el mismo renglón (p. ej. "Portfolio construction drivers.").
+import type { Title } from '../data/wealth';
+
+interface Props {
+  lines: Title;
+  as?: 'h1' | 'h2' | 'h3' | 'p';
+  size?: 'h1' | 'h2';
+  inline?: boolean;
+  class?: string;
+}
+const { lines, as: Tag = 'h2', size = 'h2', inline = false, class: className } = Astro.props;
+---
+
+<Tag class:list={[`t-${size}`, 'title', { 'title--inline': inline }, className]} data-reveal>
+  {
+    inline ? (
+      <>
+        {lines[0]} <span class="accent">{lines[1]}</span>
+      </>
+    ) : (
+      <>
+        <span class="title__line">
+          <span class="title__in">{lines[0]}</span>
+        </span>
+        <span class="title__line accent">
+          <span class="title__in">{lines[1]}</span>
+        </span>
+      </>
+    )
+  }
+</Tag>
+
+<style>
+  .title__line {
+    display: block;
+  }
+</style>

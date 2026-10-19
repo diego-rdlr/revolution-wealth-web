@@ -1,0 +1,118 @@
+/*
+ * Tokens de diseño — la "fuente de la verdad" visual del sitio.
+ * Todo sale del archivo de Figma "Revolution Inc — Sitio web (Copy)",
+ * página 04b Wealth · Revolution WM (nodo 418:336): colores, tipografías,
+ * tamaños, espaciados y radios. La base es la misma que Revolution Capital;
+ * la diferencia es el acento: en Wealth la segunda línea de los titulares va en dorado.
+ */
+
+/* Feature (Commercial Type), licencia web de Revolution.
+   Los archivos van SIN modificar, tal como los entrega Commercial Type: su
+   EULA prohíbe convertirlos de formato o renombrarlos sin permiso escrito.
+   Por eso se sirven como TrueType y no como WOFF2. */
+@font-face {
+  font-family: 'Feature';
+  src: url('/fonts/FeatureDisplay-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Feature';
+  src: url('/fonts/Feature_Display_Web_Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  /* ——— Paleta (Figma) ——— */
+  --ink: #0a0a0a; /* fondo oscuro / texto sobre claro */
+  --paper: #f5f4f0; /* fondo claro / texto sobre oscuro */
+  --paper-2: #edeef1; /* fondo claro alterno (sección portafolio) */
+  --steel: #9cbdd1; /* acento sobre oscuro */
+  --navy: #3d4152; /* acento sobre claro */
+  --mist: #9da0a9; /* texto secundario sobre oscuro */
+  --slate: #4e525e; /* texto secundario sobre claro */
+  --gray: #868a94; /* etiquetas sobre claro */
+  --dim: #63666f; /* texto terciario sobre oscuro */
+  --silver: #d6d9de; /* líneas sobre claro */
+  --fog: #b8bcc4; /* separadores sobre claro */
+  --gold: #c6a052; /* posiciones más grandes / dato destacado */
+  --gold-ink: #8a6b26;
+  --green: #7ad96a; /* eventos de liquidez */
+  --edge-dark: #242832; /* borde superior de secciones oscuras */
+
+  /* ——— Familias ——— */
+  --f-display: 'Feature', Georgia, serif;
+  --f-body: 'Geist', ui-sans-serif, system-ui, sans-serif;
+  --f-mono: 'Geist Mono', ui-monospace, 'SFMono-Regular', monospace;
+
+  /* ——— Escala tipográfica (Figma → CSS, fluida en pantallas chicas) ——— */
+  --t-h1: clamp(2.75rem, 1.4rem + 3.9vw, 4.9375rem); /* 79/79 · Display/H1 hero */
+  --t-h2: clamp(2rem, 1.5rem + 1.6vw, 2.875rem); /* 46/49 · Display/H2 sección */
+  --t-num: clamp(2.25rem, 1.8rem + 1.4vw, 3.125rem); /* 50/60 · subtitulos3 */
+  --t-h3: clamp(1.5rem, 1.3rem + 0.6vw, 1.875rem); /* 30/32 · subtitulos_chicos */
+  --t-quote-mark: 3.6875rem; /* 59/62 · subtitulos */
+  --t-lead: clamp(1.1875rem, 1.05rem + 0.45vw, 1.4375rem); /* 23/30 · Cuerpo/Lead */
+  --t-base: 1.0625rem; /* 17/28 · Cuerpo/Base */
+  --t-small: 0.9375rem; /* 15/25 · Cuerpo/Pequeño */
+  --t-kicker: clamp(0.8125rem, 0.75rem + 0.2vw, 1rem); /* 16/20 · Etiqueta/Kicker */
+  --t-nav: 0.6875rem; /* 11/16 · Etiqueta/Nav */
+  --t-micro: 0.6875rem; /* 11/17 · Etiqueta/Micro */
+
+  /* ——— Rejilla (Figma: lienzo 1600, márgenes 80, contenido 1440) ——— */
+  --gutter: clamp(1rem, 5vw, 5rem);
+  --content: 90rem;
+  --section-y: clamp(5rem, 3rem + 6vw, 8.75rem); /* 140 */
+  --nav-h: 90px; /* 22 + botón de 46 + 22 */
+  --radius: 15px;
+  --radius-sm: 10px;
+  --shadow-card: 0 12px 28px -4px rgba(0, 0, 0, 0.06), 0 2px 6px 0 rgba(0, 0, 0, 0.07);
+}
+
+@media (max-width: 1180px) {
+  :root {
+    --nav-h: 64px;
+  }
+}
+@media (max-width: 600px) {
+  :root {
+    --section-y: 4.5rem; /* 72 px: menos aire vertical en celular */
+  }
+}
+
+/* ——— Temas por sección ———
+   Cada sección declara .theme-dark o .theme-light y los componentes usan
+   estas variables, así una misma pieza (kicker, tarjeta, línea) funciona en
+   los dos fondos. */
+.theme-dark {
+  --bg: var(--ink);
+  --fg: var(--paper);
+  --fg-2: var(--gold); /* segunda línea de titulares */
+  --kicker: var(--steel);
+  --body: var(--mist);
+  --meta: var(--mist);
+  --line: rgba(255, 255, 255, 0.12);
+  --card-bg: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
+  --card-border: rgba(255, 255, 255, 0.12);
+  --card-shadow: none;
+  --card-blur: blur(15px);
+  background-color: var(--bg);
+  color: var(--fg);
+}
+.theme-light {
+  --bg: var(--paper);
+  --fg: var(--ink);
+  --fg-2: var(--gold-ink);
+  --kicker: var(--navy);
+  --body: var(--slate);
+  --meta: var(--gray);
+  --line: var(--silver);
+  --card-bg: linear-gradient(180deg, #ffffff, #edeff3);
+  --card-border: var(--silver);
+  --card-shadow: var(--shadow-card);
+  --card-blur: none;
+  background-color: var(--bg);
+  color: var(--fg);
+}

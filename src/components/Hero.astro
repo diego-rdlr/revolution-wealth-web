@@ -1,0 +1,294 @@
+---
+import Kicker from './Kicker.astro';
+import Title from './Title.astro';
+import Button from './Button.astro';
+import Credentials from './Credentials.astro';
+import { hero } from '../data/wealth';
+---
+
+<section class="hero theme-dark" aria-labelledby="hero-title">
+  <div class="hero__top">
+    <!-- Foto enmarcada (Figma: "Fondo · campo"), con velos, resplandores y grano -->
+    <div class="hero__frame" aria-hidden="true">
+      <img
+        class="hero__photo"
+        src="/img/fondo-campo-1600.webp"
+        srcset="/img/fondo-campo-900.webp 900w, /img/fondo-campo-1600.webp 1600w"
+        sizes="100vw"
+        alt=""
+        width="1600"
+        height="900"
+        fetchpriority="high"
+      />
+      <div class="hero__veil hero__veil--read"></div>
+      <div class="hero__veil hero__veil--side"></div>
+      <div class="hero__veil hero__veil--bottom"></div>
+      <div class="hero__grain"></div>
+    </div>
+    <img class="hero__glow hero__glow--r" src="/img/resplandor-hero-der.svg" alt="" aria-hidden="true" />
+
+    <div class="container hero__content">
+      <Kicker text={hero.kicker} />
+      <Title lines={hero.title} as="h1" size="h1" class="hero__title" />
+
+      <div class="hero__row">
+        <div class="hero__lede">
+          <p class="hero__lead" id="hero-title">{hero.lede}</p>
+          <p class="hero__body">{hero.body}</p>
+          <div class="hero__ctas">
+            <Button href={hero.primary.href} label={hero.primary.label} />
+            <Button href={hero.secondary.href} label={hero.secondary.label} variant="tertiary" />
+          </div>
+        </div>
+
+        <aside class="session" aria-label={hero.session.title}>
+          <p class="session__head">
+            <img src="/img/punto-dorado.svg" alt="" width="7" height="7" />
+            {hero.session.title}
+          </p>
+          <ol class="session__steps">
+            {
+              hero.session.steps.map((s, i) => (
+                <li class="session__step">
+                  <span class="session__num">{String(i + 1).padStart(2, '0')}</span>
+                  <span class="session__txt">
+                    <span class="session__title">{s.title}</span>
+                    <span class="session__text">{s.text}</span>
+                  </span>
+                </li>
+              ))
+            }
+          </ol>
+          <p class="session__foot">
+            {hero.session.footer.map((f) => <span>{f}</span>)}
+          </p>
+        </aside>
+      </div>
+    </div>
+  </div>
+
+  <img class="hero__glow hero__glow--l" src="/img/resplandor-hero-izq.svg" alt="" aria-hidden="true" />
+  <div class="container">
+    <Credentials items={hero.credentials} />
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    padding-top: var(--nav-h);
+    padding-bottom: 64px;
+  }
+  .hero__top {
+    position: relative;
+  }
+  .hero__frame {
+    position: absolute;
+    inset: 1px 16px 0;
+    z-index: -2;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+  }
+  .hero__photo {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .hero__veil {
+    position: absolute;
+    inset: 0;
+  }
+  .hero__veil--read {
+    background: linear-gradient(90deg, rgba(10, 10, 10, 0.78), rgba(10, 10, 10, 0.38) 45%, rgba(10, 10, 10, 0));
+  }
+  .hero__veil--side {
+    opacity: 0.25;
+    background: linear-gradient(90deg, rgba(10, 10, 10, 0.82), rgba(10, 10, 10, 0.35) 55%, rgba(10, 10, 10, 0));
+  }
+  .hero__veil--bottom {
+    opacity: 0.25;
+    background: linear-gradient(180deg, rgba(10, 10, 10, 0.2), rgba(10, 10, 10, 0) 40%, rgba(11, 15, 22, 0.92));
+  }
+  .hero__grain {
+    position: absolute;
+    inset: 0;
+    opacity: 0.05;
+    mix-blend-mode: overlay;
+    background: url('/img/grano.png') top left / 50px 50px;
+  }
+  /* Resplandores azules (SVG de Figma, ya traen su desenfoque) */
+  .hero__glow {
+    position: absolute;
+    z-index: -1;
+    max-width: none;
+    pointer-events: none;
+  }
+  .hero__glow--r {
+    width: 1240px;
+    left: calc(50% + 730px - 800px);
+    top: -110px;
+  }
+  .hero__glow--l {
+    width: 1260px;
+    left: calc(50% - 380px - 800px);
+    top: 520px;
+    z-index: -3;
+  }
+
+  .hero__content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 22px;
+    padding-top: 49px;
+  }
+  .hero__title {
+    max-width: 1260px;
+    color: var(--paper);
+    text-shadow:
+      0 4px 10px rgba(0, 0, 0, 0.18),
+      0 4px 18px rgba(0, 0, 0, 0.18),
+      0 4px 24px rgba(0, 0, 0, 0.18),
+      0 4px 29px rgba(0, 0, 0, 0.18),
+      0 4px 32px rgba(0, 0, 0, 0.18);
+  }
+
+  .hero__row {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 48px;
+    width: 100%;
+    padding: 24px 0 56px;
+  }
+  .hero__lede {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 700px;
+  }
+  .hero__lead {
+    font-family: var(--f-body);
+    font-weight: 700;
+    font-size: clamp(1.375rem, 1.1rem + 0.8vw, 1.875rem); /* 30/38 */
+    line-height: 1.267;
+    color: var(--paper);
+  }
+  .hero__body {
+    font-size: clamp(1.0625rem, 1rem + 0.25vw, 1.25rem); /* 20/30 */
+    line-height: 1.5;
+    color: var(--silver);
+  }
+  .hero__ctas {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px 28px;
+    padding-top: 20px;
+  }
+
+  /* Tarjeta de vidrio: "Tu primera sesión de estrategia" */
+  .session {
+    flex: none;
+    width: 600px;
+    padding: 32px 40px;
+    border: 1px solid rgba(164, 194, 212, 0.35);
+    border-radius: var(--radius);
+    background: linear-gradient(144.8deg, rgba(164, 194, 212, 0.16), rgba(156, 189, 209, 0.05));
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+  }
+  .session__head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-bottom: 22px;
+    font-family: var(--f-mono);
+    font-size: 15px;
+    line-height: 17px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  .session__step {
+    display: flex;
+    gap: 24px;
+    padding-block: 18px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .session__num {
+    font-family: var(--f-mono);
+    font-size: 11px;
+    line-height: 17px;
+    letter-spacing: 0.05em;
+    color: var(--steel);
+  }
+  .session__txt {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .session__title {
+    font-size: var(--t-base);
+    line-height: 28px;
+    color: var(--paper);
+  }
+  .session__text {
+    font-size: var(--t-small);
+    line-height: 25px;
+    color: var(--mist);
+  }
+  .session__foot {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding-top: 18px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    font-family: var(--f-mono);
+    font-size: 11px;
+    line-height: 17px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--mist);
+  }
+
+  @media (max-width: 1180px) {
+    .hero__row {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 40px;
+      padding-top: 8px;
+    }
+    .session {
+      width: 100%;
+      max-width: 600px;
+    }
+  }
+  @media (max-width: 600px) {
+    .hero__frame {
+      inset-inline: 8px;
+      border-radius: 16px;
+    }
+    .hero__content {
+      padding-top: 36px;
+    }
+    .hero__row {
+      padding-bottom: 32px;
+    }
+    .session {
+      padding: 24px 20px;
+    }
+    .session__head {
+      font-size: 13px;
+    }
+    .hero__ctas :global(.btn--primary) {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+</style>

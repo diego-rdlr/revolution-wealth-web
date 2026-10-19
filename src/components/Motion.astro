@@ -1,0 +1,20 @@
+---
+// Carga la capa de animación. Base.astro solo lo incluye si MOTION_ENABLED es true.
+import '../styles/motion.css';
+---
+
+<!-- Antes de pintar: activa las animaciones salvo que el visitante pida "reducir movimiento".
+     Seguro: si el JavaScript no llega a cargar en 2.5 s, se apagan y todo queda visible. -->
+<script is:inline>
+  (function () {
+    var root = document.documentElement;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    root.classList.add('motion');
+    setTimeout(function () {
+      if (!root.classList.contains('motion-live')) root.classList.remove('motion');
+    }, 2500);
+  })();
+</script>
+<script>
+  import '../scripts/motion.ts';
+</script>
