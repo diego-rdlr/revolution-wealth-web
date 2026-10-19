@@ -1,0 +1,126 @@
+---
+// Sección 11 · Carrera (Figma 426:639). Banda oscura con foto, velo, resplandor y grano.
+// Izquierda: kicker + titular. Derecha: bajada + botón a vacantes.
+import Kicker from './Kicker.astro';
+import Title from './Title.astro';
+import Button from './Button.astro';
+import { carrera } from '../data/secciones/10-13';
+---
+
+<section id="carrera" class="section theme-dark carrera" aria-labelledby="carrera-title">
+  <div class="atmos" aria-hidden="true">
+    <img
+      class="atmos__photo carrera__photo"
+      src="/img/carrera-fondo-1600.webp"
+      srcset="/img/carrera-fondo-900.webp 900w, /img/carrera-fondo-1600.webp 1600w"
+      sizes="100vw"
+      alt=""
+      width="1600"
+      height="900"
+      loading="lazy"
+      decoding="async"
+    />
+    <div class="atmos__veil carrera__veil"></div>
+    <img class="carrera__glow" src="/img/carrera-resplandor.svg" alt="" width="1240" height="940" loading="lazy" />
+    <div class="carrera__grain"></div>
+  </div>
+
+  <div class="container carrera__grid">
+    <div class="carrera__head">
+      <Kicker text={carrera.kicker} />
+      <div id="carrera-title">
+        <Title lines={carrera.title} inline />
+      </div>
+    </div>
+    <div class="carrera__body" data-reveal>
+      <p>{carrera.body}</p>
+      <Button href={carrera.cta.href} label={carrera.cta.label} variant="secondary" />
+    </div>
+  </div>
+</section>
+
+<style>
+  .carrera {
+    padding-block: 78px 62px;
+  }
+  .carrera__photo {
+    opacity: 0.75;
+  }
+  .carrera__veil {
+    background: linear-gradient(90deg, rgba(11, 15, 22, 0.9), rgba(10, 10, 10, 0.45) 50%, rgba(10, 10, 10, 0.15));
+  }
+  /* Resplandor azul (SVG de Figma con su desenfoque): caja 900×600 en (500, -100) */
+  .carrera__glow {
+    position: absolute;
+    left: calc(50% - 800px + 330px);
+    top: -270px;
+    width: 1240px;
+    max-width: none;
+  }
+  .carrera__grain {
+    position: absolute;
+    inset: 0;
+    opacity: 0.05;
+    mix-blend-mode: overlay;
+    background: url('/img/grano.png') top left / 50px 50px;
+  }
+
+  .carrera__grid {
+    display: flex;
+    align-items: flex-end;
+    gap: 120px;
+  }
+  .carrera__head {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 28px;
+  }
+  .carrera__body {
+    flex: none;
+    width: 663px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 28px;
+  }
+  .carrera__body p {
+    color: #b7bac2; /* Figma: gris claro de la bajada, sin token */
+  }
+  /* Botón de Figma: oscuro translúcido con borde gris azulado (no es el secundario estándar) */
+  .carrera__body :global(.btn--secondary) {
+    border-color: #2e323d;
+    background: rgba(27, 27, 27, 0.9);
+    color: var(--paper);
+  }
+  .carrera__body :global(.btn--secondary .btn__arrow) {
+    color: #c8d4dc;
+  }
+  .carrera__body :global(.btn--secondary:hover) {
+    border-color: var(--slate);
+    background: rgba(40, 40, 40, 0.95);
+  }
+
+  @media (max-width: 1180px) {
+    .carrera {
+      padding-block: var(--section-y);
+    }
+    .carrera__grid {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 32px;
+    }
+    .carrera__body {
+      width: 100%;
+      max-width: 663px;
+    }
+  }
+  @media (max-width: 600px) {
+    .carrera__body :global(.btn) {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+</style>
