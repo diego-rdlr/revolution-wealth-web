@@ -45,6 +45,9 @@ Es la misma base que `revolution-capital-web` y `wealth-nation-web`.
 
 ## Configuración de Cloudflare (Workers)
 
+- Producción: https://revolution-wealth-web.romeo-8d3.workers.dev
+- Vista previa de cada rama: `https://<rama>-revolution-wealth-web.romeo-8d3.workers.dev`
+
 El sitio se publica como un **Worker con archivos estáticos**. `wrangler.jsonc` le dice a
 Cloudflare que publique la carpeta `dist/`.
 
@@ -54,7 +57,7 @@ En Cloudflare → Workers & Pages → `revolution-wealth-web` → Settings → B
 |---|---|
 | Build command | vacío (lo corre `wrangler deploy` por su cuenta, ver `build` en `wrangler.jsonc`) |
 | Deploy command | `npx wrangler deploy` |
-| Non-production branch deploy command | `npx wrangler versions upload` (genera links de vista previa) |
+| Non-production branch deploy command | `npx wrangler preview` (genera links de vista previa; requiere el bloque `previews` de `wrangler.jsonc`) |
 | Node | 22 (lo toma de `.node-version`) |
 
 ## Trabajar localmente (opcional)

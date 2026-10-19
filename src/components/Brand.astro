@@ -47,7 +47,8 @@ const { tagline = true } = Astro.props;
     text-transform: uppercase;
     color: var(--steel);
   }
-  @media (max-width: 760px) {
+  /* En laptops (1181–1500 px) el menú completo no cabe junto a la etiqueta: se oculta */
+  @media (max-width: 1500px) and (min-width: 1181px), (max-width: 760px) {
     .brand__divider,
     .brand__tagline {
       display: none;
