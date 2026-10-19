@@ -10,11 +10,11 @@ interface Props {
   variant?: 'primary' | 'secondary' | 'tertiary';
   size?: 'md' | 'lg';
   arrow?: boolean;
-  /** Abre en otra pestaña (enlaces fuera del sitio). */
+  /** Abre en otra pestaña. Por defecto, sí cuando el enlace sale del sitio (http…). */
   newTab?: boolean;
   class?: string;
 }
-const { href, label, variant = 'primary', size = 'md', arrow = true, newTab = false, class: className } = Astro.props;
+const { href, label, variant = 'primary', size = 'md', arrow = true, newTab = href.startsWith('http'), class: className } = Astro.props;
 ---
 
 <a
