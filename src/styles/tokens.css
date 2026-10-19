@@ -45,6 +45,8 @@
 
   /* ——— Familias ——— */
   --f-display: 'Feature', Georgia, serif;
+  /* Source Serif 4 (Google Fonts, licencia OFL): títulos de tarjeta, nombres y cifras medianas */
+  --f-serif: 'Source Serif 4', Georgia, serif;
   --f-body: 'Geist', ui-sans-serif, system-ui, sans-serif;
   --f-mono: 'Geist Mono', ui-monospace, 'SFMono-Regular', monospace;
 

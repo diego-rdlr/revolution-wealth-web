@@ -11,10 +11,11 @@ export type Title = [string, string];
 
 /** Enlaces que salen del sitio o que todavía están por definir (ver docs/PENDIENTES.md). */
 export const links = {
-  /** "Agenda tu sesión" / "Comenzar mi análisis patrimonial". Por ahora baja a la sección final. */
-  agenda: '#comienza',
-  /** "Ver oportunidades": formulario de "Únete al equipo". */
-  vacantes: '#carrera',
+  /** "Agenda tu sesión" / "Comenzar mi análisis patrimonial": el Microsoft Form del sitio actual (revolutionwm.com). */
+  agenda:
+    'https://forms.office.com/pages/responsepage.aspx?id=SsUEMUpKMked1DTOMJunxEL0r7geOTNOhEcZMIHL08NUMzUxNlhTUk4yVUZURTZGUkZMU09aTEc1TS4u&route=shorturl',
+  /** "Ver oportunidades": formulario de Google de "Únete al equipo" (el de revolutionwm.com/carrera). */
+  vacantes: 'https://docs.google.com/forms/d/e/1FAIpQLSeTssne4LEUf0Ar8CD6KhtNOa5hFwEIKJK2eWeKgm6GRMEyMA/viewform',
   /** "Conoce más": página principal de Revolution. */
   revolution: 'https://revolution.inc',
   capital: 'https://revolutioncapital.mx',
@@ -311,28 +312,95 @@ export const preguntas = {
     cta: { label: 'CONTACTAR A UN ASESOR', href: links.agenda },
   },
   /**
-   * Las 12 preguntas, en orden. En Figma solo la 01 trae respuesta (es la que
-   * se ve abierta); las demás salen del sitio actual revolutionwm.com.
-   * Las que tengan `respuesta: ''` NO se muestran en la página ni en el JSON-LD.
+   * Las 12 preguntas, en orden. Las preguntas son las del Figma; las respuestas
+   * de la 02 a la 12 salen del sitio actual revolutionwm.com (19-oct-2026).
+   * La 01 es la versión corta que trae el Figma.
+   * Cada línea del arreglo `respuesta` es un párrafo.
+   * Si una pregunta tiene `respuesta: []`, NO se muestra en la página ni en el JSON-LD.
    */
   items: [
     {
       pregunta: '¿Qué es Revolution Wealth?',
-      respuesta:
+      respuesta: [
         'Somos un asesor financiero independiente que opera a través de la plataforma de GBM. Formamos parte del ecosistema Revolution Inc, que integra educación financiera, comunidad y asesoría patrimonial integral.',
+      ],
     },
-    { pregunta: '¿Necesito un asesor para invertir?', respuesta: '' }, // PENDIENTE: respuesta de revolutionwm.com
-    { pregunta: '¿Vale la pena contratar asesoría si me gusta estudiar y aprender sobre inversiones?', respuesta: '' }, // PENDIENTE
-    { pregunta: '¿Es seguro invertir con Revolution Wealth?', respuesta: '' }, // PENDIENTE
-    { pregunta: '¿Revolution Wealth custodia mi dinero?', respuesta: '' }, // PENDIENTE
-    { pregunta: '¿Cuál es la diferencia entre invertir en un banco y con Revolution Wealth?', respuesta: '' }, // PENDIENTE
-    { pregunta: '¿Cómo se contrata la asesoría?', respuesta: '' }, // PENDIENTE
-    { pregunta: '¿Necesito abrir una cuenta nueva?', respuesta: '' }, // PENDIENTE
-    { pregunta: '¿Puedo retirar mi dinero cuando quiera?', respuesta: '' }, // PENDIENTE
-    { pregunta: '¿Cómo cobra Revolution Wealth?', respuesta: '' }, // PENDIENTE
-    { pregunta: '¿Puedo dejar de recibir la asesoría?', respuesta: '' }, // PENDIENTE
-    { pregunta: '¿Cómo puedo comenzar?', respuesta: '' }, // PENDIENTE
-  ],
+    {
+      pregunta: '¿Necesito un asesor para invertir?',
+      respuesta: [
+        'Para invertir, no. Para invertir bien, sí.',
+        'Invertir no es algo sencillo, así que con un asesor de inversiones, recibes apoyo y orientación para construir una cartera de inversiones ideal, según tu perfil y tus propios objetivos. En Revolution Wealth, priorizamos las relaciones cercanas y duraderas, por lo que nuestros asesores certificados tienen amplio conocimiento y buscan ofrecer lo mejor para ti de manera transparente. Ah, tampoco trabajan con metas, comprometiéndose a brindar la mejor solución posible para ti. De esta manera, nuestro trabajo es ayudarte en la diversificación de las inversiones de acuerdo con tus expectativas, facilitando tu toma de decisiones y mostrando posibles riesgos y ganancias.',
+      ],
+    },
+    {
+      pregunta: '¿Vale la pena contratar asesoría si me gusta estudiar y aprender sobre inversiones?',
+      respuesta: [
+        'El servicio de asesoría se vuelve aún más valioso cuando el cliente tiene interés y conocimiento sobre el tema. En la práctica, la decisión final sobre adoptar o no las recomendaciones del asesor siempre es del cliente.',
+        'El asesor, sin embargo, cuenta con conocimientos técnicos y experiencia práctica para ayudar a identificar los instrumentos que mejor se alinean con tus objetivos y necesidades personales.',
+        'La prestación del servicio de asesoría se realiza a través de un equipo de profesionales dedicados a la orientación, recomendación y acompañamiento técnico, de forma independiente, objetiva y personalizada, en distintos ámbitos de tu vida financiera, como: Planeación financiera, Construcción y gestión de portafolio y Protección patrimonial.',
+      ],
+    },
+    {
+      pregunta: '¿Es seguro invertir con Revolution Wealth?',
+      respuesta: [
+        'Revolution Wealth es una oficina afiliada a GBM – Grupo Bursátil Mexicano, la casa de bolsa más grande de México y respaldada por 40 años de historia.',
+        'Desde el punto de vista de la seguridad, todas nuestras operaciones son auditadas y pasan por un riguroso proceso de gobernanza. Los riesgos de invertir están exclusivamente vinculados al tipo de activo financiero en el que asignas tus inversiones.',
+      ],
+    },
+    {
+      pregunta: '¿Revolution Wealth custodia mi dinero?',
+      respuesta: [
+        'No.',
+        'Tus recursos permanecen siempre en tu cuenta individual dentro de la plataforma de GBM. Revolution Wealth no custodia fondos ni tiene control sobre tu dinero; nuestro rol es exclusivamente de asesoría.',
+      ],
+    },
+    {
+      pregunta: '¿Cuál es la diferencia entre invertir en un banco y con Revolution Wealth?',
+      respuesta: [
+        'En la banca tradicional la asesoría suele centrarse en productos estandarizados del propio banco.',
+        'En Revolution Wealth brindamos asesoría independiente y personalizada, enfocada en implementar estrategias de los mejores gestores de activos alineadas a tus objetivos, perfil de riesgo y horizonte de inversión.',
+      ],
+    },
+    {
+      pregunta: '¿Cómo se contrata la asesoría?',
+      respuesta: [
+        'El proceso inicia con una sesión de diagnóstico. Posteriormente, se solicita la asignación de tu contrato de GBM a la asesoría de Revolution Wealth, lo que nos permite visualizar tu portafolio y brindarte recomendaciones personalizadas.',
+      ],
+    },
+    {
+      pregunta: '¿Necesito abrir una cuenta nueva?',
+      respuesta: [
+        'No necesariamente.',
+        'Si ya cuentas con un contrato en GBM, únicamente se realiza la migración de asesoría. Si aún no tienes cuenta, te acompañamos en el proceso de apertura.',
+      ],
+    },
+    {
+      pregunta: '¿Puedo retirar mi dinero cuando quiera?',
+      respuesta: [
+        'Sí.',
+        'Al estar tu cuenta directamente en GBM, puedes disponer de tus recursos conforme a los plazos y condiciones de los instrumentos en los que estés invertido.',
+      ],
+    },
+    {
+      pregunta: '¿Cómo cobra Revolution Wealth?',
+      respuesta: [
+        'La estructura de honorarios se explica de forma clara y transparente antes de iniciar la relación de asesoría. No cobramos comisiones ocultas ni incentivos por recomendar productos específicos.',
+      ],
+    },
+    {
+      pregunta: '¿Puedo dejar de recibir la asesoría?',
+      respuesta: [
+        'Sí.',
+        'La relación de asesoría es flexible y no hay plazo mínimo de permanencia. Puedes solicitar la baja en cualquier momento y tu cuenta y recursos permanecerán siempre bajo tu control en GBM.',
+      ],
+    },
+    {
+      pregunta: '¿Cómo puedo comenzar?',
+      respuesta: [
+        'Solo tienes que agendar una sesión inicial. Evaluaremos tu situación, resolveremos dudas y te explicaremos el proceso paso a paso.',
+      ],
+    },
+  ] as { pregunta: string; respuesta: string[] }[],
 };
 
 /** Figma 426:639 · "11 · Carrera" */
@@ -368,17 +436,17 @@ export const footer = {
     {
       title: 'ECOSISTEMA',
       links: [
-        // PENDIENTE: URLs propias de cada marca; por ahora la principal de Revolution
+        // Mismos destinos que el footer de revolutionwm.com (Media va a la principal de Revolution)
         { label: 'Revolution Media', href: links.revolution, external: true },
-        { label: 'Wealth Club', href: links.revolution, external: true },
-        { label: 'Wealth Mastery', href: links.revolution, external: true },
+        { label: 'Wealth Club', href: 'https://revoluciondelariqueza.com/wealthclub/', external: true },
+        { label: 'Wealth Mastery', href: 'https://revoluciondelariqueza.com/wealthmastery', external: true },
         { label: 'Revolution Capital', href: links.capital, external: true },
       ],
     },
     {
       title: 'CONTACTO',
       links: [
-        { label: 'Agenda tu sesión', href: links.agenda },
+        { label: 'Agenda tu sesión', href: links.agenda, external: true },
         { label: 'Preguntas frecuentes', href: '#preguntas' },
         { label: 'Carrera', href: '#carrera' },
         { label: 'Aviso de privacidad', href: '#' }, // PENDIENTE: página del aviso de privacidad

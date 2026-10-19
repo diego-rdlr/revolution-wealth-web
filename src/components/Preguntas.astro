@@ -11,7 +11,7 @@ import { preguntas } from '../data/wealth';
 // Se conserva el número original de cada pregunta aunque falten respuestas
 const items = preguntas.items
   .map((it, i) => ({ ...it, num: String(i + 1).padStart(2, '0') }))
-  .filter((it) => it.respuesta.trim() !== '');
+  .filter((it) => it.respuesta.length > 0);
 
 // Datos estructurados para buscadores (FAQPage), solo con las que tienen respuesta
 const faqLd = {
@@ -20,7 +20,7 @@ const faqLd = {
   mainEntity: items.map((it) => ({
     '@type': 'Question',
     name: it.pregunta,
-    acceptedAnswer: { '@type': 'Answer', text: it.respuesta },
+    acceptedAnswer: { '@type': 'Answer', text: it.respuesta.join(' ') },
   })),
 };
 ---
@@ -59,7 +59,7 @@ const faqLd = {
               </span>
             </summary>
             <div class="faq__answer">
-              <p>{it.respuesta}</p>
+              {it.respuesta.map((parrafo) => <p>{parrafo}</p>)}
             </div>
           </details>
         ))
@@ -136,10 +136,10 @@ const faqLd = {
   .contact__kicker {
     color: var(--gold-ink);
   }
-  /* Figma pide Source Serif 4 Medium 28/32; se usa la display del sitio */
+  /* Figma: Source Serif 4 Medium 28/32 */
   .contact__title {
-    font-family: var(--f-display);
-    font-weight: 400;
+    font-family: var(--f-serif);
+    font-weight: 500;
     font-size: 1.75rem;
     line-height: 1.143;
     letter-spacing: -0.018em;
@@ -236,9 +236,13 @@ const faqLd = {
   .faq__answer {
     overflow: hidden;
     margin-top: -10px; /* Figma: 14 entre fila y respuesta, en vez de los 24 del padding */
+    padding-bottom: 24px;
+  }
+  .faq__answer p + p {
+    margin-top: 12px;
   }
   .faq__answer p {
-    padding: 0 60px 24px 52px;
+    padding: 0 60px 0 52px;
     font-size: var(--t-base);
     line-height: 1.647;
     color: var(--slate);
@@ -278,8 +282,11 @@ const faqLd = {
     .faq__q {
       font-size: 1.125rem;
     }
+    .faq__answer {
+      padding-bottom: 20px;
+    }
     .faq__answer p {
-      padding: 0 0 20px 34px;
+      padding: 0 0 0 34px;
       font-size: var(--t-small);
       line-height: 1.667;
     }
