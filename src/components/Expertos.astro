@@ -1,0 +1,188 @@
+---
+// Sección 02 · "Invierte con expertos" (Figma 422:557).
+// Encabezado a dos columnas + cuatro pilares en tarjetas de papel con ícono.
+import Kicker from './Kicker.astro';
+import Title from './Title.astro';
+import Button from './Button.astro';
+import { expertos } from '../data/secciones/02-05';
+---
+
+<section id="acompanamos" class="section theme-light expertos" aria-labelledby="acompanamos-title">
+  <div class="container">
+    <header class="expertos__head">
+      <div class="expertos__titular">
+        <Kicker text={expertos.kicker} />
+        <div id="acompanamos-title"><Title lines={expertos.title} /></div>
+      </div>
+      <div class="expertos__bajada" data-reveal>
+        <p class="t-lead expertos__lead">{expertos.lead}</p>
+        <Button href={expertos.cta.href} label={expertos.cta.label} />
+      </div>
+    </header>
+
+    <ul class="pilares" data-reveal>
+      {
+        expertos.pilares.map((p, i) => (
+          <li class="pilar" style={`--i: ${i}`}>
+            <span class="pilar__acento" aria-hidden="true" />
+            <div class="pilar__cabecera">
+              <span class="pilar__num">{String(i + 1).padStart(2, '0')}</span>
+              <img class="pilar__icono" src={p.icon} alt="" width="44" height="44" loading="lazy" />
+            </div>
+            <h3 class="pilar__titulo">{p.title}</h3>
+            <p class="pilar__texto">{p.text}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .expertos__head {
+    display: flex;
+    align-items: flex-end;
+    gap: 120px;
+  }
+  .expertos__titular {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 28px;
+    min-width: 0;
+  }
+  .expertos__titular :global(.title) {
+    max-width: 700px;
+  }
+  .expertos__bajada {
+    flex: none;
+    width: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 28px;
+  }
+  .expertos__lead {
+    color: var(--fg);
+  }
+
+  /* ——— Pilares ——— */
+  .pilares {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 24px;
+    margin-top: 72px;
+  }
+  .pilar {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 32px 32px 36px;
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius);
+    /* Figma usa el degradado de tarjeta clara a 139°, no vertical */
+    background: linear-gradient(139deg, #ffffff, #edeff3);
+    box-shadow: var(--card-shadow);
+  }
+  /* Acento azul: 48 × 3 px sobre el borde superior */
+  .pilar__acento {
+    position: absolute;
+    top: -1px;
+    left: 31px;
+    width: 48px;
+    height: 3px;
+    background: var(--steel);
+  }
+  .pilar__cabecera {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 40px;
+  }
+  .pilar__num {
+    font-family: var(--f-mono);
+    font-size: var(--t-micro);
+    line-height: 17px;
+    letter-spacing: 0.05em;
+    color: var(--navy);
+  }
+  .pilar__icono {
+    width: 44px;
+    height: 44px;
+    object-fit: contain;
+  }
+  /* Figma: Source Serif 4 Medium 28/32; aquí va Feature (familia display del sitio) */
+  .pilar__titulo {
+    font-family: var(--f-display);
+    font-weight: 400;
+    font-size: clamp(1.5rem, 1.35rem + 0.4vw, 1.75rem);
+    line-height: 1.143;
+    letter-spacing: -0.018em;
+    color: var(--fg);
+    text-wrap: balance;
+  }
+  .pilar__texto {
+    font-size: var(--t-small);
+    line-height: 1.667;
+    color: var(--body);
+  }
+
+  /* Entrada: bajada y tarjetas suben en cascada */
+  :global(html.motion) .expertos__bajada,
+  :global(html.motion) .pilares .pilar {
+    opacity: 0;
+    transform: translateY(24px);
+    transition:
+      opacity 0.8s var(--ease-out),
+      transform 0.9s var(--ease-out);
+  }
+  :global(html.motion) .expertos__bajada {
+    transition-delay: 0.25s;
+  }
+  :global(html.motion) .pilares .pilar {
+    transition-delay: calc(var(--i) * 110ms);
+  }
+  :global(html.motion) .expertos__bajada.is-in,
+  :global(html.motion) .pilares.is-in .pilar {
+    opacity: 1;
+    transform: none;
+  }
+
+  @media (max-width: 1180px) {
+    .expertos__head {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 32px;
+    }
+    .expertos__bajada {
+      width: 100%;
+      max-width: 600px;
+    }
+    .pilares {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      margin-top: 56px;
+    }
+  }
+  @media (max-width: 600px) {
+    .pilares {
+      grid-template-columns: 1fr;
+      gap: 16px;
+      margin-top: 44px;
+    }
+    .pilar {
+      padding: 28px 24px 30px;
+    }
+    .pilar__acento {
+      left: 23px;
+    }
+    .pilar__cabecera {
+      padding-bottom: 20px;
+    }
+    .expertos__bajada :global(.btn--primary) {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+</style>

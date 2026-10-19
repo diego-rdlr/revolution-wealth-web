@@ -1,0 +1,103 @@
+---
+// Sección 05 · "Principio" (Figma 424:575).
+// Banda oscura con el horizonte de luz, frase centrada y el botón "Empieza hoy".
+import Kicker from './Kicker.astro';
+import Title from './Title.astro';
+import Button from './Button.astro';
+import { principio } from '../data/secciones/02-05';
+---
+
+<section id="principio" class="section theme-dark principio" aria-labelledby="principio-title">
+  <div class="atmos" aria-hidden="true">
+    <img
+      class="atmos__photo principio__foto"
+      src="/img/principio-fondo-horizonte-1600.webp"
+      srcset="/img/principio-fondo-horizonte-900.webp 900w, /img/principio-fondo-horizonte-1600.webp 1600w"
+      sizes="100vw"
+      alt=""
+      width="1600"
+      height="900"
+      loading="lazy"
+    />
+    <div class="atmos__veil principio__velo"></div>
+    <img class="atmos__glow principio__glow" src="/img/principio-resplandor.svg" alt="" width="1340" height="860" />
+    <div class="atmos__grain principio__grano"></div>
+  </div>
+
+  <div class="container principio__content">
+    <Kicker text={principio.kicker} line={false} />
+    <div id="principio-title"><Title lines={principio.title} class="principio__frase" /></div>
+    <div class="principio__cta">
+      <Button href={principio.cta.href} label={principio.cta.label} size="lg" />
+    </div>
+  </div>
+</section>
+
+<style>
+  .principio {
+    padding-block: 79px 70px;
+  }
+  .principio__foto {
+    opacity: 0.9;
+  }
+  /* Velo: azul noche arriba y abajo, casi transparente al centro (Figma "Velo") */
+  .principio__velo {
+    background: linear-gradient(180deg, rgba(11, 15, 22, 0.5), rgba(10, 10, 10, 0.1) 50%, rgba(11, 15, 22, 0.75));
+  }
+  .principio__glow {
+    width: 1340px;
+    left: calc(50% - 670px);
+    top: -50px;
+  }
+  .principio__grano {
+    bottom: 52px;
+    opacity: 0.05;
+  }
+
+  .principio__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+    text-align: center;
+  }
+  /* Frase: Feature Regular 59/62 (Figma), con sombra para leerse sobre la luz */
+  .principio__content :global(.principio__frase) {
+    max-width: 1240px;
+    font-weight: 400;
+    font-size: clamp(2.125rem, 1.4rem + 2.4vw, var(--t-quote-mark));
+    line-height: 1.051;
+    /* La sombra va como filtro del bloque: con animaciones, cada renglón se
+       recorta (overflow: hidden) y un text-shadow dejaría bordes rectos */
+    filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.3)) drop-shadow(0 4px 30px rgba(0, 0, 0, 0.25));
+  }
+  .principio__cta {
+    padding-top: 16px;
+  }
+  /* Botón primario en dorado oscuro con borde (Figma: #8a6b26, borde #534015, texto 16 px) */
+  .principio__cta :global(.btn--primary) {
+    --btn-bg: var(--gold-ink);
+    --btn-fg: var(--paper);
+    --btn-arrow: #c8d4dc;
+    border: 1px solid #534015;
+    font-size: 16px;
+    font-weight: 600;
+  }
+  .principio__cta :global(.btn--primary .btn__arrow) {
+    color: #c8d4dc;
+  }
+
+  @media (max-width: 1180px) {
+    .principio {
+      padding-block: var(--section-y);
+    }
+  }
+  @media (max-width: 600px) {
+    .principio__content {
+      gap: 28px;
+    }
+    .principio__cta :global(.btn--primary) {
+      font-size: 14px;
+    }
+  }
+</style>

@@ -1,0 +1,237 @@
+---
+// Sección 03 · "Servicios" (Figma 424:490).
+// Banda oscura con haz de luz, resplandor azul y grano; cuatro tarjetas de vidrio.
+import Kicker from './Kicker.astro';
+import Title from './Title.astro';
+import { servicios } from '../data/secciones/02-05';
+---
+
+<section id="servicios" class="section theme-dark servicios" aria-labelledby="servicios-title">
+  <div class="atmos" aria-hidden="true">
+    <img
+      class="atmos__photo servicios__luz"
+      src="/img/servicios-fondo-luz-1600.webp"
+      srcset="/img/servicios-fondo-luz-900.webp 900w, /img/servicios-fondo-luz-1600.webp 1600w"
+      sizes="100vw"
+      alt=""
+      width="1600"
+      height="900"
+      loading="lazy"
+    />
+    <img class="atmos__glow servicios__glow" src="/img/servicios-resplandor.svg" alt="" width="1340" height="1240" />
+    <div class="atmos__grain servicios__grano"></div>
+  </div>
+
+  <div class="container">
+    <header class="servicios__head">
+      <div class="servicios__titular">
+        <Kicker text={servicios.kicker} />
+        <div id="servicios-title"><Title lines={servicios.title} inline /></div>
+      </div>
+      <p class="servicios__body" data-reveal>{servicios.body}</p>
+    </header>
+
+    <ul class="servicios__lista" data-reveal>
+      {
+        servicios.items.map((s, i) => (
+          <li class="servicio" style={`--i: ${i}`}>
+            <div class="servicio__cabecera">
+              <span class="servicio__num" aria-hidden="true">
+                {String(i + 1).padStart(2, '0')}
+              </span>
+              <img class="servicio__icono" src={s.icon} alt="" width="52" height="52" loading="lazy" />
+            </div>
+            <span class="servicio__regla" aria-hidden="true" />
+            <h3 class="servicio__titulo">{s.title}</h3>
+            <p class="servicio__texto">{s.text}</p>
+            <p class="servicio__tag t-micro">{s.tag}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .servicios {
+    /* Figma: degradado vertical #1b2433 → #0e131b (60%) → ink. Colores fuera de la paleta. */
+    background: linear-gradient(180deg, #1b2433, #0e131b 60%, var(--ink));
+    padding-block: 62px 77px;
+  }
+  .servicios__luz {
+    opacity: 0.385; /* capa al 70% × imagen al 55% */
+  }
+  .servicios__glow {
+    width: 1340px;
+    left: calc(50% - 120px);
+    top: -420px;
+  }
+  .servicios__grano {
+    opacity: 0.05;
+  }
+
+  .servicios__head {
+    display: flex;
+    align-items: flex-end;
+    gap: 120px;
+  }
+  .servicios__titular {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 28px;
+    min-width: 0;
+  }
+  .servicios__body {
+    flex: none;
+    width: 560px;
+    font-size: var(--t-base);
+    line-height: 1.647;
+    color: var(--body);
+  }
+
+  /* ——— Tarjetas ——— */
+  .servicios__lista {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 24px;
+    margin-top: 72px;
+  }
+  .servicio {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 32px 32px 36px;
+    /* Vidrio azulado propio de esta sección (Figma), distinto del --card-bg genérico */
+    border: 1px solid rgba(164, 194, 212, 0.16);
+    border-radius: var(--radius);
+    background: linear-gradient(131deg, rgba(42, 52, 70, 0.85), rgba(17, 23, 33, 0.9));
+  }
+  .servicio__cabecera {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    width: 100%;
+    padding-bottom: 96px;
+  }
+  /* Figma: Source Serif 4 Light 42/48, #a4c2d4 (fuera de la paleta) */
+  .servicio__num {
+    font-family: var(--f-display);
+    font-weight: 300;
+    font-size: 42px;
+    line-height: 48px;
+    letter-spacing: -0.019em;
+    color: #a4c2d4;
+  }
+  .servicio__icono {
+    width: 52px;
+    height: 52px;
+    object-fit: contain;
+  }
+  .servicio__regla {
+    width: 40px;
+    height: 1px;
+    background: var(--steel);
+  }
+  /* Figma: Source Serif 4 Medium 28/32; aquí va Feature */
+  .servicio__titulo {
+    font-family: var(--f-display);
+    font-weight: 400;
+    font-size: clamp(1.5rem, 1.35rem + 0.4vw, 1.75rem);
+    line-height: 1.143;
+    letter-spacing: -0.018em;
+    color: var(--fg);
+    text-wrap: balance;
+  }
+  .servicio__texto {
+    font-size: var(--t-small);
+    line-height: 1.667;
+    color: var(--body);
+  }
+  .servicio__tag {
+    padding-top: 12px;
+    color: var(--steel);
+  }
+  /* Hover: la regla se alarga y el borde se aclara */
+  .servicio,
+  .servicio__regla {
+    transition:
+      border-color 0.35s ease,
+      width 0.5s cubic-bezier(0.2, 0.7, 0.1, 1);
+  }
+  @media (hover: hover) {
+    .servicio:hover {
+      border-color: rgba(164, 194, 212, 0.34);
+    }
+    .servicio:hover .servicio__regla {
+      width: 72px;
+    }
+  }
+
+  /* Entrada en cascada (solo con animaciones activas) */
+  :global(html.motion) .servicios__body,
+  :global(html.motion) .servicios__lista .servicio {
+    opacity: 0;
+    transform: translateY(24px);
+    transition:
+      opacity 0.8s var(--ease-out),
+      transform 0.9s var(--ease-out),
+      border-color 0.35s ease;
+  }
+  :global(html.motion) .servicios__body {
+    transition-delay: 0.25s;
+  }
+  :global(html.motion) .servicios__lista .servicio {
+    transition-delay: calc(var(--i) * 110ms);
+  }
+  :global(html.motion) .servicios__body.is-in,
+  :global(html.motion) .servicios__lista.is-in .servicio {
+    opacity: 1;
+    transform: none;
+  }
+
+  @media (max-width: 1180px) {
+    .servicios {
+      padding-block: var(--section-y);
+    }
+    .servicios__head {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 24px;
+    }
+    .servicios__body {
+      width: 100%;
+      max-width: 560px;
+    }
+    .servicios__lista {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      margin-top: 56px;
+    }
+    .servicio__cabecera {
+      padding-bottom: 56px;
+    }
+  }
+  @media (max-width: 600px) {
+    .servicios__lista {
+      grid-template-columns: 1fr;
+      gap: 16px;
+      margin-top: 44px;
+    }
+    .servicio {
+      padding: 28px 24px 30px;
+    }
+    .servicio__cabecera {
+      padding-bottom: 28px;
+    }
+    .servicio__num {
+      font-size: 36px;
+      line-height: 42px;
+    }
+    .servicios__glow {
+      left: -300px;
+      top: -500px;
+    }
+  }
+</style>

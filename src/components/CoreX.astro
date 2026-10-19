@@ -1,0 +1,400 @@
+---
+// 06 · Filosofía Core-X (Figma 425:492). Sección clara: texto + lista Core/Exponencial
+// a la izquierda y, a la derecha, la tarjeta oscura con la gráfica ilustrativa.
+// La gráfica es SVG en línea (rejilla de 620 × 330 de Figma) para poder dibujar las
+// curvas al entrar en pantalla: con animaciones activas los trazos se dibujan
+// (stroke-dashoffset), luego aparecen las áreas y al final los puntos.
+import Kicker from './Kicker.astro';
+import Title from './Title.astro';
+import { coreX } from '../data/secciones/06-07';
+
+const { chart } = coreX;
+
+// Curvas: arrancan juntas en (0, 275). La exponencial sube a (620, 20) y la core a (620, 230).
+const W = 620;
+const BASE = 275;
+function curve(endY: number, k: number) {
+  const pts: string[] = [];
+  for (let i = 0; i <= 62; i++) {
+    const t = i / 62;
+    const y = BASE - (BASE - endY) * ((Math.exp(k * t) - 1) / (Math.exp(k) - 1));
+    pts.push(`${(t * W).toFixed(1)} ${y.toFixed(1)}`);
+  }
+  return `M${pts.join(' L')}`;
+}
+const expPath = curve(20, 3.5);
+const corePath = curve(230, 0.6);
+const expArea = `${expPath} L${W} ${BASE} L0 ${BASE} Z`;
+const coreArea = `${corePath} L${W} 300 L0 300 Z`;
+const guides = [0, 75, 150, 225];
+---
+
+<section id="filosofia" class="section theme-light corex" aria-labelledby="filosofia-title">
+  <div class="container corex__row">
+    <div class="corex__text">
+      <Kicker text={coreX.kicker} />
+      <div id="filosofia-title">
+        <Title lines={coreX.title} class="corex__title" />
+      </div>
+      <p class="corex__lead" data-reveal>{coreX.lead}</p>
+
+      <ul class="corex__list" data-reveal>
+        {
+          coreX.components.map((c) => (
+            <li class:list={['corex__item', `corex__item--${c.tone}`]}>
+              <span class="corex__swatch" aria-hidden="true" />
+              <span class="corex__label">{c.label}</span>
+              <span class="corex__desc">{c.text}</span>
+            </li>
+          ))
+        }
+      </ul>
+
+      <p class="corex__note">{coreX.note}</p>
+    </div>
+
+    <figure class="chart" data-reveal>
+      <p class="chart__eq" aria-label={`${chart.equation[0]} + ${chart.equation[1]} = ${chart.equation[2]}`}>
+        <span class="chip chip--core">{chart.equation[0]}</span>
+        <span class="chart__op" aria-hidden="true">+</span>
+        <span class="chip chip--exp">{chart.equation[1]}</span>
+        <span class="chart__op" aria-hidden="true">=</span>
+        <span class="chip chip--x">{chart.equation[2]}</span>
+      </p>
+
+      <div class="chart__plot">
+        <svg viewBox="0 0 620 330" role="img" aria-label={`${chart.expLabel} frente a ${chart.coreLabel}`}>
+          <defs>
+            <linearGradient id="corex-area-exp" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#c6a052" stop-opacity="0.28" />
+              <stop offset="1" stop-color="#c6a052" stop-opacity="0" />
+            </linearGradient>
+            <linearGradient id="corex-area-core" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#9cbdd1" stop-opacity="0.18" />
+              <stop offset="1" stop-color="#9cbdd1" stop-opacity="0" />
+            </linearGradient>
+            <filter id="corex-glow" x="-200%" y="-200%" width="500%" height="500%">
+              <feGaussianBlur stdDeviation="4" />
+            </filter>
+          </defs>
+          {guides.map((y) => <line class="chart__guide" x1="0" x2="620" y1={y + 0.5} y2={y + 0.5} />)}
+          <line class="chart__axis" x1="0" x2="620" y1="300.5" y2="300.5" />
+          <path class="chart__area chart__area--exp" d={expArea} fill="url(#corex-area-exp)" />
+          <path class="chart__area chart__area--core" d={coreArea} fill="url(#corex-area-core)" />
+          <path class="chart__line chart__line--core" d={corePath} pathLength="1" />
+          <path class="chart__line chart__line--exp" d={expPath} pathLength="1" />
+          <g class="chart__dot chart__dot--exp">
+            <circle cx="620" cy="20" r="8" fill="#c6a052" opacity="0.55" filter="url(#corex-glow)" />
+            <circle cx="620" cy="20" r="6" fill="#c6a052" />
+          </g>
+          <circle class="chart__dot chart__dot--core" cx="620" cy="230" r="4.5" fill="#9cbdd1" />
+        </svg>
+        <span class="chart__tag chart__tag--exp" aria-hidden="true">{chart.expLabel}</span>
+        <span class="chart__tag chart__tag--core" aria-hidden="true">{chart.coreLabel}</span>
+      </div>
+
+      <ol class="chart__x" aria-hidden="true">
+        {chart.axis.map((a) => <li>{a}</li>)}
+      </ol>
+      <figcaption class="chart__note">{chart.disclaimer}</figcaption>
+    </figure>
+  </div>
+</section>
+
+<style>
+  .corex {
+    /* Figma: degradado horizontal papel → azul niebla (#e4ecf1 no está en tokens) */
+    background: linear-gradient(90deg, var(--paper) 0%, var(--paper) 50%, #e4ecf1 100%);
+    padding-top: clamp(4.5rem, 3.5rem + 2vw, 5.1875rem); /* 83 */
+    padding-bottom: clamp(4.5rem, 3rem + 3.5vw, 6.5625rem); /* 105 */
+  }
+  .corex__row {
+    display: flex;
+    align-items: center;
+    gap: 100px;
+  }
+  .corex__text {
+    flex: 1 1 0;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 28px;
+  }
+  /* En Figma este titular va en Feature Display Regular (400), no Light */
+  .corex__text :global(.corex__title) {
+    max-width: 640px;
+    font-weight: 400;
+  }
+  .corex__lead {
+    font-size: var(--t-lead);
+    line-height: 1.304;
+    color: var(--fg);
+  }
+  .corex__list {
+    width: 100%;
+    padding-top: 8px;
+  }
+  .corex__item {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding-block: 20px;
+    border-top: 1px solid var(--line);
+  }
+  .corex__swatch {
+    flex: none;
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    background: var(--navy);
+  }
+  .corex__label {
+    flex: none;
+    width: 110px;
+    font-family: var(--f-mono);
+    font-size: 11px;
+    line-height: 17px;
+    letter-spacing: 0.05em;
+    color: var(--navy);
+  }
+  .corex__item--exp .corex__swatch {
+    background: var(--gold-ink);
+  }
+  .corex__item--exp .corex__label {
+    color: var(--gold-ink);
+  }
+  .corex__desc {
+    flex: 1 1 0;
+    min-width: 0;
+    font-size: var(--t-base);
+    line-height: 28px;
+    color: var(--body);
+  }
+  .corex__note {
+    font-size: var(--t-small);
+    line-height: 25px;
+    color: var(--meta);
+  }
+
+  /* ——— Tarjeta oscura con la gráfica ——— */
+  .chart {
+    flex: none;
+    width: 700px;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    padding: 36px 40px;
+    border: 1px solid rgba(164, 194, 212, 0.2);
+    border-radius: var(--radius);
+    background: linear-gradient(141.5deg, #243044 0%, #0e131b 100%); /* literales de Figma */
+    box-shadow: 0 30px 60px -10px rgba(0, 0, 0, 0.18);
+    color: var(--paper);
+  }
+  .chart__eq {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+  }
+  .chip {
+    padding: 8px 14px;
+    border: 1px solid;
+    border-radius: 40px;
+    font-family: var(--f-mono);
+    font-size: 11px;
+    line-height: 17px;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+  }
+  .chip--core {
+    border-color: rgba(156, 189, 209, 0.6);
+    color: var(--steel);
+  }
+  .chip--exp {
+    border-color: rgba(198, 160, 82, 0.6);
+    color: var(--gold);
+  }
+  .chip--x {
+    border-color: rgba(245, 244, 240, 0.6);
+    background: rgba(245, 244, 240, 0.14);
+    color: var(--paper);
+  }
+  .chart__op {
+    font-size: var(--t-base);
+    line-height: 28px;
+    color: var(--mist);
+  }
+  .chart__plot {
+    position: relative;
+  }
+  .chart__plot svg {
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+  .chart__guide {
+    stroke: rgba(255, 255, 255, 0.06);
+    stroke-width: 1;
+  }
+  .chart__axis {
+    stroke: rgba(255, 255, 255, 0.22);
+    stroke-width: 1;
+  }
+  .chart__line {
+    fill: none;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .chart__line--exp {
+    stroke: var(--gold);
+  }
+  .chart__line--core {
+    stroke: var(--steel);
+  }
+  .chart__tag {
+    position: absolute;
+    right: 3%;
+    font-family: var(--f-mono);
+    font-size: 11px;
+    line-height: 17px;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+  }
+  .chart__tag--exp {
+    top: 1.2%; /* 4 / 330 */
+    color: var(--gold);
+  }
+  .chart__tag--core {
+    top: 59.4%; /* 196 / 330 */
+    color: var(--steel);
+  }
+  .chart__x {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  .chart__x,
+  .chart__note {
+    font-family: var(--f-mono);
+    font-size: 11px;
+    line-height: 17px;
+    letter-spacing: 0.05em;
+    color: var(--dim);
+  }
+  .chart__x li {
+    white-space: nowrap;
+  }
+
+  /* ——— Animación: las curvas se dibujan al entrar (solo con html.motion) ——— */
+  :global(html.motion) .chart .chart__line {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    transition: stroke-dashoffset 1.6s cubic-bezier(0.45, 0, 0.2, 1);
+  }
+  :global(html.motion) .chart .chart__line--exp {
+    transition-duration: 2s;
+    transition-delay: 0.35s;
+  }
+  :global(html.motion) .chart.is-in .chart__line {
+    stroke-dashoffset: 0;
+  }
+  :global(html.motion) .chart .chart__area,
+  :global(html.motion) .chart .chart__tag {
+    opacity: 0;
+    transition: opacity 1s ease 1.4s;
+  }
+  :global(html.motion) .chart .chart__area--exp {
+    transition-delay: 1.9s;
+  }
+  :global(html.motion) .chart.is-in .chart__area,
+  :global(html.motion) .chart.is-in .chart__tag {
+    opacity: 1;
+  }
+  :global(html.motion) .chart .chart__dot {
+    opacity: 0;
+    transform-box: fill-box;
+    transform-origin: center;
+    transform: scale(0.2);
+    transition:
+      opacity 0.4s ease,
+      transform 0.6s cubic-bezier(0.3, 1.6, 0.5, 1);
+  }
+  :global(html.motion) .chart.is-in .chart__dot--core {
+    transition-delay: 1.6s;
+  }
+  :global(html.motion) .chart.is-in .chart__dot--exp {
+    transition-delay: 2.3s;
+  }
+  :global(html.motion) .chart.is-in .chart__dot {
+    opacity: 1;
+    transform: none;
+  }
+  /* Texto y lista: suben suaves */
+  :global(html.motion) .corex__lead[data-reveal],
+  :global(html.motion) .corex__list[data-reveal] {
+    opacity: 0;
+    transform: translateY(16px);
+    transition:
+      opacity 0.8s cubic-bezier(0.2, 0.7, 0.1, 1) 0.2s,
+      transform 0.9s cubic-bezier(0.2, 0.7, 0.1, 1) 0.2s;
+  }
+  :global(html.motion) .corex__list[data-reveal] {
+    transition-delay: 0.35s;
+  }
+  :global(html.motion) .corex__lead.is-in,
+  :global(html.motion) .corex__list.is-in {
+    opacity: 1;
+    transform: none;
+  }
+
+  @media (max-width: 1280px) {
+    .corex__row {
+      gap: 56px;
+    }
+    .chart {
+      width: 600px;
+    }
+  }
+  @media (max-width: 1100px) {
+    .corex__row {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 48px;
+    }
+    .chart {
+      width: 100%;
+      max-width: 700px;
+    }
+  }
+  @media (max-width: 600px) {
+    .chart {
+      gap: 22px;
+      padding: 24px 18px;
+    }
+    .chart__eq {
+      gap: 8px;
+    }
+    .chip {
+      padding: 6px 10px;
+      font-size: 10px;
+    }
+    .chart__tag,
+    .chart__x,
+    .chart__note {
+      font-size: 9px;
+      letter-spacing: 0.03em;
+    }
+    .chart__note {
+      white-space: normal;
+    }
+    .corex__item {
+      flex-wrap: wrap;
+      gap: 6px 14px;
+    }
+    .corex__desc {
+      flex-basis: 100%;
+    }
+  }
+</style>

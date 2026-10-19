@@ -9,11 +9,13 @@ interface Props {
   size?: 'h1' | 'h2';
   inline?: boolean;
   class?: string;
+  /** Para enlazarlo desde aria-labelledby de la sección. */
+  id?: string;
 }
-const { lines, as: Tag = 'h2', size = 'h2', inline = false, class: className } = Astro.props;
+const { lines, as: Tag = 'h2', size = 'h2', inline = false, class: className, id } = Astro.props;
 ---
 
-<Tag class:list={[`t-${size}`, 'title', { 'title--inline': inline }, className]} data-reveal>
+<Tag id={id} class:list={[`t-${size}`, 'title', { 'title--inline': inline }, className]} data-reveal>
   {
     inline ? (
       <>
