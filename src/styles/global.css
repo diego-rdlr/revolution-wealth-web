@@ -1,0 +1,234 @@
+@import '@fontsource/geist/300.css';
+@import '@fontsource/geist/400.css';
+@import '@fontsource/geist/500.css';
+@import '@fontsource/geist-mono/400.css';
+@import '@fontsource/geist-mono/500.css';
+@import '@fontsource/geist-mono/600.css';
+@import '@fontsource/geist-mono/700.css';
+@import './tokens.css';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+@media (max-width: 1180px) {
+  html {
+    scroll-padding-top: var(--nav-h); /* los anclajes no quedan tapados por la barra fija */
+    scroll-behavior: auto; /* en celular los saltos los hace Nav.astro: cortos y directos */
+  }
+}
+html.menu-open {
+  overflow: hidden; /* con el menú móvil abierto, la página no se desplaza detrás */
+}
+
+body {
+  margin: 0;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--f-body);
+  font-weight: 300;
+  font-size: var(--t-base);
+  line-height: 1.647; /* 28/17 */
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+blockquote,
+figure,
+dl,
+dd {
+  margin: 0;
+}
+
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* ——— Tipografía ——— */
+.t-h1 {
+  font-family: var(--f-display);
+  font-weight: 300;
+  font-size: var(--t-h1);
+  line-height: 1;
+  letter-spacing: -0.019em; /* -1.5px a 79px */
+}
+.t-h2 {
+  font-family: var(--f-display);
+  font-weight: 300;
+  font-size: var(--t-h2);
+  line-height: 1.065; /* 49/46 */
+}
+.t-num {
+  font-family: var(--f-display);
+  font-weight: 300;
+  font-size: var(--t-num);
+  line-height: 1.2; /* 60/50 */
+}
+.t-h3 {
+  font-family: var(--f-display);
+  font-weight: 300;
+  font-size: var(--t-h3);
+  line-height: 1.067; /* 32/30 */
+}
+.t-lead {
+  font-size: var(--t-lead);
+  line-height: 1.304; /* 30/23 */
+}
+.t-body {
+  font-size: var(--t-base);
+  line-height: 1.647;
+  color: var(--body);
+}
+.t-small {
+  font-size: var(--t-small);
+  line-height: 1.667; /* 25/15 */
+}
+.t-micro {
+  font-family: var(--f-mono);
+  font-weight: 400;
+  font-size: var(--t-micro);
+  line-height: 1.545; /* 17/11 */
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--meta);
+}
+/* Reparto parejo de renglones: evita palabras huérfanas en titulares */
+.t-h1,
+.t-h2,
+.t-h3 {
+  text-wrap: balance;
+}
+p,
+blockquote {
+  text-wrap: pretty;
+}
+/* Segunda línea / remate de un titular en el color de acento */
+.accent {
+  color: var(--fg-2);
+}
+.nowrap {
+  white-space: nowrap;
+}
+
+/* ——— Rejilla ——— */
+.container {
+  width: 100%;
+  max-width: calc(var(--content) + 2 * var(--gutter));
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.section {
+  position: relative;
+  padding-block: var(--section-y);
+  isolation: isolate;
+  overflow: hidden;
+}
+
+/* Tarjeta: vidrio en oscuro, papel con sombra en claro */
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius);
+  box-shadow: var(--card-shadow);
+  backdrop-filter: var(--card-blur);
+  -webkit-backdrop-filter: var(--card-blur);
+}
+
+/* "Subrayado" del brandbook: línea de 252px con remate cuadrado */
+.underline {
+  display: flex;
+  align-items: center;
+  width: min(256px, 100%);
+}
+.underline::before {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: rgba(156, 189, 209, 0.9);
+}
+.underline::after {
+  content: '';
+  width: 4px;
+  height: 4px;
+  background: var(--steel);
+}
+
+/* Fondo atmosférico: foto + velo + resplandor + grano */
+.atmos {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+.atmos__photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.atmos__veil {
+  position: absolute;
+  inset: 0;
+}
+/* Resplandor: SVG exportado de Figma (elipse #9CBDD1 con desenfoque).
+   Cada sección lo posiciona con left/top/width en su propio estilo. */
+.atmos__glow {
+  position: absolute;
+  max-width: none;
+  height: auto;
+}
+.atmos__grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.06;
+  mix-blend-mode: overlay;
+  background: url('/img/grano.png') top left / 50px 50px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+:focus-visible {
+  outline: 2px solid var(--steel);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}

@@ -1,0 +1,175 @@
+---
+// Sección 13 · Footer (Figma 426:669). Marca + tres columnas de enlaces,
+// aviso legal y renglón final con el año y las cuatro áreas.
+import { brand } from '../data/wealth';
+import { footer } from '../data/wealth';
+---
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <a href="/" aria-label={brand.name}>
+          <img src="/img/logo-rwm-blanco.png" alt="" width="241" height="24" loading="lazy" />
+        </a>
+        <p class="t-small footer__about">
+          {footer.about.map((line) => <span>{line}</span>)}
+        </p>
+      </div>
+
+      <nav class="footer__cols" aria-label="Pie de página">
+        {
+          footer.columns.map((col) => (
+            <div class="footer__col">
+              <p class="t-micro footer__col-title">{col.title}</p>
+              <ul>
+                {col.links.map((l) => (
+                  <li>
+                    <a
+                      href={l.href}
+                      target={l.external ? '_blank' : undefined}
+                      rel={l.external ? 'noopener' : undefined}
+                    >
+                      {l.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))
+        }
+      </nav>
+    </div>
+
+    <div class="footer__legal">
+      <p class="t-small">{footer.legal}</p>
+    </div>
+
+    <div class="t-micro footer__bottom">
+      <p>{footer.copyright}</p>
+      <p class="footer__areas">{footer.areas.join('  ·  ')}</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    padding-block: 80px 56px;
+    background: linear-gradient(180deg, #10151e, var(--ink)); /* Figma: #10151e sin token */
+    color: var(--paper);
+  }
+  .footer .container {
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+  }
+
+  .footer__top {
+    display: flex;
+    justify-content: space-between;
+    gap: 48px 80px;
+  }
+  .footer__brand {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+  .footer__brand a {
+    display: block;
+  }
+  .footer__brand img {
+    width: 241px;
+    height: 24px;
+    object-fit: contain;
+  }
+  .footer__about {
+    max-width: 360px;
+    color: var(--mist);
+  }
+  .footer__about span {
+    display: block;
+  }
+
+  .footer__cols {
+    display: flex;
+    gap: 80px;
+  }
+  .footer__col {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    white-space: nowrap;
+  }
+  .footer__col-title {
+    color: var(--steel);
+  }
+  .footer__col ul {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .footer__col a {
+    font-size: var(--t-small);
+    line-height: 25px;
+    color: var(--silver);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  .footer__col a:hover {
+    color: var(--gold);
+  }
+  .footer__col a:focus-visible {
+    outline: 1px solid var(--steel);
+    outline-offset: 3px;
+  }
+
+  .footer__legal {
+    padding-top: 40px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .footer__legal p {
+    max-width: 1100px;
+    color: var(--dim);
+  }
+
+  .footer__bottom {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px 32px;
+    color: var(--dim);
+  }
+  .footer__areas {
+    white-space: pre;
+  }
+
+  @media (max-width: 1180px) {
+    .footer__top {
+      flex-direction: column;
+    }
+  }
+  @media (max-width: 600px) {
+    .footer {
+      padding-block: 64px 40px;
+    }
+    .footer .container {
+      gap: 40px;
+    }
+    .footer__brand img {
+      width: 201px;
+      height: 20px;
+    }
+    .footer__cols {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 36px 24px;
+    }
+    .footer__col {
+      white-space: normal;
+    }
+    .footer__bottom {
+      flex-direction: column;
+    }
+  }
+</style>

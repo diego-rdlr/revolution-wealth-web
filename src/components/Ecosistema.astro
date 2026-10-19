@@ -1,0 +1,299 @@
+---
+// 09 · Ecosistema Revolution Inc (Figma 426:492): texto a la izquierda y las
+// cuatro divisiones a la derecha; Wealth resaltada con "Estás aquí".
+// Las filas no son enlaces (Figma no define destinos). Si una división trae
+// `href` en el archivo de copy, su fila se vuelve enlace a otra pestaña.
+import Kicker from './Kicker.astro';
+import Title from './Title.astro';
+import { ecosistema } from '../data/wealth';
+---
+
+<section id="ecosistema" class="section theme-dark ecosistema" aria-labelledby="ecosistema-title">
+  <div class="atmos" aria-hidden="true">
+    <img
+      class="ecosistema__marca"
+      src="/img/ecosistema-isotipo-marca-agua-760.webp"
+      srcset="/img/ecosistema-isotipo-marca-agua-760.webp 760w, /img/ecosistema-isotipo-marca-agua.webp 1042w"
+      sizes="760px"
+      alt=""
+      width="760"
+      height="775"
+      loading="lazy"
+    />
+    <img class="atmos__glow ecosistema__glow" src="/img/ecosistema-resplandor.svg" alt="" width="1340" height="1240" />
+    <div class="atmos__grain ecosistema__grano"></div>
+  </div>
+
+  <div class="container ecosistema__inner">
+    <div class="ecosistema__texto">
+      <Kicker text={ecosistema.kicker} />
+      <div id="ecosistema-title">
+        <Title lines={ecosistema.title} />
+      </div>
+      <p class="t-lead ecosistema__lead" data-reveal>{ecosistema.lead}</p>
+      <p class="t-body ecosistema__body" data-reveal>{ecosistema.body}</p>
+    </div>
+
+    <ol class="divisiones" data-reveal>
+      {
+        ecosistema.divisiones.map((d, i) => {
+          const Tag = d.href ? 'a' : 'div';
+          return (
+            <li class:list={['division', { 'division--actual': d.actual }]} style={`--i: ${i}`}>
+              <Tag
+                class="division__fila"
+                href={d.href}
+                target={d.href ? '_blank' : undefined}
+                rel={d.href ? 'noopener' : undefined}
+                aria-current={d.actual ? 'page' : undefined}
+              >
+                <span class="division__num">{String(i + 1).padStart(2, '0')}</span>
+                <img class="division__icono" src={d.icono} alt="" width="40" height="40" loading="lazy" />
+                <span class="division__lockup">
+                  <span class="division__nombre">
+                    Revolution <span class="division__marca">{d.marca}</span>
+                  </span>
+                  <span class="division__sub">{d.sub}</span>
+                </span>
+                {d.actual ? (
+                  <span class="division__chip">
+                    <span class="division__punto" aria-hidden="true" />
+                    {ecosistema.aqui}
+                  </span>
+                ) : (
+                  <span class="division__flecha" aria-hidden="true">
+                    →
+                  </span>
+                )}
+              </Tag>
+            </li>
+          );
+        })
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  .ecosistema {
+    /* Figma: degradado vertical tinta → azul noche (#141b27, #1e2838 no tienen token) */
+    background: linear-gradient(180deg, var(--ink) 0%, #141b27 50%, #1e2838 100%);
+    padding-block: var(--section-y);
+  }
+  .ecosistema__marca {
+    position: absolute;
+    left: calc(50% - 800px - 220px);
+    top: 120px;
+    width: 760px;
+    max-width: none;
+    height: auto;
+    opacity: 0.14;
+  }
+  .ecosistema__glow {
+    left: calc(50% - 800px + 480px);
+    top: -320px;
+    width: 1340px;
+  }
+  .ecosistema__grano {
+    opacity: 0.05;
+  }
+
+  .ecosistema__inner {
+    display: flex;
+    align-items: center;
+    gap: 100px;
+  }
+  .ecosistema__texto {
+    flex: none;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 28px;
+    width: 560px;
+  }
+  .ecosistema__lead {
+    font-weight: 300;
+    color: var(--silver);
+  }
+  .ecosistema__body {
+    color: var(--mist);
+  }
+
+  /* ——— Divisiones ——— */
+  .divisiones {
+    flex: 1 1 0;
+    min-width: 0;
+    overflow: hidden;
+    border: 1px solid rgba(164, 194, 212, 0.18);
+    border-radius: var(--radius);
+    background: linear-gradient(148.77deg, rgba(38, 50, 74, 0.8) 0%, rgba(16, 21, 30, 0.9) 100%);
+  }
+  .division + .division {
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .division__fila {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding: 30px 36px;
+    text-decoration: none;
+    color: inherit;
+  }
+  a.division__fila:hover .division__flecha {
+    color: var(--paper);
+    transform: translateX(3px);
+  }
+  .division--actual .division__fila {
+    background: linear-gradient(90deg, rgba(198, 160, 82, 0.1), rgba(198, 160, 82, 0));
+  }
+  /* Barra activa dorada a la izquierda */
+  .division--actual .division__fila::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    bottom: 0;
+    left: 0;
+    width: 3px;
+    background: var(--gold);
+  }
+  .division__num {
+    flex: none;
+    font-family: var(--f-mono);
+    font-size: 11px;
+    line-height: 17px;
+    letter-spacing: 0.05em;
+    color: var(--dim);
+  }
+  .division--actual .division__num {
+    color: var(--gold);
+  }
+  .division__icono {
+    flex: none;
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+  }
+  .division__lockup {
+    flex: 1 1 0;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .division__nombre {
+    /* Figma pide Source Serif 4 Medium 28/34: se usa la display del sitio */
+    font-family: var(--f-display);
+    font-weight: 400;
+    font-size: clamp(1.375rem, 1.2rem + 0.6vw, 1.75rem);
+    line-height: 1.214;
+    color: var(--paper);
+  }
+  .division__marca {
+    color: var(--steel);
+  }
+  .division--actual .division__marca {
+    color: var(--gold);
+  }
+  .division__sub {
+    font-family: var(--f-mono);
+    font-size: 11px;
+    line-height: 17px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--mist);
+  }
+  .division__flecha {
+    flex: none;
+    font-size: var(--t-base);
+    line-height: 28px;
+    color: var(--dim);
+    transition:
+      color 0.2s ease,
+      transform 0.2s ease;
+  }
+  .division__chip {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    border: 1px solid rgba(198, 160, 82, 0.5);
+    border-radius: 40px;
+    background: rgba(198, 160, 82, 0.14);
+    font-family: var(--f-mono);
+    font-size: 11px;
+    line-height: 17px;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+    color: var(--gold);
+  }
+  .division__punto {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--gold);
+  }
+
+  /* Entrada: texto y filas suben en cascada (solo con animaciones activas) */
+  :global(html.motion) .ecosistema__lead,
+  :global(html.motion) .ecosistema__body,
+  :global(html.motion) .ecosistema .division {
+    opacity: 0;
+    transform: translateY(18px);
+    transition:
+      opacity 0.8s cubic-bezier(0.2, 0.7, 0.1, 1),
+      transform 0.9s cubic-bezier(0.2, 0.7, 0.1, 1);
+  }
+  :global(html.motion) .ecosistema__body {
+    transition-delay: 0.12s;
+  }
+  :global(html.motion) .ecosistema .division {
+    transition-delay: calc(var(--i) * 110ms + 100ms);
+  }
+  :global(html.motion) .ecosistema__lead.is-in,
+  :global(html.motion) .ecosistema__body.is-in,
+  :global(html.motion) .divisiones.is-in .division {
+    opacity: 1;
+    transform: none;
+  }
+
+  @media (max-width: 1180px) {
+    .ecosistema__inner {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 56px;
+    }
+    .ecosistema__texto {
+      width: auto;
+      max-width: 640px;
+    }
+    .divisiones {
+      flex: none;
+    }
+  }
+  @media (max-width: 600px) {
+    .ecosistema__marca {
+      left: -180px;
+      width: 520px;
+    }
+    .ecosistema__glow {
+      left: -400px;
+    }
+    .division__fila {
+      flex-wrap: wrap;
+      gap: 12px 16px;
+      padding: 22px 20px;
+    }
+    .division__num {
+      display: none;
+    }
+    /* En celular el chip "Estás aquí" baja a su propio renglón */
+    .division--actual .division__lockup {
+      flex-basis: calc(100% - 56px);
+    }
+    .division__chip {
+      margin-left: 56px;
+    }
+  }
+</style>

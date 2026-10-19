@@ -1,0 +1,274 @@
+---
+// Sección 04 · "Proceso" (Figma 424:538).
+// Línea de tiempo de cuatro pasos: riel, nodos numerados y el tramo activo 01 → 02.
+// Con animaciones activas el riel se dibuja de izquierda a derecha al entrar,
+// los nodos aparecen a su paso y al final se traza el tramo activo.
+// En pantallas angostas la línea de tiempo se vuelve vertical.
+import Kicker from './Kicker.astro';
+import Title from './Title.astro';
+import { proceso } from '../data/wealth';
+---
+
+<section id="proceso" class="section theme-light proceso" aria-labelledby="proceso-title">
+  <div class="container">
+    <header class="proceso__head">
+      <div class="proceso__titular">
+        <Kicker text={proceso.kicker} />
+        <div id="proceso-title"><Title lines={proceso.title} inline /></div>
+      </div>
+      <p class="proceso__body" data-reveal>{proceso.body}</p>
+    </header>
+
+    <ol class="linea" data-reveal>
+      {
+        proceso.steps.map((s, i) => {
+          const n = String(i + 1).padStart(2, '0');
+          return (
+            <li class:list={['paso', { 'paso--activo': i === 0 }]} style={`--i: ${i}`}>
+              {i === 0 && <span class="linea__tramo" aria-hidden="true" />}
+              <span class="paso__nodo" aria-hidden="true">
+                <img
+                  src={i === 0 ? '/img/proceso-nodo-activo.svg' : '/img/proceso-nodo.svg'}
+                  alt=""
+                  width={i === 0 ? 60 : 48}
+                  height={i === 0 ? 60 : 48}
+                />
+                <span class="paso__n">{n}</span>
+              </span>
+              <p class="paso__label t-micro">
+                {proceso.stepLabel} {n}
+              </p>
+              <h3 class="paso__titulo">{s.title}</h3>
+              <p class="paso__texto">{s.text}</p>
+            </li>
+          );
+        })
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  .proceso {
+    /* Figma: papel → azul niebla #dce7ee (fuera de la paleta) */
+    background: linear-gradient(180deg, var(--paper), #dce7ee);
+    padding-block: 66px 71px;
+  }
+  .proceso__head {
+    display: flex;
+    align-items: flex-end;
+    gap: 120px;
+  }
+  .proceso__titular {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 28px;
+    min-width: 0;
+  }
+  .proceso__body {
+    flex: none;
+    width: 560px;
+    font-size: var(--t-base);
+    line-height: 1.647;
+    color: var(--body);
+  }
+
+  /* ——— Línea de tiempo ———
+     Rejilla de 4 columnas (gap 48): cada paso empieza con su nodo, así los
+     nodos caen en 0 / 372 / 744 / 1116 px como en Figma. */
+  .linea {
+    --nodo: 48px;
+    --gap: 48px;
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--gap);
+    margin-top: 88px;
+  }
+  /* Riel completo: del centro del primer nodo al borde derecho */
+  .linea::before {
+    content: '';
+    position: absolute;
+    top: calc(var(--nodo) / 2);
+    left: calc(var(--nodo) / 2);
+    right: 0;
+    height: 1px;
+    background: #b8ccd8; /* Figma "Línea", fuera de la paleta */
+    transform-origin: left center;
+  }
+  .paso {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    min-width: 0;
+  }
+  /* Tramo activo: del nodo 01 al nodo 02 (ancho de columna + gap) */
+  .linea__tramo {
+    position: absolute;
+    top: calc(var(--nodo) / 2 - 1px);
+    left: calc(var(--nodo) / 2);
+    width: calc(100% + var(--gap));
+    height: 2px;
+    background: #6f93ab; /* Figma "Tramo activo", fuera de la paleta */
+    transform-origin: left center;
+  }
+  .paso__nodo {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: var(--nodo);
+    height: var(--nodo);
+    margin-bottom: 22px; /* 36 de Figma menos el gap de 14 */
+  }
+  .paso__nodo img {
+    position: absolute;
+    max-width: none;
+  }
+  /* El nodo activo trae su halo de 6 px: el SVG mide 60 y se centra sobre los 48 */
+  .paso--activo .paso__nodo img {
+    left: -6px;
+    top: -6px;
+  }
+  .paso:not(.paso--activo) .paso__nodo img {
+    inset: 0;
+  }
+  .paso__n {
+    position: relative;
+    font-family: var(--f-mono);
+    font-size: var(--t-micro);
+    line-height: 17px;
+    letter-spacing: 0.05em;
+    color: var(--navy);
+  }
+  .paso--activo .paso__n {
+    color: var(--paper);
+  }
+  .paso__label {
+    color: var(--navy);
+  }
+  /* Figma: Source Serif 4 Medium 28/32; aquí va Feature */
+  .paso__titulo {
+    font-family: var(--f-display);
+    font-weight: 400;
+    font-size: clamp(1.5rem, 1.35rem + 0.4vw, 1.75rem);
+    line-height: 1.143;
+    letter-spacing: -0.018em;
+    color: var(--fg);
+    text-wrap: balance;
+  }
+  .paso__texto {
+    font-size: var(--t-small);
+    line-height: 1.667;
+    color: var(--body);
+  }
+
+  /* ——— Animación: la línea se dibuja al entrar ——— */
+  :global(html.motion) .proceso__body {
+    opacity: 0;
+    transform: translateY(20px);
+    transition:
+      opacity 0.8s var(--ease-out),
+      transform 0.9s var(--ease-out);
+    transition-delay: 0.25s;
+  }
+  :global(html.motion) .proceso__body.is-in {
+    opacity: 1;
+    transform: none;
+  }
+  :global(html.motion) .linea::before {
+    transform: scaleX(0);
+    transition: transform 1.6s var(--ease-out) 0.1s;
+  }
+  :global(html.motion) .linea.is-in::before {
+    transform: none;
+  }
+  :global(html.motion) .linea .paso__nodo {
+    opacity: 0;
+    transform: scale(0.6);
+    transition:
+      opacity 0.5s var(--ease-out),
+      transform 0.6s var(--ease-out);
+    transition-delay: calc(var(--i) * 260ms + 100ms);
+  }
+  :global(html.motion) .linea .paso > :not(.paso__nodo, .linea__tramo) {
+    opacity: 0;
+    transform: translateY(16px);
+    transition:
+      opacity 0.7s var(--ease-out),
+      transform 0.8s var(--ease-out);
+    transition-delay: calc(var(--i) * 260ms + 250ms);
+  }
+  :global(html.motion) .linea.is-in .paso__nodo,
+  :global(html.motion) .linea.is-in .paso > * {
+    opacity: 1;
+    transform: none;
+  }
+  :global(html.motion) .linea .linea__tramo {
+    transform: scaleX(0);
+    transition: transform 1s var(--ease-out) 0.9s;
+  }
+  :global(html.motion) .linea.is-in .linea__tramo {
+    transform: none;
+  }
+
+  /* ——— Tableta y celular: línea de tiempo vertical ——— */
+  @media (max-width: 1180px) {
+    .proceso {
+      padding-block: var(--section-y);
+    }
+    .proceso__head {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 24px;
+    }
+    .proceso__body {
+      width: 100%;
+      max-width: 560px;
+    }
+  }
+  @media (max-width: 1023px) {
+    .linea {
+      --gap: 40px;
+      grid-template-columns: 1fr;
+      margin-top: 56px;
+    }
+    .linea::before {
+      top: 10px; /* centro del primer nodo, alineado con "PASO 01" */
+      bottom: 0;
+      left: calc(var(--nodo) / 2);
+      right: auto;
+      width: 1px;
+      height: auto;
+      transform-origin: center top;
+    }
+    .paso {
+      padding-left: calc(var(--nodo) + 24px);
+      gap: 10px;
+    }
+    .paso__nodo {
+      position: absolute;
+      left: 0;
+      top: -14px;
+      margin: 0;
+    }
+    .paso__label {
+      line-height: 20px;
+    }
+    .linea__tramo {
+      top: 10px;
+      left: calc(var(--nodo) / 2 - 1px);
+      width: 2px;
+      height: calc(100% + var(--gap));
+      transform-origin: center top;
+    }
+    :global(html.motion) .linea::before {
+      transform: scaleY(0);
+    }
+    :global(html.motion) .linea .linea__tramo {
+      transform: scaleY(0);
+    }
+  }
+</style>

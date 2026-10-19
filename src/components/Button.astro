@@ -1,0 +1,97 @@
+---
+// Botón del brandbook. Tres niveles y nada más (componente "Botón" de Figma):
+// - primary:   sólido, UNA vez por página (más el de la navegación), nunca dentro de una tarjeta.
+// - secondary: contorno, se puede repetir.
+// - tertiary:  solo texto con flecha, para saltos.
+// Toma los colores del tema de la sección (.theme-dark / .theme-light).
+interface Props {
+  href: string;
+  label: string;
+  variant?: 'primary' | 'secondary' | 'tertiary';
+  size?: 'md' | 'lg';
+  arrow?: boolean;
+  /** Abre en otra pestaña (enlaces fuera del sitio). */
+  newTab?: boolean;
+  class?: string;
+}
+const { href, label, variant = 'primary', size = 'md', arrow = true, newTab = false, class: className } = Astro.props;
+---
+
+<a
+  class:list={['btn', `btn--${variant}`, `btn--${size}`, className]}
+  href={href}
+  target={newTab ? '_blank' : undefined}
+  rel={newTab ? 'noopener' : undefined}
+>
+  <span>{label}</span>
+  {arrow && <span class="btn__arrow" aria-hidden="true">→</span>}
+</a>
+
+<style>
+  .btn {
+    --btn-bg: var(--fg, var(--paper));
+    --btn-fg: var(--bg, var(--ink));
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    height: 46px;
+    font-family: var(--f-mono);
+    text-transform: uppercase;
+    text-decoration: none;
+    white-space: nowrap;
+    transition:
+      background 0.2s ease,
+      color 0.2s ease,
+      border-color 0.2s ease;
+  }
+  .btn--md {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.19em;
+  }
+  .btn--lg {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.19em;
+  }
+  .btn--primary {
+    padding: 0 22px;
+    background: var(--btn-bg);
+    color: var(--btn-fg);
+  }
+  .btn--primary .btn__arrow {
+    color: var(--btn-arrow, var(--navy));
+  }
+  .theme-light .btn--primary {
+    --btn-arrow: var(--fog);
+  }
+  .btn--primary:hover {
+    background: color-mix(in srgb, var(--btn-bg) 88%, var(--btn-fg));
+  }
+  .btn--secondary {
+    padding: 0 22px;
+    border: 1px solid currentColor;
+    color: var(--fg, var(--paper));
+  }
+  .btn--secondary:hover {
+    background: color-mix(in srgb, currentColor 8%, transparent);
+  }
+  .btn--tertiary {
+    color: var(--btn-tertiary, #c8d4dc);
+  }
+  .theme-light .btn--tertiary {
+    --btn-tertiary: var(--navy);
+  }
+  .btn--tertiary:hover {
+    color: var(--fg, var(--paper));
+  }
+  .btn__arrow {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0;
+    transition: transform 0.2s ease;
+  }
+  .btn:hover .btn__arrow {
+    transform: translateX(3px);
+  }
+</style>

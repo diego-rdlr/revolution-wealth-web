@@ -1,0 +1,47 @@
+---
+// Etiqueta de sección: línea de 40px + texto mono en versalitas.
+// En Figma el separador " · " lleva doble espacio a cada lado.
+interface Props {
+  text: string;
+  line?: boolean;
+}
+const { text, line = true } = Astro.props;
+const spaced = text.replaceAll(' · ', '  ·  ');
+---
+
+<p class:list={['kicker', { 'kicker--line': line }]}>{spaced}</p>
+
+<style>
+  .kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    font-family: var(--f-mono);
+    font-weight: 500;
+    font-size: var(--t-kicker);
+    line-height: 1.25;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    white-space: pre-wrap;
+    color: var(--kicker);
+  }
+  .kicker--line::before {
+    content: '';
+    width: 40px;
+    height: 1px;
+    flex: none;
+    background: currentColor;
+  }
+  @media (max-width: 600px) {
+    .kicker {
+      align-items: flex-start;
+      gap: 12px;
+      letter-spacing: 0.16em;
+      line-height: 1.5;
+    }
+    .kicker--line::before {
+      width: 24px;
+      margin-top: 0.75em;
+    }
+  }
+</style>
