@@ -17,7 +17,7 @@ const { items } = Astro.props;
           <span class="cpilar__num">{String(i + 1).padStart(2, '0')}</span>
           <img class="cpilar__icono" src={p.icon} alt="" width="44" height="44" loading="lazy" />
         </div>
-        <h3 class="t-h3 cpilar__titulo">{p.title}</h3>
+        <h3 class="cpilar__titulo">{p.title}</h3>
         <p class="cpilar__texto">{p.text}</p>
       </li>
     ))
@@ -67,7 +67,13 @@ const { items } = Astro.props;
     height: 44px;
     object-fit: contain;
   }
+  /* Figma: estas capas se ven en sans (Geist) aunque su estilo diga Feature; se sigue lo que se ve */
   .cpilar__titulo {
+    font-family: var(--f-body);
+    font-weight: 400;
+    font-size: clamp(1.375rem, 1.2rem + 0.55vw, 1.875rem); /* 30/32 */
+    line-height: 1.067;
+    letter-spacing: -0.01em;
     color: var(--ink);
   }
   .cpilar__texto {

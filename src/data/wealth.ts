@@ -513,8 +513,7 @@ export const carreraPagina = {
   /** Figma 574:444 · "03 · Oportunidades abiertas" */
   oportunidades: {
     kicker: '02 · OPORTUNIDADES ABIERTAS',
-    // PENDIENTE: titular exacto del Figma (nodo 581:353); se usa el del kicker mientras.
-    title: ['Oportunidades', 'abiertas.'] as Title,
+    title: ['Buscamos talento de primer nivel', 'para sumarse.'] as Title,
     lead: 'Proteger el patrimonio de nuestros clientes hoy, mañana y por generaciones requiere un equipo multidisciplinario de profesionales de excelencia. Estas son las áreas donde estamos creciendo.',
     /** Vacantes. Para abrir una nueva: agrega un objeto; para cerrarla: bórralo. */
     vacantes: [
@@ -522,14 +521,14 @@ export const carreraPagina = {
         title: 'Wealth Guardian — Asesor Patrimonial',
         text: 'El corazón del modelo Revolution Wealth. Acompaña a clientes de alto y ultra-alto patrimonio en sus decisiones de inversión con profundidad técnica y relación de largo plazo. Requiere Figura 3 AMIB.',
         tag: 'ADVISORY',
-        icon: '/img/servicios-icono-gestion.png', // PENDIENTE: ícono del Figma (574:459)
+        icon: '/img/servicios-icono-plan.png',
         cta: { label: 'VER PERFIL', href: links.vacantes },
       },
       {
         title: 'Director de Advisory',
         text: 'Lidera y desarrolla al equipo de asesores. Traduce la estrategia de RWM en resultados medibles, impulsa la cultura de excelencia y participa en el crecimiento patrimonial de la firma.',
         tag: 'LIDERAZGO',
-        icon: '/img/servicios-icono-plan.png', // PENDIENTE: ícono del Figma (574:468)
+        icon: '/img/servicios-icono-gestion.png',
         cta: { label: 'VER PERFIL', href: links.vacantes },
       },
     ],
@@ -537,27 +536,26 @@ export const carreraPagina = {
   /** Figma 574:979 · "04 · Beneficios" */
   beneficios: {
     kicker: '03 · TU CARRERA',
-    // PENDIENTE: titular exacto del Figma (nodo 584:351).
-    title: ['Una carrera', 'con propósito.'] as Title,
+    title: ['Un lugar donde', 'tu carrera importa de verdad.'] as Title,
     lead: 'Ofrecemos compensación anclada en benchmarks de mercado, bonos por crecimiento, participación en el éxito de la firma, y la oportunidad de construir algo que trasciende. No solo un trabajo — una carrera con propósito.',
-    // PENDIENTE: etiquetas exactas de los dos botones del Figma (574:988 y 574:3610).
-    primary: { label: 'POSTÚLATE', href: links.vacantes },
-    secondary: { label: 'VACANTES', href: '#oportunidades' },
+    primary: { label: 'VER PERFIL', href: links.vacantes },
+    /** "Conoce más": regresa a la página principal de Revolution Wealth. */
+    secondary: { label: 'CONOCE MÁS', href: '/' },
     pilares: [
       {
         title: 'Compensación competitiva',
         text: 'Sueldo base + variable trimestral + bono de generación, todo calibrado con estándares WTW de mercado.',
-        icon: '/img/expertos-icono-comunicacion.png', // PENDIENTE: ícono del Figma (574:993)
+        icon: '/img/expertos-icono-estrategia.png',
       },
       {
         title: 'Participación real en el crecimiento',
         text: 'Para roles de liderazgo, estructura de equity en S.A.P.I. de C.V. con vesting a 4 años.',
-        icon: '/img/expertos-icono-revision.png', // PENDIENTE: ícono del Figma (574:1000)
+        icon: '/img/expertos-icono-asesoria.png',
       },
       {
         title: 'Misión y cultura claras',
         text: 'Empresa en plena construcción, con visión de largo plazo, liderazgo accesible y estándares de clase mundial.',
-        icon: '/img/expertos-icono-asesoria.png', // PENDIENTE: ícono del Figma (574:1007)
+        icon: '/img/expertos-icono-comunicacion.png',
       },
     ],
   },

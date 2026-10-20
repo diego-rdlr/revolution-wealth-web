@@ -62,7 +62,8 @@ const { href, label, variant = 'primary', size = 'md', arrow = true, newTab = hr
   .btn--primary .btn__arrow {
     color: var(--btn-arrow, var(--navy));
   }
-  .theme-light .btn--primary {
+  /* :global porque .theme-light vive en la sección, fuera del alcance de este componente */
+  :global(.theme-light) .btn--primary {
     --btn-arrow: var(--fog);
   }
   .btn--primary:hover {
@@ -79,8 +80,8 @@ const { href, label, variant = 'primary', size = 'md', arrow = true, newTab = hr
   .btn--tertiary {
     color: var(--btn-tertiary, #c8d4dc);
   }
-  .theme-light .btn--tertiary {
-    --btn-tertiary: var(--navy);
+  :global(.theme-light) .btn--tertiary {
+    --btn-tertiary: var(--ink);
   }
   .btn--tertiary:hover {
     color: var(--fg, var(--paper));
