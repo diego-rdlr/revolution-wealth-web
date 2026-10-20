@@ -1,0 +1,126 @@
+---
+// Footer de revolution.inc, portado tal cual (ver IncNav.astro). Debajo de su aviso legal
+// se conserva el de Revolution Wealth Management, que es regulatorio.
+import { u } from '../../config/base';
+import { inc, footer } from '../../data/wealth';
+---
+
+<footer class="incpie">
+  <div class="incpie__wrap">
+    <div class="incpie__top">
+      <div class="incpie__col-marca">
+        <a class="incpie__marca" href={inc.home}><img src={u('/img/inc-wordmark.webp')} alt="Revolution Inc." width="128" height="16" /></a>
+        <p class="incpie__firma">{inc.footer.firma}</p>
+      </div>
+      {
+        inc.footer.columnas.map((c) => (
+          <nav aria-label={c.titulo}>
+            <h2>{c.titulo}</h2>
+            <ul>
+              {c.links.map((l) => (
+                <li>
+                  {l.href ? (
+                    <a href={l.href} target={l.externo ? '_blank' : undefined} rel={l.externo ? 'noopener' : undefined}>
+                      {l.label}
+                    </a>
+                  ) : (
+                    <span class="incpie__sin-enlace" title="Próximamente">
+                      {l.label}
+                    </span>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </nav>
+        ))
+      }
+    </div>
+    <p class="incpie__legal">{inc.footer.legal}</p>
+    <p class="incpie__legal">{footer.legal}</p>
+  </div>
+</footer>
+
+<style>
+  .incpie {
+    background: #181818;
+    padding-block: 64px 44px;
+  }
+  .incpie__wrap {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding-inline: clamp(20px, 5vw, 80px);
+  }
+  .incpie__top {
+    border-top: 1px solid #242832;
+    padding-top: 30px;
+    display: grid;
+    grid-template-columns: minmax(0, 460px) repeat(3, minmax(0, 300px));
+    gap: 2.5rem 0;
+  }
+  .incpie__marca img {
+    width: 128px;
+    height: 16px;
+    object-fit: contain;
+    object-position: left;
+  }
+  .incpie__firma {
+    margin-top: 20px;
+    font-family: var(--f-mono);
+    font-weight: 500;
+    font-size: 16px;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: #c8d4dc;
+  }
+  .incpie h2 {
+    margin: 0 0 10px;
+    font-family: var(--f-mono);
+    font-weight: 400;
+    font-size: 9px;
+    line-height: 14px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--dim);
+  }
+  .incpie li a {
+    font-size: 15px;
+    line-height: 22px;
+    color: var(--mist);
+    text-decoration: none;
+    transition: color 0.25s cubic-bezier(0.2, 0, 0, 1);
+  }
+  .incpie li a:hover {
+    color: #fff;
+  }
+  .incpie__sin-enlace {
+    font-size: 15px;
+    line-height: 22px;
+    color: var(--dim);
+    cursor: default;
+  }
+  .incpie__legal {
+    margin-top: 40px;
+    max-width: 1400px;
+    font-family: var(--f-mono);
+    font-size: 9px;
+    line-height: 14px;
+    letter-spacing: 0.16em;
+    color: var(--dim);
+  }
+  .incpie__legal + .incpie__legal {
+    margin-top: 16px;
+  }
+  @media (max-width: 900px) {
+    .incpie__top {
+      grid-template-columns: 1fr 1fr;
+    }
+    .incpie__col-marca {
+      grid-column: 1/-1;
+    }
+  }
+  @media (max-width: 480px) {
+    .incpie__top {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

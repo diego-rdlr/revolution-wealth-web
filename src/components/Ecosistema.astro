@@ -1,4 +1,5 @@
 ---
+import { u } from '../config/base';
 // 09 · Ecosistema Revolution Inc (Figma 426:492): texto a la izquierda y las
 // cuatro divisiones a la derecha; Wealth resaltada con "Estás aquí".
 // Las filas no son enlaces (Figma no define destinos). Si una división trae
@@ -12,15 +13,15 @@ import { ecosistema } from '../data/wealth';
   <div class="atmos" aria-hidden="true">
     <img
       class="ecosistema__marca"
-      src="/img/ecosistema-isotipo-marca-agua-760.webp"
-      srcset="/img/ecosistema-isotipo-marca-agua-760.webp 760w, /img/ecosistema-isotipo-marca-agua.webp 1042w"
+      src={u('/img/ecosistema-isotipo-marca-agua-760.webp')}
+      srcset={u('/img/ecosistema-isotipo-marca-agua-760.webp') + ' 760w' + ", " + u('/img/ecosistema-isotipo-marca-agua.webp') + ' 1042w'}
       sizes="760px"
       alt=""
       width="760"
       height="775"
       loading="lazy"
     />
-    <img class="atmos__glow ecosistema__glow" src="/img/ecosistema-resplandor.svg" alt="" width="1340" height="1240" />
+    <img class="atmos__glow ecosistema__glow" src={u('/img/ecosistema-resplandor.svg')} alt="" width="1340" height="1240" />
     <div class="atmos__grain ecosistema__grano"></div>
   </div>
 

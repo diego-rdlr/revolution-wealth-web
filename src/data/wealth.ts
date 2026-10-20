@@ -1,3 +1,4 @@
+import { u } from '../config/base';
 /**
  * Contenido de la página de Revolution Wealth, copiado del diseño en Figma
  * (archivo "Revolution Inc — Sitio web (Copy)", página "04b Wealth · Revolution WM", nodo 418:336).
@@ -15,7 +16,7 @@ export const links = {
   agenda:
     'https://forms.office.com/pages/responsepage.aspx?id=SsUEMUpKMked1DTOMJunxEL0r7geOTNOhEcZMIHL08NUMzUxNlhTUk4yVUZURTZGUkZMU09aTEc1TS4u&route=shorturl',
   /** "Ver oportunidades" de la página principal: la subpágina de carrera. */
-  carrera: '/carrera',
+  carrera: u('/carrera'),
   /** "Ver perfil" de cada vacante: formulario de Google de "Únete al equipo" (el de revolutionwm.com/carrera). */
   vacantes: 'https://docs.google.com/forms/d/e/1FAIpQLSeTssne4LEUf0Ar8CD6KhtNOa5hFwEIKJK2eWeKgm6GRMEyMA/viewform',
   /** "Conoce más": página principal de Revolution. */
@@ -76,22 +77,22 @@ export const expertos = {
     {
       title: 'Estrategia de largo plazo',
       text: 'Un plan construido sobre tus objetivos, no sobre el ruido del mercado.',
-      icon: '/img/expertos-icono-estrategia.png',
+      icon: u('/img/expertos-icono-estrategia.png'),
     },
     {
       title: 'Asesoría especializada',
       text: 'Un asesor que conoce tu portafolio y responde cuando lo necesitas.',
-      icon: '/img/expertos-icono-asesoria.png',
+      icon: u('/img/expertos-icono-asesoria.png'),
     },
     {
       title: 'Comunicación clara',
       text: 'Información oportuna, en lenguaje directo y sin tecnicismos innecesarios.',
-      icon: '/img/expertos-icono-comunicacion.png',
+      icon: u('/img/expertos-icono-comunicacion.png'),
     },
     {
       title: 'Revisión integral',
       text: 'Evaluaciones periódicas para ajustar el rumbo cuando cambian las condiciones o tus prioridades.',
-      icon: '/img/expertos-icono-revision.png',
+      icon: u('/img/expertos-icono-revision.png'),
     },
   ],
 };
@@ -106,25 +107,25 @@ export const servicios = {
       title: 'Planeación financiera',
       text: 'Recomendaciones personalizadas para ayudarte a alcanzar tus objetivos.',
       tag: 'PLAN',
-      icon: '/img/servicios-icono-plan.png',
+      icon: u('/img/servicios-icono-plan.png'),
     },
     {
       title: 'Gestión patrimonial',
       text: 'Hecha a la medida. Sin carteras estándar ni asignaciones prestablecidas.',
       tag: 'GESTIÓN',
-      icon: '/img/servicios-icono-gestion.png',
+      icon: u('/img/servicios-icono-gestion.png'),
     },
     {
       title: 'Seguros',
       text: 'Porque proteger la riqueza es tan importante como hacerla crecer.',
       tag: 'PROTECCIÓN',
-      icon: '/img/servicios-icono-proteccion.png',
+      icon: u('/img/servicios-icono-proteccion.png'),
     },
     {
       title: 'Estrategias y portafolio',
       text: 'Hechos a la medida, usando estrategias de los mejores asset managers.',
       tag: 'PORTAFOLIO',
-      icon: '/img/servicios-icono-portafolio.png',
+      icon: u('/img/servicios-icono-portafolio.png'),
     },
   ],
 };
@@ -190,7 +191,7 @@ export const fundadores = {
     {
       name: 'Javier Morodo',
       role: 'CEO · REVOLUCIÓN DE LA RIQUEZA',
-      photo: '/img/fundadores-javier.webp',
+      photo: u('/img/fundadores-javier.webp'),
       points: [
         '17 años en tecnología, finanzas e inversiones; más de 15 en activos alternativos.',
         'Cofundador de GOAT Capital. Inversionista ángel y consejero.',
@@ -201,7 +202,7 @@ export const fundadores = {
     {
       name: 'Pablo Sánchez',
       role: 'COFUNDADOR · GOAT CAPITAL',
-      photo: '/img/fundadores-pablo.webp',
+      photo: u('/img/fundadores-pablo.webp'),
       points: [
         'Más de 13 años como Director General de Family Office, enfocado en activos alternativos.',
         'Inversionista ángel.',
@@ -212,7 +213,7 @@ export const fundadores = {
     {
       name: 'Vinicius Ramos',
       role: 'FUNDADOR & CEO · REVOLUTION WEALTH',
-      photo: '/img/fundadores-vinicius.webp',
+      photo: u('/img/fundadores-vinicius.webp'),
       points: [
         'Fundador de Revolution Wealth, firma afiliada a GBM.',
         '17 años liderando operaciones en Brasil, México y Estados Unidos.',
@@ -247,20 +248,20 @@ export const equipo = {
   lede: 'Asesores, estrategas y operación trabajando por un solo objetivo: tu patrimonio.',
   placeholder: 'FOTO PENDIENTE',
   personas: [
-    { nombre: 'Vinicius R. Ramos', puesto: 'CEO · REVOLUTION WEALTH', foto: '/img/equipo-vinicius-r-ramos.webp' },
-    { nombre: 'Hugo Rodrigo Solís', puesto: 'DIRECTOR DE ADVISORY', foto: '/img/equipo-hugo-rodrigo-solis.webp' },
+    { nombre: 'Vinicius R. Ramos', puesto: 'CEO · REVOLUTION WEALTH', foto: u('/img/equipo-vinicius-r-ramos.webp') },
+    { nombre: 'Hugo Rodrigo Solís', puesto: 'DIRECTOR DE ADVISORY', foto: u('/img/equipo-hugo-rodrigo-solis.webp') },
     { nombre: 'Jesús Paz', puesto: 'INVESTMENT STRATEGIST', foto: null },
-    { nombre: 'María Fernanda López', puesto: 'BACK OFFICE', foto: '/img/equipo-maria-fernanda-lopez.webp' },
-    { nombre: 'Axel Méndez', puesto: 'BACK OFFICE', foto: '/img/equipo-axel-mendez.webp' },
-    { nombre: 'Camilo Parra', puesto: 'BACK OFFICE', foto: '/img/equipo-camilo-parra.webp' },
-    { nombre: 'José Carlos Villa', puesto: 'ASESOR PATRIMONIAL', foto: '/img/equipo-jose-carlos-villa.webp' },
-    { nombre: 'Fernando Mejía', puesto: 'ASESOR PATRIMONIAL', foto: '/img/equipo-fernando-mejia.webp' },
-    { nombre: 'Jacqueline Rodríguez', puesto: 'ASESORA PATRIMONIAL SR.', foto: '/img/equipo-jacqueline-rodriguez.webp' },
-    { nombre: 'Josué Romero', puesto: 'ASESOR PATRIMONIAL JR.', foto: '/img/equipo-josue-romero.webp' },
-    { nombre: 'Ben López', puesto: 'ASESOR PATRIMONIAL', foto: '/img/equipo-ben-lopez.webp' },
-    { nombre: 'Luis Alberto Téllez', puesto: 'ASESOR PATRIMONIAL', foto: '/img/equipo-luis-alberto-tellez.webp' },
-    { nombre: 'Rychel Parra', puesto: 'ASESOR ASOCIADO', foto: '/img/equipo-rychel-parra.webp' },
-    { nombre: 'César Colin', puesto: 'ASESOR PATRIMONIAL', foto: '/img/equipo-cesar-colin.webp' },
+    { nombre: 'María Fernanda López', puesto: 'BACK OFFICE', foto: u('/img/equipo-maria-fernanda-lopez.webp') },
+    { nombre: 'Axel Méndez', puesto: 'BACK OFFICE', foto: u('/img/equipo-axel-mendez.webp') },
+    { nombre: 'Camilo Parra', puesto: 'BACK OFFICE', foto: u('/img/equipo-camilo-parra.webp') },
+    { nombre: 'José Carlos Villa', puesto: 'ASESOR PATRIMONIAL', foto: u('/img/equipo-jose-carlos-villa.webp') },
+    { nombre: 'Fernando Mejía', puesto: 'ASESOR PATRIMONIAL', foto: u('/img/equipo-fernando-mejia.webp') },
+    { nombre: 'Jacqueline Rodríguez', puesto: 'ASESORA PATRIMONIAL SR.', foto: u('/img/equipo-jacqueline-rodriguez.webp') },
+    { nombre: 'Josué Romero', puesto: 'ASESOR PATRIMONIAL JR.', foto: u('/img/equipo-josue-romero.webp') },
+    { nombre: 'Ben López', puesto: 'ASESOR PATRIMONIAL', foto: u('/img/equipo-ben-lopez.webp') },
+    { nombre: 'Luis Alberto Téllez', puesto: 'ASESOR PATRIMONIAL', foto: u('/img/equipo-luis-alberto-tellez.webp') },
+    { nombre: 'Rychel Parra', puesto: 'ASESOR ASOCIADO', foto: u('/img/equipo-rychel-parra.webp') },
+    { nombre: 'César Colin', puesto: 'ASESOR PATRIMONIAL', foto: u('/img/equipo-cesar-colin.webp') },
   ] as Persona[],
 };
 
@@ -296,10 +297,10 @@ export const ecosistema = {
   body: 'Aprendes en Media y Education, construyes con Wealth y accedes a mercados privados con Capital.',
   aqui: 'ESTÁS AQUÍ',
   divisiones: [
-    { marca: 'Media', sub: 'PODCAST · REDES · NEWSLETTER', icono: '/img/ecosistema-icono-media.png' },
-    { marca: 'Education', sub: 'WEALTH CLUB · WEALTH MASTERY', icono: '/img/ecosistema-icono-education.png' },
-    { marca: 'Wealth', sub: 'REVOLUTION WEALTH MANAGEMENT', icono: '/img/ecosistema-icono-wealth.png', actual: true },
-    { marca: 'Capital', sub: 'REVOLUTION CAPITAL · FUND II', icono: '/img/ecosistema-icono-capital.png' },
+    { marca: 'Media', sub: 'PODCAST · REDES · NEWSLETTER', icono: u('/img/ecosistema-icono-media.png') },
+    { marca: 'Education', sub: 'WEALTH CLUB · WEALTH MASTERY', icono: u('/img/ecosistema-icono-education.png') },
+    { marca: 'Wealth', sub: 'REVOLUTION WEALTH MANAGEMENT', icono: u('/img/ecosistema-icono-wealth.png'), actual: true },
+    { marca: 'Capital', sub: 'REVOLUTION CAPITAL · FUND II', icono: u('/img/ecosistema-icono-capital.png') },
   ] as Division[],
 };
 
@@ -430,10 +431,10 @@ export const footer = {
     {
       title: 'REVOLUTION WEALTH',
       links: [
-        { label: 'Servicios', href: '/#servicios' },
-        { label: 'Proceso', href: '/#proceso' },
-        { label: 'Filosofía Core-X', href: '/#filosofia' },
-        { label: 'Fundadores', href: '/#fundadores' },
+        { label: 'Servicios', href: u('/#servicios') },
+        { label: 'Proceso', href: u('/#proceso') },
+        { label: 'Filosofía Core-X', href: u('/#filosofia') },
+        { label: 'Fundadores', href: u('/#fundadores') },
       ],
     },
     {
@@ -450,9 +451,9 @@ export const footer = {
       title: 'CONTACTO',
       links: [
         { label: 'Agenda tu sesión', href: links.agenda, external: true },
-        { label: 'Preguntas frecuentes', href: '/#preguntas' },
+        { label: 'Preguntas frecuentes', href: u('/#preguntas') },
         { label: 'Carrera', href: links.carrera },
-        { label: 'Aviso de privacidad', href: '#' }, // PENDIENTE: página del aviso de privacidad
+        { label: 'Aviso de privacidad', href: 'https://revoluciondelariqueza.com/aviso-de-privacidad/', external: true },
       ],
     },
   ] as { title: string; links: { label: string; href: string; external?: boolean }[] }[],
@@ -490,7 +491,7 @@ export const carreraPagina = {
       { value: '+800', label: 'CLIENTES PREMIUM' },
       { value: '1', label: 'OFICINA CDMX' },
       { value: '∞', label: 'IMPACTO EN EL PATRIMONIO' },
-      { value: 'GBM', logo: '/img/logo-gbm.svg', label: 'SOCIO ESTRATÉGICO' },
+      { value: 'GBM', logo: u('/img/logo-gbm.svg'), label: 'SOCIO ESTRATÉGICO' },
     ],
   },
   /** Figma 574:405 · "02 · Lo que nos distingue" */
@@ -502,12 +503,12 @@ export const carreraPagina = {
       {
         title: 'Nuestra filosofía de inversión',
         text: 'Nuestra filosofía de inversión parte de primeros principios: cada portafolio se construye desde el perfil, horizonte y objetivos vitales del cliente — no desde índices ni tendencias del momento. Preservar el capital primero, crecer después. La disciplina conductual, no el oportunismo, es nuestra ventaja de largo plazo.',
-        icon: '/img/expertos-icono-estrategia.png',
+        icon: u('/img/expertos-icono-estrategia.png'),
       },
       {
         title: 'El asesor patrimonial moderno',
         text: 'El asesor patrimonial moderno va más allá de los números. Integramos diagnóstico integral, plan financiero personalizado, ejecución institucional vía GBM y acompañamiento proactivo. El resultado es una relación activa — no reactiva — que convierte la volatilidad en oportunidad y el patrimonio de hoy en legado de mañana.',
-        icon: '/img/expertos-icono-asesoria.png',
+        icon: u('/img/expertos-icono-asesoria.png'),
       },
     ],
   },
@@ -523,11 +524,11 @@ export const carreraPagina = {
         title: 'Wealth Guardian — Asesor Patrimonial',
         text: 'El corazón del modelo Revolution Wealth. Acompaña a clientes de alto y ultra-alto patrimonio en sus decisiones de inversión con profundidad técnica y relación de largo plazo. Requiere Figura 3 AMIB.',
         tag: 'ADVISORY',
-        icon: '/img/servicios-icono-plan.png',
+        icon: u('/img/servicios-icono-plan.png'),
         cta: { label: 'VER PERFIL', href: links.vacantes },
       },
     ],
-    foto: '/img/carrera-asesores.webp' as string | null,
+    foto: u('/img/carrera-asesores.webp') as string | null,
   },
   /** Figma 574:979 · "04 · Beneficios" */
   beneficios: {
@@ -536,21 +537,76 @@ export const carreraPagina = {
     lead: 'Ofrecemos compensación anclada en benchmarks de mercado, bonos por crecimiento, participación en el éxito de la firma, y la oportunidad de construir algo que trasciende. No solo un trabajo — una carrera con propósito.',
     primary: { label: 'VER PERFIL', href: links.vacantes },
     /** "Conoce más": regresa a la página principal de Revolution Wealth. */
-    secondary: { label: 'CONOCE MÁS', href: '/' },
+    secondary: { label: 'CONOCE MÁS', href: u('/') },
     pilares: [
       {
         title: 'Compensación competitiva',
         text: 'Sueldo base + variable trimestral + bono de generación, todo calibrado con estándares WTW de mercado.',
-        icon: '/img/expertos-icono-estrategia.png',
+        icon: u('/img/expertos-icono-estrategia.png'),
       },
       {
         title: 'Misión y cultura claras',
         text: 'Empresa en plena construcción, con visión de largo plazo, liderazgo accesible y estándares de clase mundial.',
         /** Remate con punto dorado (Figma 615:348) */
         punto: 'Sin conflictos de interés.',
-        icon: '/img/expertos-icono-comunicacion.png',
+        icon: u('/img/expertos-icono-comunicacion.png'),
       },
     ],
+  },
+};
+
+/* ——————————————————————————————————————————————————————————————
+ * Header y footer de revolution.inc (layout "inc", ver src/config/layout.ts).
+ * Copiados del sitio de Revolution Inc (repo revolution-inc-landing) el 20-oct-2026.
+ * —————————————————————————————————————————————————————————————— */
+const INC = 'https://revolution.inc';
+export const inc = {
+  home: `${INC}/`,
+  nav: [
+    { label: 'Media', href: `${INC}/media.html` },
+    { label: 'Education', href: `${INC}/education.html` },
+    { label: 'Wealth', href: u('/'), actual: true },
+    { label: 'Capital', href: `${INC}/capital.html` },
+    { label: 'Nosotros', href: `${INC}/nosotros.html` },
+  ],
+  cta: { label: 'Haz tu Financial Checkup', href: `${INC}/financial-checkup.html` },
+  footer: {
+    firma: 'Signal over noise. Always.',
+    columnas: [
+      {
+        titulo: 'Ecosistema',
+        links: [
+          { label: 'Media', href: `${INC}/media.html` },
+          { label: 'Education', href: `${INC}/education.html` },
+          { label: 'Wealth', href: u('/') },
+          { label: 'Capital', href: `${INC}/capital.html` },
+        ],
+      },
+      {
+        titulo: 'Compañía',
+        links: [
+          { label: 'Nosotros', href: `${INC}/nosotros.html` },
+          { label: 'Reporte HENRY', href: `${INC}/#henry` },
+          { label: 'Agenda', href: `${INC}/#agenda` },
+          {
+            label: 'Contacto',
+            href: 'https://api.whatsapp.com/send?phone=528135732633&text=Hola.%20Quiero%20contactar%20a%20Revolution%20Inc.',
+            externo: true,
+          },
+          { label: 'Trabaja con nosotros', href: `${INC}/trabaja-con-nosotros.html` },
+        ],
+      },
+      {
+        titulo: 'Legal',
+        links: [
+          { label: 'Aviso de privacidad', href: 'https://revoluciondelariqueza.com/aviso-de-privacidad/', externo: true },
+          { label: 'Términos', href: '' },
+          { label: 'Avisos regulatorios', href: '' },
+        ],
+      },
+    ] as { titulo: string; links: { label: string; href: string; externo?: boolean }[] }[],
+    legal:
+      'El contenido de este sitio es informativo y educativo. No constituye asesoría de inversión personalizada, ni una recomendación de compra o venta de instrumentos financieros. Rendimientos pasados no garantizan resultados futuros.',
   },
 };
 

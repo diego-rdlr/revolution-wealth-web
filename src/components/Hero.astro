@@ -1,4 +1,5 @@
 ---
+import { u } from '../config/base';
 import Kicker from './Kicker.astro';
 import Title from './Title.astro';
 import Button from './Button.astro';
@@ -12,8 +13,8 @@ import { hero } from '../data/wealth';
     <div class="hero__frame" aria-hidden="true">
       <img
         class="hero__photo"
-        src="/img/fondo-campo-1600.webp"
-        srcset="/img/fondo-campo-900.webp 900w, /img/fondo-campo-1600.webp 1600w"
+        src={u('/img/fondo-campo-1600.webp')}
+        srcset={u('/img/fondo-campo-900.webp') + ' 900w' + ", " + u('/img/fondo-campo-1600.webp') + ' 1600w'}
         sizes="100vw"
         alt=""
         width="1600"
@@ -26,7 +27,7 @@ import { hero } from '../data/wealth';
       <div class="hero__veil hero__veil--bottom"></div>
       <div class="hero__grain"></div>
     </div>
-    <img class="hero__glow hero__glow--r" src="/img/resplandor-hero-der.svg" alt="" aria-hidden="true" />
+    <img class="hero__glow hero__glow--r" src={u('/img/resplandor-hero-der.svg')} alt="" aria-hidden="true" />
 
     <div class="container hero__content">
       <Kicker text={hero.kicker} />
@@ -44,7 +45,7 @@ import { hero } from '../data/wealth';
 
         <aside class="session" aria-label={hero.session.title} data-reveal>
           <p class="session__head">
-            <img src="/img/punto-dorado.svg" alt="" width="7" height="7" />
+            <img src={u('/img/punto-dorado.svg')} alt="" width="7" height="7" />
             {hero.session.title}
           </p>
           <ol class="session__steps">
@@ -68,7 +69,7 @@ import { hero } from '../data/wealth';
     </div>
   </div>
 
-  <img class="hero__glow hero__glow--l" src="/img/resplandor-hero-izq.svg" alt="" aria-hidden="true" />
+  <img class="hero__glow hero__glow--l" src={u('/img/resplandor-hero-izq.svg')} alt="" aria-hidden="true" />
   <div class="container">
     <Credentials items={hero.credentials} />
   </div>

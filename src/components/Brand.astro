@@ -1,4 +1,5 @@
 ---
+import { u } from '../config/base';
 import { brand } from '../data/wealth';
 
 interface Props {
@@ -8,15 +9,15 @@ interface Props {
 const { tagline = true } = Astro.props;
 ---
 
-<a class="brand" href="/" aria-label={`${brand.name}, ${brand.tagline} GBM`}>
-  <img class="brand__logo" src="/img/logo-rwm-blanco.png" alt="" width="201" height="20" />
+<a class="brand" href={u('/')} aria-label={`${brand.name}, ${brand.tagline} GBM`}>
+  <img class="brand__logo" src={u('/img/logo-rwm-blanco.png')} alt="" width="201" height="20" />
   {
     tagline && (
       <>
         <span class="brand__divider" aria-hidden="true" />
         <span class="brand__tagline">
           {brand.tagline}
-          <img class="brand__gbm" src="/img/logo-gbm.svg" alt="GBM" width="54" height="15" />
+          <img class="brand__gbm" src={u('/img/logo-gbm.svg')} alt="GBM" width="54" height="15" />
         </span>
       </>
     )

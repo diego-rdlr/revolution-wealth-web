@@ -8,16 +8,19 @@ import Distingue from '../components/carrera/Distingue.astro';
 import Oportunidades from '../components/carrera/Oportunidades.astro';
 import Beneficios from '../components/carrera/Beneficios.astro';
 import Footer from '../components/Footer.astro';
+import IncNav from '../components/inc/IncNav.astro';
+import IncFooter from '../components/inc/IncFooter.astro';
+import { LAYOUT } from '../config/layout';
 import { carreraPagina } from '../data/wealth';
 ---
 
 <Base title={carreraPagina.meta.title} description={carreraPagina.meta.description}>
-  <Nav nav={carreraPagina.nav} />
+  {LAYOUT === 'inc' ? <IncNav /> : <Nav nav={carreraPagina.nav} />}
   <main>
     <HeroCarrera />
     <Distingue />
     <Oportunidades />
     <Beneficios />
   </main>
-  <Footer />
+  {LAYOUT === 'inc' ? <IncFooter /> : <Footer />}
 </Base>

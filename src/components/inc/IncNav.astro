@@ -1,0 +1,169 @@
+---
+// Header de revolution.inc (sitio "revolution-inc-landing" de Romeo), portado tal cual
+// para que la página de Wealth viva dentro del layout de Revolution Inc (pedido de Vini, 20-oct).
+// Estilos copiados de revolution.inc/assets/css/sitio.css (.nav). Si allá cambia, se actualiza aquí.
+import { u } from '../../config/base';
+import { inc } from '../../data/wealth';
+---
+
+<header class="incnav" data-incnav>
+  <div class="incnav__wrap">
+    <a class="incnav__marca" href={inc.home} aria-label="Revolution Inc — inicio">
+      <img src={u('/img/inc-isotipo.svg')} alt="" width="17" height="17" /><span>Revolution Inc.</span>
+    </a>
+    <nav class="incnav__links" id="incnav-links" aria-label="Principal" data-incnav-links>
+      {
+        inc.nav.map((l) => (
+          <a href={l.href} aria-current={l.actual ? 'page' : undefined}>
+            {l.label}
+          </a>
+        ))
+      }
+    </nav>
+    <button class="incnav__toggle" type="button" aria-expanded="false" aria-controls="incnav-links" data-incnav-toggle>Menú</button>
+    <a class="incnav__cta" href={inc.cta.href}>{inc.cta.label}</a>
+  </div>
+</header>
+
+<script>
+  const btn = document.querySelector<HTMLButtonElement>('[data-incnav-toggle]');
+  const links = document.querySelector<HTMLElement>('[data-incnav-links]');
+  if (btn && links) {
+    btn.addEventListener('click', () => {
+      const open = links.classList.toggle('open');
+      btn.setAttribute('aria-expanded', String(open));
+    });
+    links.addEventListener('click', (e) => {
+      if ((e.target as HTMLElement).closest('a')) {
+        links.classList.remove('open');
+        btn.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+</script>
+
+<style>
+  .incnav {
+    position: fixed;
+    inset: 0 0 auto;
+    z-index: 50;
+    height: var(--nav-h);
+    background: rgba(10, 10, 10, 0.66);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid #242832;
+  }
+  .incnav__wrap {
+    max-width: 1600px;
+    height: 100%;
+    margin: 0 auto;
+    padding-inline: clamp(20px, 5vw, 80px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+  }
+  .incnav__marca {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: none;
+    text-decoration: none;
+  }
+  .incnav__marca img {
+    width: 17px;
+    height: 17px;
+  }
+  .incnav__marca span {
+    font-family: var(--f-mono);
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--paper);
+  }
+  .incnav__links {
+    display: flex;
+    align-items: center;
+    gap: clamp(1rem, 2.1vw, 2.1rem);
+  }
+  .incnav__links a {
+    font-family: var(--f-mono);
+    font-weight: 400;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--mist);
+    text-decoration: none;
+    transition: color 0.25s cubic-bezier(0.2, 0, 0, 1);
+  }
+  .incnav__links a:hover,
+  .incnav__links a[aria-current='page'] {
+    color: var(--paper);
+  }
+  .incnav__cta {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 236px;
+    height: 34px;
+    padding: 0 18px;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--f-mono);
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 0.19em;
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+  .incnav__toggle {
+    display: none;
+    background: none;
+    border: 0;
+    cursor: pointer;
+    font-family: var(--f-mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--paper);
+    padding: 0.5rem 0;
+  }
+  @media (max-width: 980px) {
+    .incnav {
+      background: rgba(10, 10, 10, 0.97);
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+    }
+    .incnav__links {
+      position: absolute;
+      top: var(--nav-h);
+      left: 0;
+      right: 0;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 1.25rem clamp(20px, 5vw, 80px) 1.5rem;
+      background: rgba(10, 10, 10, 0.96);
+      border-bottom: 1px solid #242832;
+      display: none;
+    }
+    .incnav__links:global(.open) {
+      display: flex;
+    }
+    .incnav__toggle {
+      display: inline-flex;
+    }
+    .incnav__cta {
+      min-width: 0;
+      padding: 0 14px;
+      font-size: 10.5px;
+    }
+  }
+  @media (max-width: 520px) {
+    .incnav__cta {
+      display: none;
+    }
+  }
+</style>

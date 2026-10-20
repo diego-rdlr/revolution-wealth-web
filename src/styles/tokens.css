@@ -84,6 +84,11 @@
   }
 }
 
+/* Con el header de revolution.inc (57 px de alto) */
+html.layout-inc {
+  --nav-h: 57px;
+}
+
 /* ——— Temas por sección ———
    Cada sección declara .theme-dark o .theme-light y los componentes usan
    estas variables, así una misma pieza (kicker, tarjeta, línea) funciona en

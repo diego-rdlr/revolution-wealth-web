@@ -50,9 +50,18 @@ Es la misma base que `revolution-capital-web` y `wealth-nation-web`.
 - Si el visitante tiene activado "reducir movimiento", no se anima nada.
 - Si el JavaScript no llega a cargar en 2.5 s, las animaciones se apagan solas y todo queda visible.
 
+## Dónde vive: revolution.inc/wealth
+
+El sitio se publica bajo **`/wealth`** (`base` y `outDir` en `astro.config.mjs`):
+
+- Las páginas se generan en `dist/wealth/`. Toda ruta interna pasa por `u()` (`src/config/base.ts`), que le agrega el prefijo.
+- `public-root/_redirects` se copia a `dist/_redirects` al compilar. Ahí van `wealth.html` → `/wealth/` (el header de revolution.inc apunta ahí) y las direcciones viejas (`/`, `/carrera`).
+- En Cloudflare, una **ruta** `revolution.inc/wealth*` (y `www.revolution.inc/wealth*`) manda esas visitas a este Worker. El resto de revolution.inc lo sigue sirviendo `revolution-inc-landing`.
+- **Header y footer:** `src/config/layout.ts` → `LAYOUT = 'inc'` usa los de revolution.inc (`src/components/inc/`); `'propio'` regresa a los de Revolution Wealth.
+
 ## Configuración de Cloudflare (Workers)
 
-- Producción: https://revolution-wealth-web.romeo-8d3.workers.dev
+- Producción: https://revolution.inc/wealth (y https://revolution-wealth-web.romeo-8d3.workers.dev/wealth/)
 - Vista previa de cada rama: `https://<rama>-revolution-wealth-web.romeo-8d3.workers.dev`
 
 El sitio se publica como un **Worker con archivos estáticos**. `wrangler.jsonc` le dice a
@@ -73,7 +82,8 @@ Requiere Node 22+.
 
 ```bash
 npm install
-npm run dev      # abre http://localhost:4321 y se recarga al guardar
+npm run dev      # abre http://localhost:4321/wealth/ y se recarga al guardar
 npm run check    # revisa errores de tipos
-npm run build    # genera dist/, lo mismo que hace Cloudflare
+npm run build    # genera dist/wealth/ y dist/_redirects, lo mismo que hace Cloudflare
+npx wrangler dev # sirve dist/ como en Cloudflare (con redirecciones): http://localhost:8787/wealth/
 ```
