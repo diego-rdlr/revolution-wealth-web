@@ -23,7 +23,7 @@ import { expertos } from '../data/wealth';
     <ul class="pilares" data-reveal>
       {
         expertos.pilares.map((p, i) => (
-          <li class="pilar" style={`--i: ${i}`}>
+          <li class="pilar lift" style={`--i: ${i}`}>
             <span class="pilar__acento" aria-hidden="true" />
             <div class="pilar__cabecera">
               <span class="pilar__num">{String(i + 1).padStart(2, '0')}</span>
@@ -94,6 +94,12 @@ import { expertos } from '../data/wealth';
     width: 48px;
     height: 3px;
     background: var(--steel);
+    transition: width 0.6s var(--ease-out, ease);
+  }
+  @media (hover: hover) {
+    .pilar:hover .pilar__acento {
+      width: 88px;
+    }
   }
   .pilar__cabecera {
     display: flex;
@@ -142,7 +148,12 @@ import { expertos } from '../data/wealth';
     transition-delay: 0.25s;
   }
   :global(html.motion) .pilares .pilar {
-    transition-delay: calc(var(--i) * 110ms);
+    /* Retraso solo para la entrada; la elevación del hover (.lift) responde al instante */
+    transition:
+      opacity 0.8s var(--ease-out) calc(var(--i) * 110ms),
+      transform 0.9s var(--ease-out) calc(var(--i) * 110ms),
+      translate 0.6s cubic-bezier(0.2, 0.7, 0.1, 1),
+      box-shadow 0.6s cubic-bezier(0.2, 0.7, 0.1, 1);
   }
   :global(html.motion) .expertos__bajada.is-in,
   :global(html.motion) .pilares.is-in .pilar {

@@ -39,6 +39,12 @@ Es la misma base que `revolution-capital-web` y `wealth-nation-web`.
 | JavaScript (aparición al entrar en pantalla, conteo de cifras, scroll suave con Lenis) | `src/scripts/motion.ts` |
 | Estilos de animación | `src/styles/motion.css` y bloques `html.motion` dentro de cada componente |
 | Banner "40 años" (entrada en cascada + conteo + dorado al pasar el mouse) | `src/components/Credentials.astro` |
+| Parallax de las fotos de fondo (`data-parallax="0.1"` en la imagen; solo de 768 px en adelante) | `src/scripts/motion.ts` + `src/styles/motion.css` |
+| Kicker que se traza de izquierda a derecha | `src/components/Kicker.astro` |
+| Llegada del hero (acercamiento de la foto, pasos de la sesión uno por uno) | `src/components/Hero.astro`, `src/components/carrera/HeroCarrera.astro` |
+| Amanecer de "El segundo mejor momento es hoy" | `src/components/Principio.astro` |
+| Luz que respira en "Comienza tu análisis" (único movimiento continuo) | `src/components/Comienza.astro` |
+| Elevación de tarjetas claras al pasar el cursor (clase `lift`) | `src/styles/motion.css` |
 
 - **Apagar:** poner `MOTION_ENABLED = false`, hacer merge. La página queda estática, igual que Figma.
 - Si el visitante tiene activado "reducir movimiento", no se anima nada.

@@ -11,6 +11,7 @@ import { comienza } from '../data/wealth';
   <div class="atmos" aria-hidden="true">
     <img
       class="atmos__photo comienza__photo"
+      data-parallax="0.1"
       src="/img/comienza-fondo-1600.webp"
       srcset="/img/comienza-fondo-900.webp 900w, /img/comienza-fondo-1600.webp 1600w"
       sizes="100vw"
@@ -93,12 +94,8 @@ import { comienza } from '../data/wealth';
   .comienza__title {
     max-width: 1100px;
     color: var(--paper);
-    text-shadow:
-      0 4px 10px rgba(0, 0, 0, 0.18),
-      0 4px 18px rgba(0, 0, 0, 0.18),
-      0 4px 24px rgba(0, 0, 0, 0.18),
-      0 4px 29px rgba(0, 0, 0, 0.18),
-      0 4px 32px rgba(0, 0, 0, 0.18);
+    /* Sombra de Figma como filtro: con animaciones el text-shadow sale recortado */
+    filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.18)) drop-shadow(0 4px 24px rgba(0, 0, 0, 0.3));
   }
   .comienza__lede {
     max-width: 760px;
@@ -109,6 +106,21 @@ import { comienza } from '../data/wealth';
   }
   .comienza__note {
     color: var(--mist);
+  }
+
+  /* La puerta de luz "respira" muy lento: es el único movimiento continuo del sitio */
+  :global(html.motion) .comienza__champan {
+    animation: comienza-luz 7s ease-in-out infinite alternate;
+  }
+  @keyframes comienza-luz {
+    from {
+      opacity: 0.14;
+      scale: 0.97;
+    }
+    to {
+      opacity: 0.26;
+      scale: 1.04;
+    }
   }
 
   @media (max-width: 1180px) {

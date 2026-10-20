@@ -11,7 +11,7 @@ const { items } = Astro.props;
 <ul class="cpilares" data-reveal style={`--cols: ${items.length}`}>
   {
     items.map((p, i) => (
-      <li class="cpilar" style={`--i: ${i}`}>
+      <li class="cpilar lift" style={`--i: ${i}`}>
         <span class="cpilar__acento" aria-hidden="true" />
         <div class="cpilar__cabecera">
           <span class="cpilar__num">{String(i + 1).padStart(2, '0')}</span>
@@ -48,6 +48,12 @@ const { items } = Astro.props;
     width: 48px;
     height: 3px;
     background: var(--steel);
+    transition: width 0.6s var(--ease-out, ease);
+  }
+  @media (hover: hover) {
+    .cpilar:hover .cpilar__acento {
+      width: 88px;
+    }
   }
   .cpilar__cabecera {
     display: flex;
@@ -85,10 +91,12 @@ const { items } = Astro.props;
   :global(html.motion) .cpilares .cpilar {
     opacity: 0;
     transform: translateY(24px);
+    /* Retraso solo para la entrada; la elevación del hover (.lift) responde al instante */
     transition:
-      opacity 0.8s var(--ease-out),
-      transform 0.9s var(--ease-out);
-    transition-delay: calc(var(--i) * 110ms);
+      opacity 0.8s var(--ease-out) calc(var(--i) * 110ms),
+      transform 0.9s var(--ease-out) calc(var(--i) * 110ms),
+      translate 0.6s cubic-bezier(0.2, 0.7, 0.1, 1),
+      box-shadow 0.6s cubic-bezier(0.2, 0.7, 0.1, 1);
   }
   :global(html.motion) .cpilares.is-in .cpilar {
     opacity: 1;

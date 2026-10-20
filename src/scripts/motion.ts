@@ -40,6 +40,39 @@ if (root.classList.contains('motion')) {
     requestAnimationFrame(tick);
   }
 
+  // ——— Profundidad: las fotos de fondo se desplazan más lento que el contenido ———
+  // [data-parallax] lleva en su valor la fracción de velocidad (p. ej. "0.12").
+  // Solo mueve `translate` (la escala base y el acercamiento del hero van en `scale`,
+  // por eso no se pisan). En pantallas chicas no corre: ahí se siente brusco.
+  const layers = [...document.querySelectorAll<HTMLElement>('[data-parallax]')];
+  if (layers.length && matchMedia('(min-width: 768px)').matches) {
+    const visible = new Set<HTMLElement>();
+    const watch = new IntersectionObserver((entries) => {
+      for (const e of entries) e.isIntersecting ? visible.add(e.target as HTMLElement) : visible.delete(e.target as HTMLElement);
+      onScroll(); // coloca cada capa en cuanto entra, sin brinco en el primer scroll
+    });
+    layers.forEach((el) => watch.observe(el));
+    let ticking = false;
+    function update() {
+      ticking = false;
+      const mid = innerHeight / 2;
+      for (const el of visible) {
+        const r = el.getBoundingClientRect();
+        const speed = Number(el.dataset.parallax) || 0.1;
+        const max = r.height * 0.05; // nunca más que el margen que da scale(1.12)
+        const y = Math.max(-max, Math.min(max, (r.top + r.height / 2 - mid) * -speed));
+        el.style.translate = `0 ${y.toFixed(1)}px`;
+      }
+    }
+    function onScroll() {
+      if (!ticking) requestAnimationFrame(update);
+      ticking = true;
+    }
+    addEventListener('scroll', onScroll, { passive: true });
+    addEventListener('resize', onScroll, { passive: true });
+    update();
+  }
+
   // ——— Scroll suave: solo escritorio con mouse. Nunca en pantallas táctiles
   // (teléfonos, tablets, iPad con trackpad): ahí se usa el scroll nativo. ———
   const desktopMouse =

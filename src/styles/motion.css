@@ -64,3 +64,28 @@ html.motion [data-reveal].is-in .edge__fill {
 html.motion [data-count]:not(.is-counting) {
   opacity: 0;
 }
+
+/* ——— 3. Profundidad (parallax suave de las fotos de fondo) ———
+   La foto se agranda 12% para que al desplazarse nunca se vea el borde.
+   En celular no corre (ver motion.ts), así que tampoco se agranda. */
+@media (min-width: 768px) {
+  html.motion [data-parallax] {
+    scale: 1.12;
+    will-change: translate;
+  }
+}
+
+/* ——— 4. Elevación de tarjetas claras al pasar el cursor ——— */
+html.motion .lift {
+  transition:
+    translate 0.6s var(--ease-out),
+    box-shadow 0.6s var(--ease-out);
+}
+@media (hover: hover) {
+  html.motion .lift:hover {
+    translate: 0 -4px;
+    box-shadow:
+      0 22px 40px -12px rgba(20, 26, 38, 0.14),
+      0 4px 10px rgba(20, 26, 38, 0.06);
+  }
+}

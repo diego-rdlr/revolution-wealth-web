@@ -139,6 +139,22 @@ const { hero } = carreraPagina;
     color: var(--paper);
   }
 
+  /* Llegada: la foto del equipo entra con un acercamiento lento, como el hero principal.
+     Sin parallax y anclado arriba, para no cortar las caras: termina en su tamaño real. */
+  :global(html.motion) .hcar__photo {
+    transform-origin: center top;
+    animation: hcar-push 2.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  @keyframes hcar-push {
+    from {
+      scale: 1.1;
+      opacity: 0.4;
+    }
+    to {
+      scale: 1;
+      opacity: 1;
+    }
+  }
   :global(html.motion) .hcar__card {
     opacity: 0;
     transform: translateY(24px);
