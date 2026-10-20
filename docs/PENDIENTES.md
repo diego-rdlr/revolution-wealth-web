@@ -35,7 +35,8 @@ El original de Marisol es `jS424JGWQITz5Lx9SPIRTs`.
 
 Construida desde el Figma y las capturas de diseño del 20-oct (titulares, botones e íconos ya confirmados).
 
-- [ ] Ambas vacantes llevan al mismo Google Form; si cada una tiene su formulario, cambiar `cta.href` de cada una.
+- [ ] CTAs (formulario de vacante y WhatsApp de asesoría): se definen con Vini.
+- [ ] Foto de asesores: el original de Figma mide 708 px (se ve suave en pantallas retina); pedir una de ~1400 px.
 
 ## Diseño
 

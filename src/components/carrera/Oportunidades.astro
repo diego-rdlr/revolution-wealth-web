@@ -51,6 +51,13 @@ const { oportunidades } = carreraPagina;
           </li>
         ))
       }
+      {
+        oportunidades.foto && (
+          <li class="coport__foto" aria-hidden="true">
+            <img src={oportunidades.foto} alt="" width="708" height="468" loading="lazy" />
+          </li>
+        )
+      }
     </ul>
   </div>
 </section>
@@ -92,6 +99,15 @@ const { oportunidades } = carreraPagina;
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 24px;
+  }
+  .coport__foto {
+    overflow: hidden;
+    border-radius: var(--radius);
+  }
+  .coport__foto img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
   .vacante {
     display: flex;

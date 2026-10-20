@@ -3,7 +3,8 @@
 // Mismo lenguaje que los pilares de "Invierte con expertos": acento azul arriba,
 // número + ícono, titular y texto. Figma: título en Feature Display Light 30/32.
 interface Props {
-  items: { title: string; text: string; icon: string }[];
+  /** `punto`: remate opcional con punto dorado al pie de la tarjeta. */
+  items: { title: string; text: string; icon: string; punto?: string }[];
 }
 const { items } = Astro.props;
 ---
@@ -19,6 +20,7 @@ const { items } = Astro.props;
         </div>
         <h3 class="cpilar__titulo">{p.title}</h3>
         <p class="cpilar__texto">{p.text}</p>
+        {p.punto && <p class="cpilar__punto">{p.punto}</p>}
       </li>
     ))
   }
@@ -86,6 +88,24 @@ const { items } = Astro.props;
     font-size: var(--t-small);
     line-height: 1.667;
     color: var(--slate);
+  }
+
+  .cpilar__punto {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 6px;
+    font-size: var(--t-base);
+    line-height: 28px;
+    color: var(--ink);
+  }
+  .cpilar__punto::before {
+    content: '';
+    flex: none;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--gold);
   }
 
   :global(html.motion) .cpilares .cpilar {

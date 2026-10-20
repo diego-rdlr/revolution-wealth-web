@@ -25,7 +25,8 @@ if (root.classList.contains('motion')) {
   function countUp(el: HTMLElement) {
     const target = Number(el.dataset.count);
     const final = el.textContent ?? '';
-    const suffix = final.replace(/^[\d.,]+/, '');
+    // Admite prefijo y sufijo: "+20 años" cuenta 0→20 y conserva "+" y " años"
+    const [, prefix = '', , suffix = ''] = final.match(/^(\D*)([\d.,]+)(.*)$/s) ?? [];
     if (!Number.isFinite(target)) return;
     el.setAttribute('aria-label', final); // lectores de pantalla oyen el valor final
     el.classList.add('is-counting');
@@ -34,7 +35,7 @@ if (root.classList.contains('motion')) {
     const tick = (now: number) => {
       const t = Math.min(1, (now - start) / duration);
       const eased = 1 - Math.pow(1 - t, 3);
-      el.textContent = t < 1 ? `${Math.round(target * eased)}${suffix}` : final;
+      el.textContent = t < 1 ? `${prefix}${Math.round(target * eased)}${suffix}` : final;
       if (t < 1) requestAnimationFrame(tick);
     };
     requestAnimationFrame(tick);

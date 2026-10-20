@@ -25,7 +25,8 @@ export const links = {
 
 export const brand = {
   name: 'Revolution Wealth',
-  tagline: 'Asesor afiliado a GBM',
+  /** Se lee "Asesor afiliado a [logo GBM]" junto al logo del menú. */
+  tagline: 'Asesor afiliado a',
   year: 2026,
 };
 
@@ -59,7 +60,7 @@ export const hero = {
   /** Banner de credenciales. `count` = número al que llega el conteo animado. */
   credentials: [
     { value: '40 años', count: 40, label: 'De trayectoria de GBM, la plataforma que custodia tu cuenta' },
-    { value: '17 años', count: 17, label: 'De experiencia de nuestros fundadores en inversiones' },
+    { value: '+20 años', count: 20, label: 'De experiencia de nuestros fundadores en inversiones' },
     { value: '0', count: 0, label: 'Comisiones ocultas o incentivos por producto' },
     { value: '100%', count: 100, label: 'Estrategias hechas a la medida de tus objetivos' },
   ],
@@ -210,7 +211,7 @@ export const fundadores = {
     },
     {
       name: 'Vinicius Ramos',
-      role: 'FUNDADOR · REVOLUTION WEALTH',
+      role: 'FUNDADOR & CEO · REVOLUTION WEALTH',
       photo: '/img/fundadores-vinicius.webp',
       points: [
         'Fundador de Revolution Wealth, firma afiliada a GBM.',
@@ -487,9 +488,9 @@ export const carreraPagina = {
     cta: { label: 'VER OPORTUNIDADES', href: '#oportunidades' },
     credentials: [
       { value: '+800', label: 'CLIENTES PREMIUM' },
-      { value: '2+', label: 'OFICINAS · CDMX & GDL' },
+      { value: '1', label: 'OFICINA CDMX' },
       { value: '∞', label: 'IMPACTO EN EL PATRIMONIO' },
-      { value: 'GBM', label: 'SOCIO ESTRATÉGICO' },
+      { value: 'GBM', logo: '/img/logo-gbm.svg', label: 'SOCIO ESTRATÉGICO' },
     ],
   },
   /** Figma 574:405 · "02 · Lo que nos distingue" */
@@ -515,7 +516,8 @@ export const carreraPagina = {
     kicker: '02 · OPORTUNIDADES ABIERTAS',
     title: ['Buscamos talento de primer nivel', 'para sumarse.'] as Title,
     lead: 'Proteger el patrimonio de nuestros clientes hoy, mañana y por generaciones requiere un equipo multidisciplinario de profesionales de excelencia. Estas son las áreas donde estamos creciendo.',
-    /** Vacantes. Para abrir una nueva: agrega un objeto; para cerrarla: bórralo. */
+    /** Vacantes. Para abrir una nueva: agrega un objeto; para cerrarla: bórralo.
+     *  Con una sola vacante, a su lado va la foto `foto` (Figma "Foto · asesores"). */
     vacantes: [
       {
         title: 'Wealth Guardian — Asesor Patrimonial',
@@ -524,14 +526,8 @@ export const carreraPagina = {
         icon: '/img/servicios-icono-plan.png',
         cta: { label: 'VER PERFIL', href: links.vacantes },
       },
-      {
-        title: 'Director de Advisory',
-        text: 'Lidera y desarrolla al equipo de asesores. Traduce la estrategia de RWM en resultados medibles, impulsa la cultura de excelencia y participa en el crecimiento patrimonial de la firma.',
-        tag: 'LIDERAZGO',
-        icon: '/img/servicios-icono-gestion.png',
-        cta: { label: 'VER PERFIL', href: links.vacantes },
-      },
     ],
+    foto: '/img/carrera-asesores.webp' as string | null,
   },
   /** Figma 574:979 · "04 · Beneficios" */
   beneficios: {
@@ -548,13 +544,10 @@ export const carreraPagina = {
         icon: '/img/expertos-icono-estrategia.png',
       },
       {
-        title: 'Participación real en el crecimiento',
-        text: 'Para roles de liderazgo, estructura de equity en S.A.P.I. de C.V. con vesting a 4 años.',
-        icon: '/img/expertos-icono-asesoria.png',
-      },
-      {
         title: 'Misión y cultura claras',
         text: 'Empresa en plena construcción, con visión de largo plazo, liderazgo accesible y estándares de clase mundial.',
+        /** Remate con punto dorado (Figma 615:348) */
+        punto: 'Sin conflictos de interés.',
         icon: '/img/expertos-icono-comunicacion.png',
       },
     ],
