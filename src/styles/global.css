@@ -17,13 +17,13 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: var(--nav-h); /* los anclajes no quedan tapados por la barra fija */
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: transparent;
 }
 @media (max-width: 1180px) {
   html {
-    scroll-padding-top: var(--nav-h); /* los anclajes no quedan tapados por la barra fija */
-    scroll-behavior: auto; /* en celular los saltos los hace Nav.astro: cortos y directos */
+    scroll-behavior: auto; /* en celular los saltos van directos: en una página tan larga el smooth se siente lento */
   }
 }
 html.menu-open {

@@ -31,14 +31,8 @@ export const brand = {
   year: 2026,
 };
 
+/** Botón del header. Los enlaces del header son los de revolution.inc (ver `inc.nav`). */
 export const nav = {
-  links: [
-    { label: 'Servicios', href: '#servicios' },
-    { label: 'Proceso', href: '#proceso' },
-    { label: 'Filosofía Core-X', href: '#filosofia' },
-    { label: 'Fundadores', href: '#fundadores' },
-    { label: 'Preguntas', href: '#preguntas' },
-  ],
   cta: { label: 'Agenda tu sesión', href: links.agenda },
 };
 
@@ -474,14 +468,7 @@ export const carreraPagina = {
     description:
       'Súmate al equipo de Revolution Wealth: asesores y líderes que protegen y hacen crecer el patrimonio de sus clientes. Conoce las oportunidades abiertas y los beneficios.',
   },
-  nav: {
-    links: [
-      { label: 'Lo que nos distingue', href: '#distingue' },
-      { label: 'Oportunidades', href: '#oportunidades' },
-      { label: 'Beneficios', href: '#beneficios' },
-    ],
-    cta: { label: 'Agenda tu sesión', href: links.agenda },
-  },
+
   /** Figma 578:379 · "01 · Hero" */
   hero: {
     title: ['Lo que nos distingue', 'son nuestras personas.'] as Title,
