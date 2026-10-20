@@ -1,0 +1,23 @@
+---
+// Subpágina "Súmate al equipo" (Figma "04c Wealth · Sumate a el equipo", frame 574:337).
+// Se llega desde "Ver oportunidades" de la página principal.
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import HeroCarrera from '../components/carrera/HeroCarrera.astro';
+import Distingue from '../components/carrera/Distingue.astro';
+import Oportunidades from '../components/carrera/Oportunidades.astro';
+import Beneficios from '../components/carrera/Beneficios.astro';
+import Footer from '../components/Footer.astro';
+import { carreraPagina } from '../data/wealth';
+---
+
+<Base title={carreraPagina.meta.title} description={carreraPagina.meta.description}>
+  <Nav nav={carreraPagina.nav} />
+  <main>
+    <HeroCarrera />
+    <Distingue />
+    <Oportunidades />
+    <Beneficios />
+  </main>
+  <Footer />
+</Base>
