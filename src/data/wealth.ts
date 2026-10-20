@@ -25,7 +25,8 @@ export const links = {
 
 export const brand = {
   name: 'Revolution Wealth',
-  tagline: 'Asesor afiliado a GBM',
+  /** Se lee "Asesor afiliado a [logo GBM]" junto al logo del menú. */
+  tagline: 'Asesor afiliado a',
   year: 2026,
 };
 
@@ -59,7 +60,7 @@ export const hero = {
   /** Banner de credenciales. `count` = número al que llega el conteo animado. */
   credentials: [
     { value: '40 años', count: 40, label: 'De trayectoria de GBM, la plataforma que custodia tu cuenta' },
-    { value: '17 años', count: 17, label: 'De experiencia de nuestros fundadores en inversiones' },
+    { value: '+20 años', count: 20, label: 'De experiencia de nuestros fundadores en inversiones' },
     { value: '0', count: 0, label: 'Comisiones ocultas o incentivos por producto' },
     { value: '100%', count: 100, label: 'Estrategias hechas a la medida de tus objetivos' },
   ],
@@ -210,7 +211,7 @@ export const fundadores = {
     },
     {
       name: 'Vinicius Ramos',
-      role: 'FUNDADOR · REVOLUTION WEALTH',
+      role: 'FUNDADOR & CEO · REVOLUTION WEALTH',
       photo: '/img/fundadores-vinicius.webp',
       points: [
         'Fundador de Revolution Wealth, firma afiliada a GBM.',
@@ -489,7 +490,7 @@ export const carreraPagina = {
       { value: '+800', label: 'CLIENTES PREMIUM' },
       { value: '1', label: 'OFICINA CDMX' },
       { value: '∞', label: 'IMPACTO EN EL PATRIMONIO' },
-      { value: 'GBM', label: 'SOCIO ESTRATÉGICO' },
+      { value: 'GBM', logo: '/img/logo-gbm.svg', label: 'SOCIO ESTRATÉGICO' },
     ],
   },
   /** Figma 574:405 · "02 · Lo que nos distingue" */
@@ -526,8 +527,7 @@ export const carreraPagina = {
         cta: { label: 'VER PERFIL', href: links.vacantes },
       },
     ],
-    // PENDIENTE: exportar la foto "Foto · asesores" (Figma 616:346) a /img/carrera-asesores.webp
-    foto: null as string | null,
+    foto: '/img/carrera-asesores.webp' as string | null,
   },
   /** Figma 574:979 · "04 · Beneficios" */
   beneficios: {

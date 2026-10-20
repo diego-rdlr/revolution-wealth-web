@@ -8,13 +8,16 @@ interface Props {
 const { tagline = true } = Astro.props;
 ---
 
-<a class="brand" href="/" aria-label={brand.name}>
+<a class="brand" href="/" aria-label={`${brand.name}, ${brand.tagline} GBM`}>
   <img class="brand__logo" src="/img/logo-rwm-blanco.png" alt="" width="201" height="20" />
   {
     tagline && (
       <>
         <span class="brand__divider" aria-hidden="true" />
-        <span class="brand__tagline">{brand.tagline}</span>
+        <span class="brand__tagline">
+          {brand.tagline}
+          <img class="brand__gbm" src="/img/logo-gbm.svg" alt="GBM" width="54" height="15" />
+        </span>
       </>
     )
   }
@@ -40,6 +43,9 @@ const { tagline = true } = Astro.props;
     background: rgba(255, 255, 255, 0.2);
   }
   .brand__tagline {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
     font-family: var(--f-mono);
     font-size: var(--t-nav);
     line-height: 16px;
@@ -48,6 +54,10 @@ const { tagline = true } = Astro.props;
     color: var(--steel);
   }
   /* En laptops (1181–1500 px) el menú completo no cabe junto a la etiqueta: se oculta */
+  .brand__gbm {
+    width: 54px;
+    height: 15px;
+  }
   @media (max-width: 1500px) and (min-width: 1181px), (max-width: 760px) {
     .brand__divider,
     .brand__tagline {
