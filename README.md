@@ -57,7 +57,8 @@ El sitio se publica bajo **`/wealth`** (`base` y `outDir` en `astro.config.mjs`)
 - Las páginas se generan en `dist/wealth/`. Toda ruta interna pasa por `u()` (`src/config/base.ts`), que le agrega el prefijo.
 - `public-root/_redirects` se copia a `dist/_redirects` al compilar. Ahí van `wealth.html` → `/wealth/` (el header de revolution.inc apunta ahí) y las direcciones viejas (`/`, `/carrera`).
 - En Cloudflare, una **ruta** `revolution.inc/wealth*` (y `www.revolution.inc/wealth*`) manda esas visitas a este Worker. El resto de revolution.inc lo sigue sirviendo `revolution-inc-landing`.
-- **Header y footer:** `src/config/layout.ts` → `LAYOUT = 'propio'` (el de Figma, con "Asesor afiliado a GBM"); `'inc'` usa los de revolution.inc (`src/components/inc/`).
+- **Header:** `src/components/Nav.astro`, armonizado con el de revolution.inc (57 px, mismos botones Media · Education · Wealth · Capital · Nosotros). A la izquierda, el isotipo Ø lleva al home de revolution.inc y el logo de Revolution Wealth + "Asesor afiliado a GBM" a `/wealth`. Los enlaces salen de `inc.nav` en `src/data/wealth.ts`; si revolution.inc cambia su menú, se actualiza ahí.
+- **Footer:** `src/config/layout.ts` → `LAYOUT = 'propio'` usa el de Revolution Wealth; `'inc'` usa header y footer de revolution.inc (`src/components/inc/`).
 
 ## Configuración de Cloudflare (Workers)
 

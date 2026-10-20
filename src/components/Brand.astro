@@ -1,41 +1,53 @@
 ---
+// Marca del header: isotipo Ø de Revolution Inc (lleva al home de revolution.inc)
+// + logo de Revolution Wealth (lleva a /wealth) + "Asesor afiliado a [GBM]".
+// Convención marca madre / submarca: el sello de la casa a la izquierda y el producto al lado.
 import { u } from '../config/base';
-import { brand } from '../data/wealth';
-
-interface Props {
-  /** Muestra "Asesor afiliado a GBM" junto al logo (solo en el menú). */
-  tagline?: boolean;
-}
-const { tagline = true } = Astro.props;
+import { brand, inc } from '../data/wealth';
 ---
 
-<a class="brand" href={u('/')} aria-label={`${brand.name}, ${brand.tagline} GBM`}>
-  <img class="brand__logo" src={u('/img/logo-rwm-blanco.png')} alt="" width="201" height="20" />
-  {
-    tagline && (
-      <>
-        <span class="brand__divider" aria-hidden="true" />
-        <span class="brand__tagline">
-          {brand.tagline}
-          <img class="brand__gbm" src={u('/img/logo-gbm.svg')} alt="GBM" width="54" height="15" />
-        </span>
-      </>
-    )
-  }
-</a>
+<div class="brand">
+  <a class="brand__casa" href={inc.home} aria-label="Revolution Inc. — inicio" title="Revolution Inc.">
+    <img src={u('/img/inc-isotipo.svg')} alt="" width="17" height="17" />
+  </a>
+  <span class="brand__divider" aria-hidden="true"></span>
+  <a class="brand__wealth" href={u('/')} aria-label={`${brand.name}, ${brand.tagline} GBM`}>
+    <img class="brand__logo" src={u('/img/logo-rwm-blanco.png')} alt="" width="181" height="18" />
+    <span class="brand__divider brand__divider--tag" aria-hidden="true"></span>
+    <span class="brand__tagline">
+      {brand.tagline}
+      <img class="brand__gbm" src={u('/img/logo-gbm.svg')} alt="GBM" width="54" height="15" />
+    </span>
+  </a>
+</div>
 
 <style>
   .brand {
     display: inline-flex;
     align-items: center;
-    gap: 16px;
+    gap: 14px;
+    flex: none;
+  }
+  .brand a {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
     min-height: 44px; /* área táctil cómoda */
     text-decoration: none;
     white-space: nowrap;
   }
+  .brand__casa img {
+    width: 17px;
+    height: 17px;
+    opacity: 0.85;
+    transition: opacity 0.25s ease;
+  }
+  .brand__casa:hover img {
+    opacity: 1;
+  }
   .brand__logo {
-    width: 201px;
-    height: 20px;
+    width: 181px;
+    height: 18px;
     object-fit: contain;
   }
   .brand__divider {
@@ -48,27 +60,31 @@ const { tagline = true } = Astro.props;
     align-items: center;
     gap: 9px;
     font-family: var(--f-mono);
-    font-size: var(--t-nav);
+    font-size: 11px;
     line-height: 16px;
     letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--steel);
   }
-  /* En laptops (1181–1500 px) el menú completo no cabe junto a la etiqueta: se oculta */
   .brand__gbm {
     width: 54px;
     height: 15px;
   }
-  @media (max-width: 1500px) and (min-width: 1181px), (max-width: 760px) {
-    .brand__divider,
+  /* En laptops el menú completo no cabe junto a la etiqueta: se oculta (igual en celular) */
+  @media (max-width: 1500px) and (min-width: 981px), (max-width: 760px) {
+    .brand__divider--tag,
     .brand__tagline {
       display: none;
     }
   }
   @media (max-width: 380px) {
+    .brand,
+    .brand a {
+      gap: 10px;
+    }
     .brand__logo {
-      width: 170px;
-      height: 17px;
+      width: 151px;
+      height: 15px;
     }
   }
 </style>

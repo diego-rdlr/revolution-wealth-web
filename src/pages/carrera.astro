@@ -15,7 +15,7 @@ import { carreraPagina } from '../data/wealth';
 ---
 
 <Base title={carreraPagina.meta.title} description={carreraPagina.meta.description}>
-  {LAYOUT === 'inc' ? <IncNav /> : <Nav nav={carreraPagina.nav} />}
+  {LAYOUT === 'inc' ? <IncNav /> : <Nav />}
   <main>
     <HeroCarrera />
     <Distingue />

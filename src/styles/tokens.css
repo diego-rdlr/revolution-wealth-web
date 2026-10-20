@@ -67,26 +67,16 @@
   --gutter: clamp(1rem, 5vw, 5rem);
   --content: 90rem;
   --section-y: clamp(5rem, 3rem + 6vw, 8.75rem); /* 140 */
-  --nav-h: 90px; /* 22 + botón de 46 + 22 */
+  --nav-h: 57px; /* mismo alto que el header de revolution.inc */
   --radius: 15px;
   --radius-sm: 10px;
   --shadow-card: 0 12px 28px -4px rgba(0, 0, 0, 0.06), 0 2px 6px 0 rgba(0, 0, 0, 0.07);
 }
 
-@media (max-width: 1180px) {
-  :root {
-    --nav-h: 64px;
-  }
-}
 @media (max-width: 600px) {
   :root {
     --section-y: 4.5rem; /* 72 px: menos aire vertical en celular */
   }
-}
-
-/* Con el header de revolution.inc (57 px de alto) */
-html.layout-inc {
-  --nav-h: 57px;
 }
 
 /* ——— Temas por sección ———
