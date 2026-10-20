@@ -1,4 +1,5 @@
 ---
+import { u } from '../config/base';
 // 07 · Fundadores (Figma 425:541). Sección oscura: encabezado + 3 tarjetas con
 // foto, cargo, nombre y trayectoria. Resplandores azules y grano como en Figma.
 // Con animaciones activas las tarjetas suben en cascada y la foto se acerca un poco.
@@ -9,8 +10,8 @@ import { fundadores } from '../data/wealth';
 
 <section id="fundadores" class="section theme-dark founders" aria-labelledby="fundadores-title">
   <div class="atmos" aria-hidden="true">
-    <img class="founders__glow founders__glow--l" src="/img/fundadores-resplandor-izq.svg" alt="" />
-    <img class="founders__glow founders__glow--r" src="/img/fundadores-resplandor-der.svg" alt="" />
+    <img class="founders__glow founders__glow--l" src={u('/img/fundadores-resplandor-izq.svg')} alt="" />
+    <img class="founders__glow founders__glow--r" src={u('/img/fundadores-resplandor-der.svg')} alt="" />
     <div class="atmos__grain founders__grain"></div>
   </div>
 

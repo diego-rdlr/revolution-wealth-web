@@ -15,13 +15,16 @@ import Preguntas from '../components/Preguntas.astro';
 import Carrera from '../components/Carrera.astro';
 import Comienza from '../components/Comienza.astro';
 import Footer from '../components/Footer.astro';
+import IncNav from '../components/inc/IncNav.astro';
+import IncFooter from '../components/inc/IncFooter.astro';
+import { LAYOUT } from '../config/layout';
 ---
 
 <Base
   title="Revolution Wealth · Asesoría patrimonial personalizada"
   description="Habla con un asesor financiero certificado de Revolution Wealth y agenda tu primera sesión de estrategia. Tus recursos siempre en tu propia cuenta de GBM."
 >
-  <Nav />
+  {LAYOUT === 'inc' ? <IncNav /> : <Nav />}
   <main>
     <Hero />
     <Expertos />
@@ -37,5 +40,5 @@ import Footer from '../components/Footer.astro';
     <Carrera />
     <Comienza />
   </main>
-  <Footer />
+  {LAYOUT === 'inc' ? <IncFooter /> : <Footer />}
 </Base>

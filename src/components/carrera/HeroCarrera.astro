@@ -1,4 +1,5 @@
 ---
+import { u } from '../../config/base';
 // Subpágina /carrera · 01 Hero (Figma 578:379).
 // Banner con la foto del equipo, logo + titular a la izquierda, tarjeta de vidrio
 // a la derecha y la fila de credenciales debajo (mismo componente que el hero principal).
@@ -15,8 +16,8 @@ const { hero } = carreraPagina;
     <div class="hcar__frame" aria-hidden="true">
       <img
         class="hcar__photo"
-        src="/img/carrera-equipo-1568.webp"
-        srcset="/img/carrera-equipo-900.webp 900w, /img/carrera-equipo-1568.webp 1568w"
+        src={u('/img/carrera-equipo-1568.webp')}
+        srcset={u('/img/carrera-equipo-900.webp') + ' 900w' + ", " + u('/img/carrera-equipo-1568.webp') + ' 1568w'}
         sizes="100vw"
         alt=""
         width="1568"
@@ -29,7 +30,7 @@ const { hero } = carreraPagina;
 
     <div class="container hcar__content">
       <div class="hcar__titular">
-        <img class="hcar__logo" src="/img/logo-rwm-blanco.png" alt="Revolution Wealth" width="300" height="30" />
+        <img class="hcar__logo" src={u('/img/logo-rwm-blanco.png')} alt="Revolution Wealth" width="300" height="30" />
         <Title lines={hero.title} as="h1" size="h1" id="carrera-hero-title" class="hcar__title" />
       </div>
       <div class="hcar__card" data-reveal>

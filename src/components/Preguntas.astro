@@ -1,4 +1,5 @@
 ---
+import { u } from '../config/base';
 // Sección 10 · Preguntas frecuentes (Figma 426:536). Tema claro.
 // Izquierda: titular + tarjeta de contacto. Derecha: acordeón con <details>/<summary>
 // (funciona con teclado y sin JavaScript). La 01 va abierta, como en el diseño.
@@ -54,8 +55,8 @@ const faqLd = {
               </span>
               <span class="faq__q">{it.pregunta}</span>
               <span class="faq__icon" aria-hidden="true">
-                <img class="faq__icon-mas" src="/img/preguntas-icono-mas.svg" alt="" width="36" height="36" />
-                <img class="faq__icon-menos" src="/img/preguntas-icono-menos.svg" alt="" width="36" height="36" />
+                <img class="faq__icon-mas" src={u('/img/preguntas-icono-mas.svg')} alt="" width="36" height="36" />
+                <img class="faq__icon-menos" src={u('/img/preguntas-icono-menos.svg')} alt="" width="36" height="36" />
               </span>
             </summary>
             <div class="faq__answer">

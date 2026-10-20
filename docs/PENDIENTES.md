@@ -28,7 +28,7 @@ El original de Marisol es `jS424JGWQITz5Lx9SPIRTs`.
 
 - [x] `agenda`: Microsoft Form de "Comenzar mi análisis patrimonial" del sitio actual (abre en otra pestaña).
 - [x] `vacantes`: formulario de Google de "Únete al equipo".
-- [ ] Aviso de privacidad (footer).
+- [x] Aviso de privacidad: https://revoluciondelariqueza.com/aviso-de-privacidad/ (el mismo de revolution.inc).
 - [x] Wealth Club y Wealth Mastery con sus URLs de revoluciondelariqueza.com; Revolution Media va a revolution.inc.
 
 ## Subpágina /carrera (Figma `04c Wealth · Sumate a el equipo`, frame 574:337)
@@ -45,6 +45,12 @@ Construida desde el Figma y las capturas de diseño del 20-oct (titulares, boton
 - [x] Nombres del carrusel de equipo y títulos de tarjeta de /carrera en sans (Geist 30/32), como se ven en Figma
       (las capas dicen Feature Display Light, pero diseño las ve en sans).
 - [ ] Licencia web de Feature: confirmar que cubre el dominio final (igual que en Capital).
+
+## revolution.inc/wealth
+
+- [ ] Cloudflare: ruta `revolution.inc/wealth*` y `www.revolution.inc/wealth*` → Worker `revolution-wealth-web`.
+- [ ] Cloudflare: Redirect Rule `revolutionwealth.revolution.inc/*` → `https://revolution.inc/wealth/*` (301).
+- [ ] Con el header de revolution.inc ya no se ve "Asesor afiliado a GBM" en el menú: confirmar con Marisol si va en otro lugar.
 
 ## Antes de publicar
 

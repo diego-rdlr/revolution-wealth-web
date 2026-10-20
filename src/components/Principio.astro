@@ -1,4 +1,5 @@
 ---
+import { u } from '../config/base';
 // Sección 05 · "Principio" (Figma 424:575).
 // Banda oscura con el horizonte de luz, frase centrada y el botón "Empieza hoy".
 import Kicker from './Kicker.astro';
@@ -11,8 +12,8 @@ import { principio } from '../data/wealth';
   <div class="atmos" aria-hidden="true">
     <img
       class="atmos__photo principio__foto"
-      src="/img/principio-fondo-horizonte-1600.webp"
-      srcset="/img/principio-fondo-horizonte-900.webp 900w, /img/principio-fondo-horizonte-1600.webp 1600w"
+      src={u('/img/principio-fondo-horizonte-1600.webp')}
+      srcset={u('/img/principio-fondo-horizonte-900.webp') + ' 900w' + ", " + u('/img/principio-fondo-horizonte-1600.webp') + ' 1600w'}
       sizes="100vw"
       alt=""
       width="1600"
@@ -21,7 +22,7 @@ import { principio } from '../data/wealth';
       data-parallax="0.1"
     />
     <div class="atmos__veil principio__velo"></div>
-    <img class="atmos__glow principio__glow" src="/img/principio-resplandor.svg" alt="" width="1340" height="860" />
+    <img class="atmos__glow principio__glow" src={u('/img/principio-resplandor.svg')} alt="" width="1340" height="860" />
     <div class="atmos__grain principio__grano"></div>
   </div>
 

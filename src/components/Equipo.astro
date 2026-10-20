@@ -1,4 +1,5 @@
 ---
+import { u } from '../config/base';
 // 07b · Equipo (Figma 538:490): carrusel de asesores.
 // La lista vive en src/data/wealth.ts (una línea por persona).
 // Carrusel = scroll horizontal nativo con "snap" (swipe táctil gratis) + un JS
@@ -73,10 +74,10 @@ const paginas = Math.ceil(total / porPagina);
       </div>
       <div class="carrusel__flechas">
         <button type="button" class="carrusel__flecha" aria-label="Anteriores" data-prev disabled>
-          <img src="/img/equipo-chevron-izq.svg" alt="" width="7.6" height="13.6" />
+          <img src={u('/img/equipo-chevron-izq.svg')} alt="" width="7.6" height="13.6" />
         </button>
         <button type="button" class="carrusel__flecha" aria-label="Siguientes" data-next>
-          <img src="/img/equipo-chevron-der.svg" alt="" width="7.6" height="13.6" />
+          <img src={u('/img/equipo-chevron-der.svg')} alt="" width="7.6" height="13.6" />
         </button>
       </div>
     </div>

@@ -1,4 +1,5 @@
 ---
+import { u } from '../config/base';
 // Sección 13 · Footer (Figma 426:669). Marca + tres columnas de enlaces,
 // aviso legal y renglón final con el año y las cuatro áreas.
 import { brand } from '../data/wealth';
@@ -9,8 +10,8 @@ import { footer } from '../data/wealth';
   <div class="container">
     <div class="footer__top">
       <div class="footer__brand">
-        <a href="/" aria-label={brand.name}>
-          <img src="/img/logo-rwm-blanco.png" alt="" width="241" height="24" loading="lazy" />
+        <a href={u('/')} aria-label={brand.name}>
+          <img src={u('/img/logo-rwm-blanco.png')} alt="" width="241" height="24" loading="lazy" />
         </a>
         <p class="t-small footer__about">
           {footer.about.map((line) => <span>{line}</span>)}

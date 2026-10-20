@@ -1,7 +1,9 @@
 ---
+import { u } from '../config/base';
 import '../styles/global.css';
 import Motion from '../components/Motion.astro';
 import { MOTION_ENABLED } from '../config/motion';
+import { LAYOUT } from '../config/layout';
 
 interface Props {
   title: string;
@@ -12,18 +14,18 @@ const { title, description } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="es">
+<html lang="es" class:list={[`layout-${LAYOUT}`]}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="description" content={description} />
     <meta name="robots" content="noindex" />
     <meta name="theme-color" content="#0a0a0a" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <link rel="manifest" href="/site.webmanifest" />
-    <link rel="preload" href="/fonts/FeatureDisplay-Light.ttf" as="font" type="font/ttf" crossorigin />
+    <link rel="icon" type="image/png" sizes="32x32" href={u('/favicon-32.png')} />
+    <link rel="icon" type="image/png" sizes="16x16" href={u('/favicon-16.png')} />
+    <link rel="apple-touch-icon" href={u('/apple-touch-icon.png')} />
+    <link rel="manifest" href={u('/site.webmanifest')} />
+    <link rel="preload" href={u('/fonts/FeatureDisplay-Light.ttf')} as="font" type="font/ttf" crossorigin />
     <title>{title}</title>
     {MOTION_ENABLED && <Motion />}
   </head>

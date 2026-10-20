@@ -1,0 +1,8 @@
+# Redirecciones del Worker (archivos estáticos de Cloudflare). Se copian a dist/_redirects al compilar.
+# El header de revolution.inc apunta a wealth.html: llega aquí por la ruta revolution.inc/wealth*.
+/wealth.html        /wealth/          301
+/wealth             /wealth/          301
+# Direcciones anteriores a la mudanza a /wealth (revolutionwealth.revolution.inc y workers.dev)
+/carrera            /wealth/carrera/  301
+/carrera/           /wealth/carrera/  301
+/                   /wealth/          302
