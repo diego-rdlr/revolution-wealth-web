@@ -46,7 +46,7 @@ const paginas = Math.ceil(total / porPagina);
                 <span class="persona__pendiente">{equipo.placeholder}</span>
               )}
             </div>
-            <p class="t-h3 persona__nombre">{p.nombre}</p>
+            <p class="persona__nombre">{p.nombre}</p>
             <p class="persona__puesto">{p.puesto}</p>
             <span class="persona__linea" aria-hidden="true" />
           </li>
@@ -301,9 +301,15 @@ const paginas = Math.ceil(total / porPagina);
     text-transform: uppercase;
     color: #878a94; /* Figma: gris del placeholder */
   }
+  /* Figma: el nombre se ve en sans (Geist) aunque su estilo diga Feature; se sigue lo que se ve */
   .persona__nombre {
     min-height: 64px; /* dos renglones: los puestos quedan alineados */
     margin-top: 6px;
+    font-family: var(--f-body);
+    font-weight: 400;
+    font-size: 30px;
+    line-height: 32px;
+    letter-spacing: -0.01em;
     color: var(--ink);
     text-wrap: pretty;
   }

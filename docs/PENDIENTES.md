@@ -33,22 +33,16 @@ El original de Marisol es `jS424JGWQITz5Lx9SPIRTs`.
 
 ## Subpágina /carrera (Figma `04c Wealth · Sumate a el equipo`, frame 574:337)
 
-Construida con la estructura y los textos del Figma. A media construcción Figma cortó el acceso
-(límite de consultas del plan Starter), así que estos detalles van provisionales y marcados `PENDIENTE` en `carreraPagina`:
+Construida desde el Figma y las capturas de diseño del 20-oct (titulares, botones e íconos ya confirmados).
 
-- [ ] Titular de "Oportunidades abiertas" (nodo 581:353). Hoy: "Oportunidades abiertas."
-- [ ] Titular de "Beneficios" (nodo 584:351). Hoy: "Una carrera con propósito."
-- [ ] Etiquetas de los dos botones de "Beneficios" (574:988 y 574:3610). Hoy: "Postúlate" y "Vacantes".
-- [ ] Íconos de las vacantes y de los beneficios (se reusan íconos del sitio).
-- [ ] Fondo de "Oportunidades": se usa el mismo de Servicios; confirmar que es el del Figma.
 - [ ] Ambas vacantes llevan al mismo Google Form; si cada una tiene su formulario, cambiar `cta.href` de cada una.
 
 ## Diseño
 
 - [x] **Source Serif 4** (OFL, vía `@fontsource/source-serif-4`) en títulos de tarjeta, nombres de fundadores,
       marcas del ecosistema y cifras de Servicios, como pide Figma.
-- [ ] Nombres del carrusel de equipo: Figma los define en Feature Display Light 30/32 (así están en el sitio),
-      pero el archivo los pinta con una fuente de sustitución sin serifa. Confirmar con Marisol cuál quiere.
+- [x] Nombres del carrusel de equipo y títulos de tarjeta de /carrera en sans (Geist 30/32), como se ven en Figma
+      (las capas dicen Feature Display Light, pero diseño las ve en sans).
 - [ ] Licencia web de Feature: confirmar que cubre el dominio final (igual que en Capital).
 
 ## Antes de publicar
