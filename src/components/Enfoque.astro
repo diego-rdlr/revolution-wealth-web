@@ -21,7 +21,7 @@ import { enfoque } from '../data/wealth';
     <ol class="enfoque__principios" data-reveal>
       {
         enfoque.principios.map((p, i) => (
-          <li class="card principio" style={`--i: ${i}`}>
+          <li class="card principio lift" style={`--i: ${i}`}>
             <span class="principio__acento" aria-hidden="true" />
             <span class="principio__num">{String(i + 1).padStart(2, '0')}</span>
             <h3 class="principio__title">{p.title}</h3>
@@ -125,7 +125,12 @@ import { enfoque } from '../data/wealth';
       transform 0.9s cubic-bezier(0.2, 0.7, 0.1, 1);
   }
   :global(html.motion) .enfoque .principio {
-    transition-delay: calc(var(--i) * 120ms);
+    /* Retraso solo para la entrada; la elevación del hover (.lift) responde al instante */
+    transition:
+      opacity 0.8s cubic-bezier(0.2, 0.7, 0.1, 1) calc(var(--i) * 120ms),
+      transform 0.9s cubic-bezier(0.2, 0.7, 0.1, 1) calc(var(--i) * 120ms),
+      translate 0.6s cubic-bezier(0.2, 0.7, 0.1, 1),
+      box-shadow 0.6s cubic-bezier(0.2, 0.7, 0.1, 1);
   }
   :global(html.motion) .enfoque__mision.is-in,
   :global(html.motion) .enfoque__principios.is-in .principio {

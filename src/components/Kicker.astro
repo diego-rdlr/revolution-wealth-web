@@ -9,7 +9,7 @@ const { text, line = true } = Astro.props;
 const spaced = text.replaceAll(' · ', '  ·  ');
 ---
 
-<p class:list={['kicker', { 'kicker--line': line }]}>{spaced}</p>
+<p class:list={['kicker', { 'kicker--line': line }]} data-reveal>{spaced}</p>
 
 <style>
   .kicker {
@@ -31,6 +31,14 @@ const spaced = text.replaceAll(' · ', '  ·  ');
     height: 1px;
     flex: none;
     background: currentColor;
+  }
+  /* Firma editorial: el kicker (línea + texto) se traza de izquierda a derecha */
+  :global(html.motion) .kicker {
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 1.1s var(--ease-out);
+  }
+  :global(html.motion) .kicker.is-in {
+    clip-path: inset(0 0 0 0);
   }
   @media (max-width: 600px) {
     .kicker {

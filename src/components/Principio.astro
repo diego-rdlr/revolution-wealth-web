@@ -7,7 +7,7 @@ import Button from './Button.astro';
 import { principio } from '../data/wealth';
 ---
 
-<section id="principio" class="section theme-dark principio" aria-labelledby="principio-title">
+<section id="principio" class="section theme-dark principio" aria-labelledby="principio-title" data-reveal>
   <div class="atmos" aria-hidden="true">
     <img
       class="atmos__photo principio__foto"
@@ -18,6 +18,7 @@ import { principio } from '../data/wealth';
       width="1600"
       height="900"
       loading="lazy"
+      data-parallax="0.1"
     />
     <div class="atmos__veil principio__velo"></div>
     <img class="atmos__glow principio__glow" src="/img/principio-resplandor.svg" alt="" width="1340" height="860" />
@@ -99,5 +100,26 @@ import { principio } from '../data/wealth';
     .principio__cta :global(.btn--primary) {
       font-size: 14px;
     }
+  }
+
+  /* "El segundo mejor momento es hoy": al llegar, el horizonte se ilumina como un amanecer
+     (la luz sube y se enciende mientras la frase aparece). */
+  :global(html.motion) .principio .principio__glow {
+    opacity: 0;
+    translate: 0 90px;
+    transition:
+      opacity 2.4s cubic-bezier(0.22, 1, 0.36, 1) 0.2s,
+      translate 2.6s cubic-bezier(0.22, 1, 0.36, 1) 0.2s;
+  }
+  :global(html.motion) .principio .principio__foto {
+    filter: brightness(0.4);
+    transition: filter 2.6s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  :global(html.motion) .principio.is-in .principio__glow {
+    opacity: 1;
+    translate: none;
+  }
+  :global(html.motion) .principio.is-in .principio__foto {
+    filter: none;
   }
 </style>

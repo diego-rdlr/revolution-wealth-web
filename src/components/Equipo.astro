@@ -38,7 +38,7 @@ const paginas = Math.ceil(total / porPagina);
       <ul class="carrusel__lista" data-lista>
       {
         equipo.personas.map((p) => (
-          <li class="persona">
+          <li class="persona lift">
             <div class="persona__foto">
               {p.foto ? (
                 <img src={p.foto} alt={p.nombre} width="460" height="460" loading="lazy" decoding="async" draggable="false" />
@@ -247,12 +247,15 @@ const paginas = Math.ceil(total / porPagina);
     scroll-padding-inline: var(--borde);
     scrollbar-width: none;
     cursor: grab;
+    margin-block: -4px -22px;
   }
   .carrusel__lista {
     display: flex;
     gap: 24px;
     width: max-content;
-    padding: 8px var(--borde) 18px;
+    /* Aire extra arriba y abajo para que la elevación y la sombra del hover no se corten
+       (el margen negativo de la pista lo compensa y el diseño no se mueve) */
+    padding: 12px var(--borde) 40px;
   }
   .carrusel__pista::-webkit-scrollbar {
     display: none;
