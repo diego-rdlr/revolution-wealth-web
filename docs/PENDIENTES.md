@@ -50,7 +50,7 @@ Construida desde el Figma y las capturas de diseño del 20-oct (titulares, boton
 
 - [ ] Cloudflare: ruta `revolution.inc/wealth*` y `www.revolution.inc/wealth*` → Worker `revolution-wealth-web`.
 - [ ] Cloudflare: Redirect Rule `revolutionwealth.revolution.inc/*` → `https://revolution.inc/wealth/*` (301).
-- [ ] Con el header de revolution.inc ya no se ve "Asesor afiliado a GBM" en el menú: confirmar con Marisol si va en otro lugar.
+- [x] Header: se queda el de Revolution Wealth con "Asesor afiliado a GBM", como en Figma (`LAYOUT = 'propio'`).
 
 ## Antes de publicar
 

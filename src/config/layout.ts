@@ -1,10 +1,11 @@
 /**
  * Header y footer del sitio.
  *
- * 'inc'    → los de revolution.inc: la página vive dentro del layout de Revolution Inc
- *            (revolution.inc/wealth), como pidió Vini el 20-oct.
- * 'propio' → el menú y footer propios de Revolution Wealth (con sus anclas a cada sección).
+ * 'propio' → el menú y footer de Revolution Wealth, como en Figma ("Asesor afiliado a [GBM]"
+ *            junto al logo y anclas a cada sección). Es el que va (decisión del 21-oct).
+ * 'inc'    → los de revolution.inc (src/components/inc/), por si se decide integrar la página
+ *            al layout de Revolution Inc.
  *
  * Cambiar este valor, hacer merge y listo.
  */
-export const LAYOUT: 'inc' | 'propio' = 'inc';
+export const LAYOUT: 'inc' | 'propio' = 'propio';
