@@ -13,8 +13,12 @@ export type Title = [string, string];
 /** Enlaces que salen del sitio o que todavía están por definir (ver docs/PENDIENTES.md). */
 export const links = {
   /** CTA principal ("Agenda tu sesión", "Comenzar mi análisis patrimonial", "Empieza hoy",
-   *  "Contactar a un asesor"): el formulario de perfil de inversión, conectado a HubSpot. */
-  agenda: u('/perfil'),
+   *  "Contactar a un asesor"). Por ahora el Microsoft Form del sitio actual.
+   *  PENDIENTE: cambiar a `perfil` en cuanto el formulario esté conectado a HubSpot (docs/HUBSPOT-PERFIL.md). */
+  agenda:
+    'https://forms.office.com/pages/responsepage.aspx?id=SsUEMUpKMked1DTOMJunxEL0r7geOTNOhEcZMIHL08NUMzUxNlhTUk4yVUZURTZGUkZMU09aTEc1TS4u&route=shorturl',
+  /** Formulario "Perfil de inversión" (/wealth/perfil), conectado a HubSpot. Aún sin enlazar. */
+  perfil: u('/perfil'),
   /** "Ver oportunidades" de la página principal: la subpágina de carrera. */
   carrera: u('/carrera'),
   /** "Ver perfil" de cada vacante: formulario de Google de "Únete al equipo" (el de revolutionwm.com/carrera). */
@@ -292,9 +296,9 @@ export const ecosistema = {
   aqui: 'ESTÁS AQUÍ',
   divisiones: [
     { marca: 'Media', sub: 'PODCAST · REDES · NEWSLETTER', icono: u('/img/ecosistema-icono-media.png') },
-    { marca: 'Education', sub: 'WEALTH CLUB · WEALTH MASTERY', icono: u('/img/ecosistema-icono-education.png') },
+    { marca: 'Education', sub: 'WEALTH CLUB · WEALTH X', icono: u('/img/ecosistema-icono-education.png') },
     { marca: 'Wealth', sub: 'REVOLUTION WEALTH MANAGEMENT', icono: u('/img/ecosistema-icono-wealth.png'), actual: true },
-    { marca: 'Capital', sub: 'REVOLUTION CAPITAL · FUND II', icono: u('/img/ecosistema-icono-capital.png') },
+    { marca: 'Capital', sub: 'REVOLUTION CAPITAL', icono: u('/img/ecosistema-icono-capital.png') },
   ] as Division[],
 };
 
@@ -310,7 +314,7 @@ export const preguntas = {
     cta: { label: 'CONTACTAR A UN ASESOR', href: links.agenda },
   },
   /**
-   * Las 12 preguntas, en orden. Las preguntas son las del Figma; las respuestas
+   * Las preguntas, en orden. Las preguntas son las del Figma; las respuestas
    * de la 02 a la 12 salen del sitio actual revolutionwm.com (19-oct-2026).
    * La 01 es la versión corta que trae el Figma.
    * Cada línea del arreglo `respuesta` es un párrafo.
@@ -386,6 +390,10 @@ export const preguntas = {
       ],
     },
     {
+      pregunta: '¿Cuál es el monto mínimo para recibir asesoría?',
+      respuesta: ['Para contar con un asesor dedicado de Revolution Wealth, el monto mínimo es de $1 millón de pesos.'],
+    },
+    {
       pregunta: '¿Puedo dejar de recibir la asesoría?',
       respuesta: [
         'Sí.',
@@ -444,7 +452,7 @@ export const footer = {
     {
       title: 'CONTACTO',
       links: [
-        { label: 'Agenda tu sesión', href: links.agenda },
+        { label: 'Agenda tu sesión', href: links.agenda, external: true },
         { label: 'Preguntas frecuentes', href: u('/#preguntas') },
         { label: 'Carrera', href: links.carrera },
         { label: 'Aviso de privacidad', href: 'https://revoluciondelariqueza.com/aviso-de-privacidad/', external: true },
