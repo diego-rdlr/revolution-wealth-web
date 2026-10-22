@@ -248,10 +248,6 @@ const endpoint = HUBSPOT.perfilFormId ? hubspotSubmitUrl(HUBSPOT.perfilFormId) :
 
     // ——— Envío a HubSpot ———
     const cookie = (n: string) => document.cookie.match(new RegExp('(?:^|; )' + n + '=([^;]*)'))?.[1];
-    const rangoEdad = (iso: string) => {
-      const a = edad(iso);
-      return a <= 35 ? 'Menor de 35 años' : a <= 50 ? '36 a 50 años' : 'Más de 50 años';
-    };
     const envia = async () => {
       const endpoint = root.dataset.endpoint;
       const fields: { objectTypeId: string; name: string; value: string }[] = [];
@@ -260,10 +256,7 @@ const endpoint = HUBSPOT.perfilFormId ? hubspotSubmitUrl(HUBSPOT.perfilFormId) :
         if (el.name === 'privacidad' || el.disabled || !visible(el)) continue;
         if (el instanceof HTMLInputElement && el.type === 'radio' && !el.checked) continue;
         let v = el.value.trim();
-        if (el.name === 'fecha_de_nacimiento') {
-          add('cual_es_tu_edad', rangoEdad(v));
-          v = String(Date.parse(v + 'T00:00:00Z')); // HubSpot: fecha = medianoche UTC en milisegundos
-        }
+        if (el.name === 'fecha_de_nacimiento') v = String(Date.parse(v + 'T00:00:00Z')); // HubSpot: fecha = medianoche UTC en milisegundos
         if (el.name === 'monto_inicial_rwm') v = v.replace(/\D/g, '');
         add(el.name, v);
       }

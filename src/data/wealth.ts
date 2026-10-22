@@ -765,8 +765,7 @@ export const perfilPagina = {
       ],
     },
   ] as { titulo: string; campos: Campo[] }[],
-  /** La edad ya no se pregunta: se calcula de la fecha de nacimiento con los rangos de HubSpot */
-  edad: { name: 'cual_es_tu_edad', rangos: ['Menor de 35 años', '36 a 50 años', 'Más de 50 años'] },
+  /* La edad no se pregunta ni se envía: sale de la fecha de nacimiento cuando haga falta (perfil de riesgo). */
   montoMinimo: 1000000,
 };
 

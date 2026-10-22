@@ -52,8 +52,7 @@ El **nombre interno** debe quedar exactamente así (la web envía esos nombres).
 Configuración → Privacidad y consentimiento → Datos sensibles). Así solo la ve quien tenga ese permiso.
 
 Ya existen y se reusan (sus opciones coinciden con las del Microsoft Form):
-`firstname`, `lastname`, `email`, `phone`, `fecha_de_nacimiento` (fecha), `cual_es_tu_edad`
-(la web la calcula de la fecha de nacimiento), `cual_es_tu_horizonte_de_inversion`,
+`firstname`, `lastname`, `email`, `phone`, `fecha_de_nacimiento` (fecha; la edad ya no se pide ni se envía), `cual_es_tu_horizonte_de_inversion`,
 `cual_es_tu_nivel_de_experiencia_en_inversiones`, `cual_es_tu_objetivo_principal_de_inversion`,
 `que_porcentaje_de_tus_ingresos_estas_dispuesto_a_invertir`, `message`.
 
@@ -62,7 +61,7 @@ Ya existen y se reusan (sus opciones coinciden con las del Microsoft Form):
 1. Marketing → **Formularios** → Crear formulario → **Formulario incrustado**.
 2. Nombre: `RWM · Perfil de inversión (web)`.
 3. Agrega estos campos (todos, aunque la web sea la que pregunta):
-   `firstname`, `lastname`, `email`, `phone`, `fecha_de_nacimiento`, `cual_es_tu_edad`,
+   `firstname`, `lastname`, `email`, `phone`, `fecha_de_nacimiento`,
    `residencia_fiscal_rwm`, `tiene_contrato_gbm_rwm`, `curp_rwm`, `tiene_asesor_gbm_rwm`,
    `te_interesa_custodia_en_eua_gbm_houston`, `cual_es_tu_horizonte_de_inversion`, `cual_es_tu_nivel_de_experiencia_en_inversiones`,
    `que_harias_si_tu_inversion_pierde_10_en_un_mes`, `cual_es_tu_objetivo_principal_de_inversion`,
