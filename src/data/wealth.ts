@@ -13,12 +13,9 @@ export type Title = [string, string];
 /** Enlaces que salen del sitio o que todavía están por definir (ver docs/PENDIENTES.md). */
 export const links = {
   /** CTA principal ("Agenda tu sesión", "Comenzar mi análisis patrimonial", "Empieza hoy",
-   *  "Contactar a un asesor"). Por ahora el Microsoft Form del sitio actual.
-   *  PENDIENTE: cambiar a `perfil` en cuanto el formulario esté conectado a HubSpot (docs/HUBSPOT-PERFIL.md). */
-  agenda:
-    'https://forms.office.com/pages/responsepage.aspx?id=SsUEMUpKMked1DTOMJunxEL0r7geOTNOhEcZMIHL08NUMzUxNlhTUk4yVUZURTZGUkZMU09aTEc1TS4u&route=shorturl',
-  /** Formulario "Perfil de inversión" (/wealth/perfil), conectado a HubSpot. Aún sin enlazar. */
-  perfil: u('/perfil'),
+   *  "Contactar a un asesor"): el formulario "Perfil de inversión", conectado a HubSpot
+   *  (contacto + negocio en RWM · Llamada SDR; ver docs/HUBSPOT-PERFIL.md). */
+  agenda: u('/perfil'),
   /** "Ver oportunidades" de la página principal: la subpágina de carrera. */
   carrera: u('/carrera'),
   /** "Ver perfil" de cada vacante: formulario de Google de "Únete al equipo" (el de revolutionwm.com/carrera). */
@@ -453,7 +450,7 @@ export const footer = {
     {
       title: 'CONTACTO',
       links: [
-        { label: 'Agenda tu sesión', href: links.agenda, external: true },
+        { label: 'Agenda tu sesión', href: links.agenda },
         { label: 'Preguntas frecuentes', href: u('/#preguntas') },
         { label: 'Carrera', href: links.carrera },
         { label: 'Aviso de privacidad', href: 'https://revoluciondelariqueza.com/aviso-de-privacidad/', external: true },

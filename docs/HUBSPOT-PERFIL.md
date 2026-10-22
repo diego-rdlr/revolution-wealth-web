@@ -17,8 +17,8 @@ Pipeline **RWM** (`913042075`) → etapa **Llamada SDR** (`1387010726`). Ya exis
 
 - [x] Paso 1 · Propiedades de contacto (revisadas el 22-oct; ver nombres finales abajo)
 - [x] Paso 2 · Formulario en HubSpot (`d5adc9cd-28ec-4562-aebf-1c6f71b72997`), conectado en `src/config/hubspot.ts`. Envío real de prueba OK el 22-oct (19 propiedades).
-- [ ] Paso 3 · Workflow que crea el negocio
-- [ ] Paso 4 · Prueba de punta a punta
+- [x] Paso 3 · Workflow "RWM - Form a Llamada SDR" activo (22-oct): crea el negocio en RWM · Llamada SDR con el monto como valor, avisa al equipo RWM y no duplica si ya hay un negocio vivo en RWM. El propietario lo asigna otra automatización ("Revolution Wealth Management").
+- [x] Paso 4 · Prueba de punta a punta (22-oct): contacto con 20 propiedades, negocio creado en <30 s, tercer envío sin duplicar.
 - [ ] Perfil de riesgo calculado (cuando Vini pase la calificación; ver PENDIENTES.md)
 
 ---
