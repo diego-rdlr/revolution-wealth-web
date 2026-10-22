@@ -305,12 +305,6 @@ export const preguntas = {
   kicker: '08 · PREGUNTAS FRECUENTES',
   title: ['Preguntas', 'frecuentes.'] as Title,
   lede: 'Todo lo que necesitas saber antes de tu primera sesión: cómo trabajamos, dónde está tu dinero y cuánto cuesta.',
-  contacto: {
-    kicker: '¿TIENES OTRA PREGUNTA?',
-    title: 'Habla directamente con un asesor.',
-    text: 'Escríbenos o contacta a tu asesor de inversiones por cualquiera de nuestros canales.',
-    cta: { label: 'CONTACTAR A UN ASESOR', href: links.agenda },
-  },
   /**
    * Las preguntas, en orden. Las preguntas son las del Figma; las respuestas
    * de la 02 a la 12 salen del sitio actual revolutionwm.com (19-oct-2026).
