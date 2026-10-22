@@ -12,9 +12,13 @@ export type Title = [string, string];
 
 /** Enlaces que salen del sitio o que todavía están por definir (ver docs/PENDIENTES.md). */
 export const links = {
-  /** "Agenda tu sesión" / "Comenzar mi análisis patrimonial": el Microsoft Form del sitio actual (revolutionwm.com). */
+  /** CTA principal ("Agenda tu sesión", "Comenzar mi análisis patrimonial", "Empieza hoy",
+   *  "Contactar a un asesor"). Por ahora el Microsoft Form del sitio actual.
+   *  PENDIENTE: cambiar a `perfil` en cuanto el formulario esté conectado a HubSpot (docs/HUBSPOT-PERFIL.md). */
   agenda:
     'https://forms.office.com/pages/responsepage.aspx?id=SsUEMUpKMked1DTOMJunxEL0r7geOTNOhEcZMIHL08NUMzUxNlhTUk4yVUZURTZGUkZMU09aTEc1TS4u&route=shorturl',
+  /** Formulario "Perfil de inversión" (/wealth/perfil), conectado a HubSpot. Aún sin enlazar. */
+  perfil: u('/perfil'),
   /** "Ver oportunidades" de la página principal: la subpágina de carrera. */
   carrera: u('/carrera'),
   /** "Ver perfil" de cada vacante: formulario de Google de "Únete al equipo" (el de revolutionwm.com/carrera). */
@@ -244,7 +248,8 @@ export const equipo = {
   personas: [
     { nombre: 'Vinicius R. Ramos', puesto: 'CEO · REVOLUTION WEALTH', foto: u('/img/equipo-vinicius-r-ramos.webp') },
     { nombre: 'Hugo Rodrigo Solís', puesto: 'DIRECTOR DE ADVISORY', foto: u('/img/equipo-hugo-rodrigo-solis.webp') },
-    { nombre: 'Jesús Paz', puesto: 'INVESTMENT STRATEGIST', foto: null },
+    { nombre: 'Jesús Paz', puesto: 'INVESTMENT STRATEGIST', foto: u('/img/equipo-jesus-paz.webp') },
+    { nombre: 'Elena Araoz', puesto: 'ADMINISTRACIÓN & FINANZAS', foto: u('/img/equipo-elena-araoz.webp') },
     { nombre: 'María Fernanda López', puesto: 'BACK OFFICE', foto: u('/img/equipo-maria-fernanda-lopez.webp') },
     { nombre: 'Axel Méndez', puesto: 'BACK OFFICE', foto: u('/img/equipo-axel-mendez.webp') },
     { nombre: 'Camilo Parra', puesto: 'BACK OFFICE', foto: u('/img/equipo-camilo-parra.webp') },
@@ -292,9 +297,9 @@ export const ecosistema = {
   aqui: 'ESTÁS AQUÍ',
   divisiones: [
     { marca: 'Media', sub: 'PODCAST · REDES · NEWSLETTER', icono: u('/img/ecosistema-icono-media.png') },
-    { marca: 'Education', sub: 'WEALTH CLUB · WEALTH MASTERY', icono: u('/img/ecosistema-icono-education.png') },
+    { marca: 'Education', sub: 'WEALTH CLUB · WEALTH X', icono: u('/img/ecosistema-icono-education.png') },
     { marca: 'Wealth', sub: 'REVOLUTION WEALTH MANAGEMENT', icono: u('/img/ecosistema-icono-wealth.png'), actual: true },
-    { marca: 'Capital', sub: 'REVOLUTION CAPITAL · FUND II', icono: u('/img/ecosistema-icono-capital.png') },
+    { marca: 'Capital', sub: 'REVOLUTION CAPITAL', icono: u('/img/ecosistema-icono-capital.png') },
   ] as Division[],
 };
 
@@ -310,7 +315,7 @@ export const preguntas = {
     cta: { label: 'CONTACTAR A UN ASESOR', href: links.agenda },
   },
   /**
-   * Las 12 preguntas, en orden. Las preguntas son las del Figma; las respuestas
+   * Las preguntas, en orden. Las preguntas son las del Figma; las respuestas
    * de la 02 a la 12 salen del sitio actual revolutionwm.com (19-oct-2026).
    * La 01 es la versión corta que trae el Figma.
    * Cada línea del arreglo `respuesta` es un párrafo.
@@ -384,6 +389,10 @@ export const preguntas = {
       respuesta: [
         'La estructura de honorarios se explica de forma clara y transparente antes de iniciar la relación de asesoría. No cobramos comisiones ocultas ni incentivos por recomendar productos específicos.',
       ],
+    },
+    {
+      pregunta: '¿Cuál es el monto mínimo para recibir asesoría?',
+      respuesta: ['Para contar con un asesor dedicado de Revolution Wealth, el monto mínimo es de $1 millón de pesos.'],
     },
     {
       pregunta: '¿Puedo dejar de recibir la asesoría?',
@@ -595,5 +604,167 @@ export const inc = {
     legal:
       'El contenido de este sitio es informativo y educativo. No constituye asesoría de inversión personalizada, ni una recomendación de compra o venta de instrumentos financieros. Rendimientos pasados no garantizan resultados futuros.',
   },
+};
+
+/* ——————————————————————————————————————————————————————————————
+ * Página /perfil · "Perfil de inversión"
+ * Reemplaza al Microsoft Form "Cuestionario de Alta de Cliente y Perfil de Riesgo"
+ * (mismas preguntas y opciones). Cada `name` es la propiedad de contacto en HubSpot:
+ * las que terminan en _rwm se crean con docs/HUBSPOT-PERFIL.md; las demás ya existían.
+ * —————————————————————————————————————————————————————————————— */
+
+export type Opcion = string;
+export interface Campo {
+  name: string;
+  label: string;
+  tipo: 'texto' | 'email' | 'tel' | 'fecha' | 'opciones' | 'monto' | 'curp' | 'area';
+  opciones?: Opcion[];
+  ayuda?: string;
+  placeholder?: string;
+  opcional?: boolean;
+  /** Solo se muestra (y se exige) si otra respuesta tiene cierto valor */
+  si?: { campo: string; valor: string };
+}
+
+export const perfilPagina = {
+  meta: {
+    title: 'Perfil de inversión · Revolution Wealth',
+    description:
+      'Cuéntanos de ti y de tus objetivos para preparar tu primera sesión de estrategia con un asesor certificado de Revolution Wealth.',
+  },
+  kicker: 'Perfil de inversión',
+  title: ['Comienza tu', 'análisis patrimonial.'] as Title,
+  lede: 'Cuéntanos de ti y de tus objetivos. Con esto, un asesor certificado prepara tu primera sesión de estrategia y la apertura de tu contrato con Revolution Wealth + GBM.',
+  pasosSiguientes: [
+    'Un asesor revisa tus respuestas y te contacta para agendar tu llamada.',
+    'Definimos tu perfil de riesgo y una propuesta a la medida.',
+    'Abres o migras tu contrato en GBM: tus recursos siempre a tu nombre.',
+  ],
+  nota: 'Toma alrededor de 5 minutos. Tus datos se tratan conforme a nuestro aviso de privacidad.',
+  privacidad: {
+    texto: 'Acepto el aviso de privacidad y autorizo a Revolution Wealth Management a tratar mis datos para darme seguimiento.',
+    href: 'https://revoluciondelariqueza.com/aviso-de-privacidad/',
+  },
+  gracias: {
+    title: ['Gracias.', 'Ya tenemos tu perfil.'] as Title,
+    texto: 'Un asesor de Revolution Wealth revisará tus respuestas y te contactará en las próximas 24 horas hábiles para agendar tu primera sesión de estrategia.',
+    cta: { label: 'Volver a Revolution Wealth', href: u('/') },
+  },
+  error:
+    'No pudimos enviar tu información. Intenta de nuevo en un momento; si el problema sigue, escríbenos y lo resolvemos.',
+  pasos: [
+    {
+      titulo: 'Tus datos',
+      campos: [
+        { name: 'firstname', label: 'Nombre(s)', tipo: 'texto' },
+        { name: 'lastname', label: 'Apellidos', tipo: 'texto' },
+        { name: 'email', label: 'Correo electrónico', tipo: 'email' },
+        { name: 'phone', label: 'Teléfono (con código de país)', tipo: 'tel', placeholder: '+52 55 1234 5678' },
+        { name: 'fecha_de_nacimiento', label: 'Fecha de nacimiento', tipo: 'fecha' },
+        {
+          name: 'residencia_fiscal_rwm',
+          label: 'País de residencia fiscal',
+          tipo: 'texto',
+          ayuda: 'Si tienes más de uno, indícalos todos.',
+        },
+      ],
+    },
+    {
+      titulo: 'Tu relación con GBM',
+      campos: [
+        { name: 'tiene_contrato_gbm_rwm', label: '¿Cuentas con un contrato en GBM?', tipo: 'opciones', opciones: ['Sí', 'No'] },
+        {
+          name: 'curp_rwm',
+          label: 'CURP',
+          tipo: 'curp',
+          ayuda:
+            'Con tu CURP generamos la liga para que abras tu contrato con Revolution WM + GBM directo en la app de GBM. Si eres extranjero con residencia en México, la apertura se hace por correo.',
+          si: { campo: 'tiene_contrato_gbm_rwm', valor: 'No' },
+        },
+        { name: 'tiene_asesor_gbm_rwm', label: '¿Cuentas con un asesor en GBM?', tipo: 'opciones', opciones: ['Sí', 'No'] },
+        {
+          name: 'custodia_eua_rwm',
+          label: '¿Te interesa tener tu cuenta de inversión con custodia en Estados Unidos (a través de GBM Houston)?',
+          tipo: 'opciones',
+          opciones: ['Sí, me interesa.', 'No, la custodia en México es suficiente.', 'No estoy seguro, necesito más información.'],
+        },
+      ],
+    },
+    {
+      titulo: 'Tu perfil de riesgo',
+      campos: [
+        {
+          name: 'cual_es_tu_horizonte_de_inversion',
+          label: '¿Cuál es tu horizonte de inversión?',
+          tipo: 'opciones',
+          opciones: ['Más de 5 años', 'Entre 2 y 5 años', 'Menos de 2 años'],
+        },
+        {
+          name: 'cual_es_tu_nivel_de_experiencia_en_inversiones',
+          label: '¿Cuál es tu nivel de experiencia en inversiones?',
+          tipo: 'opciones',
+          opciones: ['Alta (acciones, derivados, criptomonedas)', 'Media (fondos de inversión, ETFs)', 'Baja o nula (ahorro, CETES, pagarés)'],
+        },
+        {
+          name: 'reaccion_perdida_10_rwm',
+          label: '¿Qué harías si tu inversión pierde 10% en un mes?',
+          tipo: 'opciones',
+          opciones: ['Compraría más aprovechando el precio bajo', 'Esperaría a que se recupere', 'Vendería para evitar más pérdidas'],
+        },
+        {
+          name: 'cual_es_tu_objetivo_principal_de_inversion',
+          label: '¿Cuál es tu objetivo principal de inversión?',
+          tipo: 'opciones',
+          opciones: ['Crecimiento a largo plazo del capital', 'Combinar crecimiento con estabilidad', 'Preservar el capital y evitar pérdidas'],
+        },
+        {
+          name: 'que_porcentaje_de_tus_ingresos_estas_dispuesto_a_invertir',
+          label: '¿Qué porcentaje de tus ingresos estás dispuesto a invertir?',
+          tipo: 'opciones',
+          opciones: ['Más del 30%', 'Entre 10% y 30%', 'Menos del 10%'],
+        },
+        {
+          name: 'situacion_financiera_rwm',
+          label: '¿Cuál es tu situación financiera actual?',
+          tipo: 'opciones',
+          opciones: ['Estable con excedente y sin deudas', 'Equilibrada, con algunas deudas manejables', 'Inestable o con alta carga de deuda'],
+        },
+      ],
+    },
+    {
+      titulo: 'Tu patrimonio',
+      campos: [
+        {
+          name: 'patrimonio_invertible_rwm',
+          label: '¿Cuál es el rango aproximado de tu patrimonio invertible (excluyendo vivienda principal)?',
+          tipo: 'opciones',
+          opciones: [
+            'Menos de USD $250,000',
+            'USD $250,000 – $500,000',
+            'USD $500,000 – $1,000,000',
+            'USD $1,000,000 – $3,000,000',
+            'USD $3,000,000 – $5,000,000',
+            'Más de USD $5,000,000',
+          ],
+        },
+        {
+          name: 'monto_inicial_rwm',
+          label: '¿Qué monto inicial te gustaría invertir con Revolution Wealth Management?',
+          tipo: 'monto',
+          ayuda: 'En pesos mexicanos. Mínimo $1,000,000.',
+          placeholder: '$1,000,000',
+        },
+        {
+          name: 'message',
+          label: '¿Hay algo más que te gustaría compartir con nosotros?',
+          tipo: 'area',
+          opcional: true,
+        },
+      ],
+    },
+  ] as { titulo: string; campos: Campo[] }[],
+  /** La edad ya no se pregunta: se calcula de la fecha de nacimiento con los rangos de HubSpot */
+  edad: { name: 'cual_es_tu_edad', rangos: ['Menor de 35 años', '36 a 50 años', 'Más de 50 años'] },
+  montoMinimo: 1000000,
 };
 

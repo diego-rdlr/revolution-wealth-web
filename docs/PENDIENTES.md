@@ -20,8 +20,7 @@ El original de Marisol es `jS424JGWQITz5Lx9SPIRTs`.
 - [x] **Respuestas del FAQ** (02 a 12) tomadas de revolutionwm.com el 19-oct. Se corrigieron dos erratas
       ("asesores certificados", "Bursátil"). La 13 del sitio ("¿a quién llamo?") no está en Figma: la cubre la tarjeta de contacto.
 - [ ] Revisar con Marisol la frase de la respuesta 02 "Ah, tampoco trabajan con metas" (viene así del sitio actual).
-- [ ] **Fotos del equipo:** las del Figma están en blanco y negro; Marisol las va a cambiar por las oficiales.
-      Jesús Paz no tiene foto (sale "FOTO PENDIENTE").
+- [x] Fotos del equipo: las de Figma (blanco y negro, así las dejó diseño).
 - [ ] Fotos de Pablo Sánchez: el original de Figma mide 522 px; pedir una de ~900 px.
 
 ## Enlaces por definir (`links` en `src/data/wealth.ts`)
@@ -37,6 +36,22 @@ Construida desde el Figma y las capturas de diseño del 20-oct (titulares, boton
 
 - [ ] CTAs (formulario de vacante y WhatsApp de asesoría): se definen con Vini.
 - [ ] Foto de asesores: el original de Figma mide 708 px (se ve suave en pantallas retina); pedir una de ~1400 px.
+
+## Perfil de inversión (/wealth/perfil)
+
+- [ ] Configurar HubSpot: propiedades, formulario y workflow (docs/HUBSPOT-PERFIL.md) y pegar `perfilFormId`.
+- [ ] Al conectarlo: `links.agenda` → `links.perfil` (hoy los CTA siguen en el Microsoft Form).
+- [ ] **Perfil de riesgo** (no olvidar): el Microsoft Form calificaba en modo cuestionario. Falta que Vini
+      pase cómo puntúa (supuesto: 1a opción = 3, 2a = 2, 3a = 1) y los rangos para Conservador / Moderado /
+      Agresivo. Con eso la web lo calcula y lo guarda en una propiedad `perfil_de_riesgo_rwm`.
+- [ ] Desactivar el Microsoft Form cuando la página esté conectada.
+
+## Ajustes de Vini (22-oct)
+
+- [x] Ecosistema: "Wealth Club · Wealth X" y "Revolution Capital".
+- [x] FAQ: "¿Cuál es el monto mínimo para recibir asesoría?".
+- [ ] FAQ: falta la segunda pregunta que pidió Vini (Marisol solo pasó una).
+- [x] Equipo: foto de Jesús Paz y nueva persona Elena Araoz (Administración & Finanzas).
 
 ## Diseño
 

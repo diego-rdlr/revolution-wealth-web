@@ -1,0 +1,140 @@
+---
+// /wealth/perfil · "Perfil de inversión": destino del CTA principal del sitio.
+// Reemplaza al Microsoft Form de alta de cliente; envía a HubSpot (ver src/config/hubspot.ts).
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import Kicker from '../components/Kicker.astro';
+import Title from '../components/Title.astro';
+import PerfilForm from '../components/perfil/PerfilForm.astro';
+import { u } from '../config/base';
+import { perfilPagina as p } from '../data/wealth';
+---
+
+<Base title={p.meta.title} description={p.meta.description}>
+  <Nav />
+  <main>
+    <section class="perfil theme-dark" aria-labelledby="perfil-title">
+      <div class="atmos" aria-hidden="true">
+        <img
+          class="atmos__photo perfil__foto"
+          src={u('/img/fondo-campo-1600.webp')}
+          srcset={u('/img/fondo-campo-900.webp') + ' 900w, ' + u('/img/fondo-campo-1600.webp') + ' 1600w'}
+          sizes="100vw"
+          alt=""
+          width="1600"
+          height="900"
+        />
+        <div class="atmos__veil perfil__velo"></div>
+        <img class="atmos__glow perfil__glow" src={u('/img/resplandor-hero-der.svg')} alt="" />
+        <div class="atmos__grain"></div>
+      </div>
+
+      <div class="container perfil__grid">
+        <div class="perfil__intro">
+          <Kicker text={p.kicker} />
+          <Title lines={p.title} as="h1" size="h2" id="perfil-title" />
+          <p class="perfil__lede">{p.lede}</p>
+          <ol class="perfil__pasos">
+            {
+              p.pasosSiguientes.map((t, i) => (
+                <li>
+                  <span class="perfil__num">{String(i + 1).padStart(2, '0')}</span>
+                  <span>{t}</span>
+                </li>
+              ))
+            }
+          </ol>
+          <p class="perfil__nota">{p.nota}</p>
+        </div>
+        <PerfilForm />
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Base>
+
+<style>
+  .perfil {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    padding: calc(var(--nav-h) + 72px) 0 120px;
+  }
+  .perfil__foto {
+    opacity: 0.35;
+    object-position: center 30%;
+  }
+  .perfil__velo {
+    background: linear-gradient(90deg, rgba(10, 10, 10, 0.92), rgba(10, 10, 10, 0.6) 55%, rgba(10, 10, 10, 0.75)),
+      linear-gradient(180deg, rgba(10, 10, 10, 0), var(--ink) 92%);
+  }
+  .perfil__glow {
+    width: 1240px;
+    left: calc(50% - 70px);
+    top: -200px;
+  }
+  .perfil__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    gap: 80px;
+    align-items: start;
+  }
+  .perfil__intro {
+    position: sticky;
+    top: calc(var(--nav-h) + 48px);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+  }
+  .perfil__lede {
+    font-size: clamp(1.0625rem, 1rem + 0.25vw, 1.25rem);
+    line-height: 1.55;
+    color: var(--silver);
+  }
+  .perfil__pasos {
+    display: grid;
+    gap: 0;
+    width: 100%;
+    margin-top: 8px;
+  }
+  .perfil__pasos li {
+    display: flex;
+    gap: 20px;
+    padding-block: 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: var(--t-small);
+    line-height: 1.6;
+    color: var(--paper);
+  }
+  .perfil__num {
+    flex: none;
+    font-family: var(--f-mono);
+    font-size: 11px;
+    line-height: 24px;
+    letter-spacing: 0.05em;
+    color: var(--steel);
+  }
+  .perfil__nota {
+    font-family: var(--f-mono);
+    font-size: 11px;
+    line-height: 1.6;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--mist);
+  }
+  @media (max-width: 1024px) {
+    .perfil {
+      padding-top: calc(var(--nav-h) + 48px);
+      padding-bottom: 80px;
+    }
+    .perfil__grid {
+      grid-template-columns: 1fr;
+      gap: 48px;
+    }
+    .perfil__intro {
+      position: static;
+    }
+  }
+</style>

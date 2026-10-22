@@ -1,0 +1,619 @@
+---
+// Formulario "Perfil de inversión" en 4 pasos. Reemplaza al Microsoft Form de alta de cliente.
+// Envía a la API pública de formularios de HubSpot (src/config/hubspot.ts): HubSpot crea o
+// actualiza el contacto y un workflow crea el negocio en RWM · Llamada SDR.
+// Funciona con teclado; cada paso se valida antes de avanzar.
+import Button from '../Button.astro';
+import Title from '../Title.astro';
+import { perfilPagina as p } from '../../data/wealth';
+import { HUBSPOT, hubspotSubmitUrl } from '../../config/hubspot';
+
+const total = p.pasos.length;
+const endpoint = HUBSPOT.perfilFormId ? hubspotSubmitUrl(HUBSPOT.perfilFormId) : '';
+---
+
+<div class="pf" data-pf data-endpoint={endpoint} data-minimo={p.montoMinimo}>
+  <form class="pf__form" novalidate data-pf-form>
+    <header class="pf__head">
+      <p class="pf__paso" aria-live="polite">
+        Paso <span data-pf-num>1</span> de {total} · <span data-pf-titulo>{p.pasos[0].titulo}</span>
+      </p>
+      <div class="pf__barra" aria-hidden="true"><span data-pf-barra style={`--avance: ${1 / total}`}></span></div>
+    </header>
+
+    {
+      p.pasos.map((paso, i) => (
+        <fieldset class:list={['pf__step', { 'is-in': i === 0 }]} data-paso={i} data-titulo={paso.titulo} hidden={i > 0}>
+          <legend class="sr-only">{paso.titulo}</legend>
+          {paso.campos.map((c) => (
+            <div
+              class:list={['pf__campo', `pf__campo--${c.tipo}`]}
+              data-campo={c.name}
+              data-si-campo={c.si?.campo}
+              data-si-valor={c.si?.valor}
+              hidden={Boolean(c.si)}
+            >
+              {c.tipo === 'opciones' ? (
+                <fieldset class="pf__grupo" data-requerido>
+                  <legend class="pf__label">{c.label}</legend>
+                  <div class:list={['pf__opciones', { 'pf__opciones--cortas': (c.opciones ?? []).every((o) => o.length < 4) }]}>
+                    {(c.opciones ?? []).map((o) => (
+                      <label class="pf__opcion">
+                        <input type="radio" name={c.name} value={o} />
+                        <span>{o}</span>
+                      </label>
+                    ))}
+                  </div>
+                </fieldset>
+              ) : (
+                <>
+                  <label class="pf__label" for={`pf-${c.name}`}>
+                    {c.label}
+                    {c.opcional && <span class="pf__opcional"> (opcional)</span>}
+                  </label>
+                  {c.tipo === 'area' ? (
+                    <textarea id={`pf-${c.name}`} name={c.name} rows="3" />
+                  ) : (
+                    <input
+                      id={`pf-${c.name}`}
+                      name={c.name}
+                      type={c.tipo === 'email' ? 'email' : c.tipo === 'tel' ? 'tel' : c.tipo === 'fecha' ? 'date' : 'text'}
+                      inputmode={c.tipo === 'monto' ? 'numeric' : undefined}
+                      autocomplete={
+                        c.name === 'firstname'
+                          ? 'given-name'
+                          : c.name === 'lastname'
+                            ? 'family-name'
+                            : c.tipo === 'email'
+                              ? 'email'
+                              : c.tipo === 'tel'
+                                ? 'tel'
+                                : c.tipo === 'fecha'
+                                  ? 'bday'
+                                  : 'off'
+                      }
+                      placeholder={c.placeholder}
+                      maxlength={c.tipo === 'curp' ? 18 : undefined}
+                      data-requerido={c.opcional ? undefined : ''}
+                    />
+                  )}
+                  {c.tipo === 'curp' && (
+                    <label class="pf__check pf__check--chico">
+                      <input type="checkbox" data-sin-curp />
+                      <span>No tengo CURP (soy extranjero con residencia en México)</span>
+                    </label>
+                  )}
+                  {c.ayuda && <p class="pf__ayuda">{c.ayuda}</p>}
+                </>
+              )}
+              <p class="pf__error" data-error hidden />
+            </div>
+          ))}
+          {i === total - 1 && (
+            <div class="pf__campo" data-campo="privacidad" data-consentimiento={p.privacidad.texto}>
+              <label class="pf__check">
+                <input type="checkbox" name="privacidad" data-requerido />
+                <span>
+                  {p.privacidad.texto}{' '}
+                  <a href={p.privacidad.href} target="_blank" rel="noopener">
+                    Ver aviso de privacidad
+                  </a>
+                </span>
+              </label>
+              <p class="pf__error" data-error hidden />
+            </div>
+          )}
+        </fieldset>
+      ))
+    }
+
+    <p class="pf__fallo" data-pf-fallo hidden>{p.error}</p>
+
+    <footer class="pf__nav">
+      <button type="button" class="pf__atras" data-pf-atras hidden>← Atrás</button>
+      <button type="submit" class="pf__siguiente" data-pf-siguiente>
+        <span data-pf-etiqueta>Siguiente</span><span class="pf__flecha" aria-hidden="true">→</span>
+      </button>
+    </footer>
+  </form>
+
+  <div class="pf__gracias" data-pf-gracias hidden tabindex="-1">
+    <span class="pf__sello" aria-hidden="true"></span>
+    <Title lines={p.gracias.title} as="h2" />
+    <p>{p.gracias.texto}</p>
+    <Button href={p.gracias.cta.href} label={p.gracias.cta.label} variant="secondary" />
+  </div>
+</div>
+
+<script>
+  const root = document.querySelector<HTMLElement>('[data-pf]');
+  const form = root?.querySelector<HTMLFormElement>('[data-pf-form]');
+  if (root && form) {
+    const steps = [...form.querySelectorAll<HTMLFieldSetElement>('[data-paso]')];
+    const num = form.querySelector('[data-pf-num]')!;
+    const titulo = form.querySelector('[data-pf-titulo]')!;
+    const barra = form.querySelector<HTMLElement>('[data-pf-barra]')!;
+    const atras = form.querySelector<HTMLButtonElement>('[data-pf-atras]')!;
+    const siguiente = form.querySelector<HTMLButtonElement>('[data-pf-siguiente]')!;
+    const etiqueta = form.querySelector('[data-pf-etiqueta]')!;
+    const fallo = form.querySelector<HTMLElement>('[data-pf-fallo]')!;
+    const gracias = root.querySelector<HTMLElement>('[data-pf-gracias]')!;
+    const minimo = Number(root.dataset.minimo);
+    let actual = 0;
+
+    // ——— Campos condicionales (CURP solo si no tiene contrato en GBM) ———
+    const condicionales = [...form.querySelectorAll<HTMLElement>('[data-si-campo]')].filter((el) => el.dataset.siCampo);
+    const sync = () => {
+      for (const el of condicionales) {
+        const marcado = form.querySelector<HTMLInputElement>(`input[name="${el.dataset.siCampo}"]:checked`);
+        el.hidden = marcado?.value !== el.dataset.siValor;
+      }
+    };
+    form.addEventListener('change', sync);
+
+    // ——— CURP: mayúsculas, y "no tengo CURP" la desactiva ———
+    const curp = form.querySelector<HTMLInputElement>('input[name="curp_rwm"]');
+    const sinCurp = form.querySelector<HTMLInputElement>('[data-sin-curp]');
+    curp?.addEventListener('input', () => (curp.value = curp.value.toUpperCase().replace(/[^A-Z0-9]/g, '')));
+    sinCurp?.addEventListener('change', () => {
+      if (!curp) return;
+      curp.disabled = sinCurp.checked;
+      if (sinCurp.checked) curp.value = '';
+    });
+
+    // ——— Monto: solo dígitos, con separador de miles ———
+    const monto = form.querySelector<HTMLInputElement>('input[name="monto_inicial_rwm"]');
+    monto?.addEventListener('input', () => {
+      const n = monto.value.replace(/\D/g, '');
+      monto.value = n ? '$' + Number(n).toLocaleString('es-MX') : '';
+    });
+
+    // ——— Validación por paso ———
+    // Un campo cuenta si no está oculto por condición (CURP); los pasos ocultos sí cuentan
+    const visible = (el: Element) => !el.closest('[data-campo][hidden]');
+    const setError = (campo: HTMLElement, msg: string) => {
+      const p = campo.querySelector<HTMLElement>('[data-error]');
+      if (p) {
+        p.textContent = msg;
+        p.hidden = !msg;
+      }
+      campo.classList.toggle('is-error', Boolean(msg));
+    };
+    const edad = (iso: string) => {
+      const d = new Date(iso + 'T00:00:00');
+      if (isNaN(+d)) return NaN;
+      const hoy = new Date();
+      let a = hoy.getFullYear() - d.getFullYear();
+      if (hoy < new Date(hoy.getFullYear(), d.getMonth(), d.getDate())) a--;
+      return a;
+    };
+    const valida = (paso: HTMLElement) => {
+      let primero: HTMLElement | null = null;
+      for (const campo of paso.querySelectorAll<HTMLElement>('[data-campo]')) {
+        if (!visible(campo)) continue;
+        let msg = '';
+        const radios = campo.querySelectorAll<HTMLInputElement>('input[type=radio]');
+        const input = campo.querySelector<HTMLInputElement | HTMLTextAreaElement>('input:not([type=radio]):not([data-sin-curp]), textarea');
+        if (radios.length) {
+          if (![...radios].some((r) => r.checked)) msg = 'Elige una opción.';
+        } else if (input && input.type === 'checkbox') {
+          if (!(input as HTMLInputElement).checked) msg = 'Necesitamos tu autorización para continuar.';
+        } else if (input && !input.disabled) {
+          const v = input.value.trim();
+          const req = input.hasAttribute('data-requerido');
+          if (!v && req) msg = 'Este dato es necesario.';
+          else if (v && input.name === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)) msg = 'Revisa tu correo.';
+          else if (v && input.name === 'phone' && v.replace(/\D/g, '').length < 10) msg = 'Incluye lada y número completo (mínimo 10 dígitos).';
+          else if (v && input.name === 'fecha_de_nacimiento') {
+            const a = edad(v);
+            if (!(a >= 18 && a <= 110)) msg = 'Revisa la fecha: debes ser mayor de edad.';
+          } else if (v && input.name === 'curp_rwm' && !/^[A-Z]{4}\d{6}[HMX][A-Z]{5}[A-Z0-9]\d$/.test(v)) msg = 'La CURP tiene 18 caracteres; revisa que esté completa.';
+          else if (input.name === 'monto_inicial_rwm' && Number(v.replace(/\D/g, '')) < minimo)
+            msg = `El monto mínimo es $${minimo.toLocaleString('es-MX')}.`;
+        }
+        setError(campo, msg);
+        if (msg && !primero) primero = campo;
+      }
+      primero?.querySelector<HTMLElement>('input, textarea')?.focus();
+      return !primero;
+    };
+    form.addEventListener('input', (e) => {
+      const campo = (e.target as HTMLElement).closest<HTMLElement>('[data-campo]');
+      if (campo?.classList.contains('is-error')) setError(campo, '');
+    });
+    form.addEventListener('change', (e) => {
+      const campo = (e.target as HTMLElement).closest<HTMLElement>('[data-campo]');
+      if (campo?.classList.contains('is-error')) setError(campo, '');
+    });
+
+    // ——— Navegación entre pasos ———
+    const ir = (i: number) => {
+      steps[actual].hidden = true;
+      actual = i;
+      steps[actual].hidden = false;
+      num.textContent = String(i + 1);
+      titulo.textContent = steps[i].dataset.titulo ?? '';
+      barra.style.setProperty('--avance', String((i + 1) / steps.length));
+      atras.hidden = i === 0;
+      etiqueta.textContent = i === steps.length - 1 ? 'Enviar mi perfil' : 'Siguiente';
+      fallo.hidden = true;
+      steps[actual].classList.remove('is-in');
+      requestAnimationFrame(() => steps[actual].classList.add('is-in'));
+      root.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
+    };
+    atras.addEventListener('click', () => ir(actual - 1));
+
+    // ——— Envío a HubSpot ———
+    const cookie = (n: string) => document.cookie.match(new RegExp('(?:^|; )' + n + '=([^;]*)'))?.[1];
+    const rangoEdad = (iso: string) => {
+      const a = edad(iso);
+      return a <= 35 ? 'Menor de 35 años' : a <= 50 ? '36 a 50 años' : 'Más de 50 años';
+    };
+    const envia = async () => {
+      const endpoint = root.dataset.endpoint;
+      const fields: { objectTypeId: string; name: string; value: string }[] = [];
+      const add = (name: string, value: string) => value && fields.push({ objectTypeId: '0-1', name, value });
+      for (const el of form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('input[name], textarea[name]')) {
+        if (el.name === 'privacidad' || el.disabled || !visible(el)) continue;
+        if (el instanceof HTMLInputElement && el.type === 'radio' && !el.checked) continue;
+        let v = el.value.trim();
+        if (el.name === 'fecha_de_nacimiento') {
+          add('cual_es_tu_edad', rangoEdad(v));
+          v = String(Date.parse(v + 'T00:00:00Z')); // HubSpot: fecha = medianoche UTC en milisegundos
+        }
+        if (el.name === 'monto_inicial_rwm') v = v.replace(/\D/g, '');
+        add(el.name, v);
+      }
+      if (sinCurp?.checked && visible(sinCurp)) add('curp_rwm', 'Extranjero: apertura por correo');
+      const body = {
+        fields,
+        context: { hutk: cookie('hubspotutk'), pageUri: location.href, pageName: document.title },
+        legalConsentOptions: {
+          consent: { consentToProcess: true, text: form.querySelector<HTMLElement>('[data-consentimiento]')?.dataset.consentimiento ?? '' },
+        },
+      };
+      if (!endpoint) throw new Error('Formulario de HubSpot sin conectar (perfilFormId vacío en src/config/hubspot.ts)');
+      const r = await fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+      if (!r.ok) throw new Error(`HubSpot respondió ${r.status}: ${await r.text()}`);
+    };
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!valida(steps[actual])) return;
+      if (actual < steps.length - 1) return ir(actual + 1);
+      siguiente.disabled = true;
+      etiqueta.textContent = 'Enviando…';
+      fallo.hidden = true;
+      try {
+        await envia();
+        form.hidden = true;
+        gracias.hidden = false;
+        gracias.querySelector('[data-reveal]')?.classList.add('is-in');
+        gracias.focus();
+        root.scrollIntoView({ block: 'start' });
+      } catch (err) {
+        console.error(err);
+        fallo.hidden = false;
+        etiqueta.textContent = 'Enviar mi perfil';
+        siguiente.disabled = false;
+      }
+    });
+
+    sync();
+  }
+</script>
+
+<style>
+  .pf {
+    position: relative;
+    scroll-margin-top: calc(var(--nav-h) + 24px);
+  }
+  .pf__form,
+  .pf__gracias {
+    padding: 36px 40px 32px;
+    border: 1px solid rgba(164, 194, 212, 0.28);
+    border-radius: var(--radius);
+    background: linear-gradient(150deg, rgba(164, 194, 212, 0.12), rgba(156, 189, 209, 0.03) 70%);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+  }
+
+  /* ——— Encabezado: paso y barra de avance dorada ——— */
+  .pf__paso {
+    font-family: var(--f-mono);
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  .pf__barra {
+    height: 2px;
+    margin: 16px 0 8px;
+    background: rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+  }
+  .pf__barra span {
+    display: block;
+    height: 100%;
+    background: var(--gold);
+    transform: scaleX(var(--avance));
+    transform-origin: left center;
+    transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  /* ——— Campos ——— */
+  .pf__step {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    min-width: 0;
+  }
+  :global(html.motion) .pf__step:not(.is-in) .pf__campo {
+    opacity: 0;
+    translate: 0 10px;
+  }
+  :global(html.motion) .pf__step .pf__campo {
+    transition:
+      opacity 0.6s var(--ease-out),
+      translate 0.7s var(--ease-out);
+  }
+  .pf__campo {
+    padding-top: 26px;
+  }
+  .pf__grupo {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    min-width: 0;
+  }
+  .pf__label {
+    display: block;
+    margin-bottom: 10px;
+    padding: 0;
+    font-size: var(--t-base);
+    line-height: 1.45;
+    color: var(--paper);
+  }
+  .pf__opcional {
+    color: var(--mist);
+  }
+  .pf input:not([type='radio']):not([type='checkbox']),
+  .pf textarea {
+    width: 100%;
+    padding: 12px 0;
+    border: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: 0;
+    background: transparent;
+    color: var(--paper);
+    font: inherit;
+    font-size: 18px;
+    line-height: 1.4;
+    color-scheme: dark;
+    transition: border-color 0.25s ease;
+  }
+  .pf textarea {
+    resize: vertical;
+    min-height: 80px;
+  }
+  .pf input::placeholder {
+    color: rgba(255, 255, 255, 0.28);
+  }
+  .pf input:focus,
+  .pf textarea:focus {
+    outline: none;
+    border-bottom-color: var(--gold);
+  }
+  .pf input:disabled {
+    opacity: 0.35;
+  }
+  .pf__ayuda {
+    margin-top: 8px;
+    font-size: var(--t-small);
+    line-height: 1.6;
+    color: var(--mist);
+  }
+
+  /* Opciones como tarjetas seleccionables */
+  .pf__opciones {
+    display: grid;
+    gap: 8px;
+  }
+  .pf__opciones--cortas {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .pf__opcion {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 13px 16px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: var(--radius-sm);
+    background: rgba(255, 255, 255, 0.02);
+    color: var(--silver);
+    font-size: 15px;
+    line-height: 1.45;
+    cursor: pointer;
+    transition:
+      border-color 0.25s ease,
+      background 0.25s ease,
+      color 0.25s ease;
+  }
+  .pf__opcion::before {
+    content: '';
+    flex: none;
+    width: 10px;
+    height: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-radius: 50%;
+    transition:
+      background 0.25s ease,
+      border-color 0.25s ease;
+  }
+  .pf__opcion input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .pf__opcion:hover {
+    border-color: rgba(255, 255, 255, 0.3);
+    color: var(--paper);
+  }
+  .pf__opcion:has(input:checked) {
+    border-color: var(--gold);
+    background: rgba(198, 160, 82, 0.1);
+    color: var(--paper);
+  }
+  .pf__opcion:has(input:checked)::before {
+    border-color: var(--gold);
+    background: var(--gold);
+  }
+  .pf__opcion:has(input:focus-visible) {
+    outline: 2px solid var(--steel);
+    outline-offset: 2px;
+  }
+
+  /* Casillas */
+  .pf__check {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: var(--t-small);
+    line-height: 1.6;
+    color: var(--silver);
+    cursor: pointer;
+  }
+  .pf__check--chico {
+    margin-top: 12px;
+    font-size: 14px;
+  }
+  .pf__check input {
+    flex: none;
+    width: 18px;
+    height: 18px;
+    margin-top: 3px;
+    accent-color: var(--gold);
+  }
+  .pf__check a {
+    color: var(--paper);
+  }
+
+  /* Errores */
+  .pf__error,
+  .pf__fallo {
+    margin-top: 8px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #e3a08f;
+  }
+  .pf__fallo {
+    margin-top: 24px;
+  }
+  .pf__campo:global(.is-error) input:not([type='radio']):not([type='checkbox']) {
+    border-bottom-color: #e3a08f;
+  }
+  .pf__campo:global(.is-error) .pf__opcion {
+    border-color: rgba(227, 160, 143, 0.5);
+  }
+
+  /* Navegación */
+  .pf__nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: 36px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .pf__atras {
+    padding: 12px 0;
+    border: 0;
+    background: none;
+    color: var(--mist);
+    font-family: var(--f-mono);
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  .pf__atras:hover {
+    color: var(--paper);
+  }
+  /* Mismo botón primario de la marca (Button.astro), aquí como <button> de envío */
+  .pf__siguiente {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    height: 46px;
+    margin-left: auto;
+    padding: 0 22px;
+    border: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--f-mono);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.19em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+  .pf__siguiente:hover {
+    background: #ffffff;
+  }
+  .pf__flecha {
+    color: var(--navy);
+    letter-spacing: 0;
+    transition: transform 0.2s ease;
+  }
+  .pf__siguiente:hover .pf__flecha {
+    transform: translateX(3px);
+  }
+  .pf__siguiente:disabled {
+    opacity: 0.6;
+    cursor: progress;
+  }
+
+  /* Gracias (oculto hasta enviar: el display flex no debe ganarle a [hidden]) */
+  .pf__gracias[hidden],
+  .pf__form[hidden] {
+    display: none;
+  }
+  .pf__gracias {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 22px;
+    padding-block: 48px;
+  }
+  .pf__gracias:focus {
+    outline: none;
+  }
+  .pf__gracias p {
+    max-width: 520px;
+    font-size: var(--t-base);
+    line-height: 1.65;
+    color: var(--silver);
+  }
+  .pf__sello {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--gold);
+    box-shadow: 0 0 0 8px rgba(198, 160, 82, 0.15);
+  }
+
+  @media (max-width: 600px) {
+    .pf__form,
+    .pf__gracias {
+      padding: 26px 20px 24px;
+    }
+    .pf__siguiente {
+      flex: 1;
+      justify-content: center;
+    }
+  }
+</style>
