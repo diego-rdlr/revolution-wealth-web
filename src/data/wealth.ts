@@ -675,6 +675,7 @@ export const perfilPagina = {
       campos: [
         // En HubSpot la opción es "Si" (sin acento): se muestra "Sí" y se envía "Si"
         { name: 'tiene_contrato_gbm_rwm', label: '¿Cuentas con un contrato en GBM?', tipo: 'opciones', opciones: [{ label: 'Sí', value: 'Si' }, 'No'] },
+        // Y la CURP solo a quien no tiene contrato (para generar la liga de apertura)
         {
           name: 'curp_rwm',
           label: 'CURP',
@@ -683,7 +684,14 @@ export const perfilPagina = {
             'Con tu CURP generamos la liga para que abras tu contrato con Revolution WM + GBM directo en la app de GBM. Si eres extranjero con residencia en México, la apertura se hace por correo.',
           si: { campo: 'tiene_contrato_gbm_rwm', valor: 'No' },
         },
-        { name: 'tiene_asesor_gbm_rwm', label: '¿Cuentas con un asesor en GBM?', tipo: 'opciones', opciones: [{ label: 'Sí', value: 'Si' }, 'No'] },
+        // Igual que el Microsoft Form: el asesor solo se pregunta a quien ya tiene contrato en GBM
+        {
+          name: 'tiene_asesor_gbm_rwm',
+          label: '¿Cuentas con un asesor en GBM?',
+          tipo: 'opciones',
+          opciones: [{ label: 'Sí', value: 'Si' }, 'No'],
+          si: { campo: 'tiene_contrato_gbm_rwm', valor: 'Si' },
+        },
         {
           name: 'te_interesa_custodia_en_eua_gbm_houston',
           label: '¿Te interesa tener tu cuenta de inversión con custodia en Estados Unidos (a través de GBM Houston)?',
