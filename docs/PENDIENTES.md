@@ -20,8 +20,7 @@ El original de Marisol es `jS424JGWQITz5Lx9SPIRTs`.
 - [x] **Respuestas del FAQ** (02 a 12) tomadas de revolutionwm.com el 19-oct. Se corrigieron dos erratas
       ("asesores certificados", "Bursátil"). La 13 del sitio ("¿a quién llamo?") no está en Figma: la cubre la tarjeta de contacto.
 - [ ] Revisar con Marisol la frase de la respuesta 02 "Ah, tampoco trabajan con metas" (viene así del sitio actual).
-- [ ] **Fotos del equipo:** las del Figma están en blanco y negro; Marisol las va a cambiar por las oficiales.
-      Jesús Paz no tiene foto (sale "FOTO PENDIENTE").
+- [x] Fotos del equipo: las de Figma (blanco y negro, así las dejó diseño).
 - [ ] Fotos de Pablo Sánchez: el original de Figma mide 522 px; pedir una de ~900 px.
 
 ## Enlaces por definir (`links` en `src/data/wealth.ts`)
@@ -52,7 +51,7 @@ Construida desde el Figma y las capturas de diseño del 20-oct (titulares, boton
 - [x] Ecosistema: "Wealth Club · Wealth X" y "Revolution Capital".
 - [x] FAQ: "¿Cuál es el monto mínimo para recibir asesoría?".
 - [ ] FAQ: falta la segunda pregunta que pidió Vini (Marisol solo pasó una).
-- [ ] Equipo: foto de Jesús Paz y nueva persona Elena Araoz (puesto y foto en Figma `jS424…`, nodos 538:508 y 637:360-368).
+- [x] Equipo: foto de Jesús Paz y nueva persona Elena Araoz (Administración & Finanzas).
 
 ## Diseño
 

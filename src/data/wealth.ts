@@ -248,7 +248,8 @@ export const equipo = {
   personas: [
     { nombre: 'Vinicius R. Ramos', puesto: 'CEO · REVOLUTION WEALTH', foto: u('/img/equipo-vinicius-r-ramos.webp') },
     { nombre: 'Hugo Rodrigo Solís', puesto: 'DIRECTOR DE ADVISORY', foto: u('/img/equipo-hugo-rodrigo-solis.webp') },
-    { nombre: 'Jesús Paz', puesto: 'INVESTMENT STRATEGIST', foto: null },
+    { nombre: 'Jesús Paz', puesto: 'INVESTMENT STRATEGIST', foto: u('/img/equipo-jesus-paz.webp') },
+    { nombre: 'Elena Araoz', puesto: 'ADMINISTRACIÓN & FINANZAS', foto: u('/img/equipo-elena-araoz.webp') },
     { nombre: 'María Fernanda López', puesto: 'BACK OFFICE', foto: u('/img/equipo-maria-fernanda-lopez.webp') },
     { nombre: 'Axel Méndez', puesto: 'BACK OFFICE', foto: u('/img/equipo-axel-mendez.webp') },
     { nombre: 'Camilo Parra', puesto: 'BACK OFFICE', foto: u('/img/equipo-camilo-parra.webp') },
