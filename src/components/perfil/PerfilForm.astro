@@ -36,13 +36,16 @@ const endpoint = HUBSPOT.perfilFormId ? hubspotSubmitUrl(HUBSPOT.perfilFormId) :
               {c.tipo === 'opciones' ? (
                 <fieldset class="pf__grupo" data-requerido>
                   <legend class="pf__label">{c.label}</legend>
-                  <div class:list={['pf__opciones', { 'pf__opciones--cortas': (c.opciones ?? []).every((o) => o.length < 4) }]}>
-                    {(c.opciones ?? []).map((o) => (
-                      <label class="pf__opcion">
-                        <input type="radio" name={c.name} value={o} />
-                        <span>{o}</span>
-                      </label>
-                    ))}
+                  <div class:list={['pf__opciones', { 'pf__opciones--cortas': (c.opciones ?? []).every((o) => (typeof o === 'string' ? o : o.label).length < 4) }]}>
+                    {(c.opciones ?? []).map((o) => {
+                      const { label, value } = typeof o === 'string' ? { label: o, value: o } : o;
+                      return (
+                        <label class="pf__opcion">
+                          <input type="radio" name={c.name} value={value} />
+                          <span>{label}</span>
+                        </label>
+                      );
+                    })}
                   </div>
                 </fieldset>
               ) : (

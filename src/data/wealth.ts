@@ -610,10 +610,11 @@ export const inc = {
  * Página /perfil · "Perfil de inversión"
  * Reemplaza al Microsoft Form "Cuestionario de Alta de Cliente y Perfil de Riesgo"
  * (mismas preguntas y opciones). Cada `name` es la propiedad de contacto en HubSpot:
- * las que terminan en _rwm se crean con docs/HUBSPOT-PERFIL.md; las demás ya existían.
+ * todas existen en HubSpot (revisado el 22-oct; ver docs/HUBSPOT-PERFIL.md).
  * —————————————————————————————————————————————————————————————— */
 
-export type Opcion = string;
+/** Opción: texto, o { label, value } cuando lo que se ve no es igual al valor en HubSpot */
+export type Opcion = string | { label: string; value: string };
 export interface Campo {
   name: string;
   label: string;
@@ -672,7 +673,8 @@ export const perfilPagina = {
     {
       titulo: 'Tu relación con GBM',
       campos: [
-        { name: 'tiene_contrato_gbm_rwm', label: '¿Cuentas con un contrato en GBM?', tipo: 'opciones', opciones: ['Sí', 'No'] },
+        // En HubSpot la opción es "Si" (sin acento): se muestra "Sí" y se envía "Si"
+        { name: 'tiene_contrato_gbm_rwm', label: '¿Cuentas con un contrato en GBM?', tipo: 'opciones', opciones: [{ label: 'Sí', value: 'Si' }, 'No'] },
         {
           name: 'curp_rwm',
           label: 'CURP',
@@ -681,9 +683,9 @@ export const perfilPagina = {
             'Con tu CURP generamos la liga para que abras tu contrato con Revolution WM + GBM directo en la app de GBM. Si eres extranjero con residencia en México, la apertura se hace por correo.',
           si: { campo: 'tiene_contrato_gbm_rwm', valor: 'No' },
         },
-        { name: 'tiene_asesor_gbm_rwm', label: '¿Cuentas con un asesor en GBM?', tipo: 'opciones', opciones: ['Sí', 'No'] },
+        { name: 'tiene_asesor_gbm_rwm', label: '¿Cuentas con un asesor en GBM?', tipo: 'opciones', opciones: [{ label: 'Sí', value: 'Si' }, 'No'] },
         {
-          name: 'custodia_eua_rwm',
+          name: 'te_interesa_custodia_en_eua_gbm_houston',
           label: '¿Te interesa tener tu cuenta de inversión con custodia en Estados Unidos (a través de GBM Houston)?',
           tipo: 'opciones',
           opciones: ['Sí, me interesa.', 'No, la custodia en México es suficiente.', 'No estoy seguro, necesito más información.'],
@@ -706,7 +708,7 @@ export const perfilPagina = {
           opciones: ['Alta (acciones, derivados, criptomonedas)', 'Media (fondos de inversión, ETFs)', 'Baja o nula (ahorro, CETES, pagarés)'],
         },
         {
-          name: 'reaccion_perdida_10_rwm',
+          name: 'que_harias_si_tu_inversion_pierde_10_en_un_mes',
           label: '¿Qué harías si tu inversión pierde 10% en un mes?',
           tipo: 'opciones',
           opciones: ['Compraría más aprovechando el precio bajo', 'Esperaría a que se recupere', 'Vendería para evitar más pérdidas'],

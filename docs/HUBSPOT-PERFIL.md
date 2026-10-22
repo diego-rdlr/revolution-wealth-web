@@ -15,7 +15,7 @@ Pipeline **RWM** (`913042075`) → etapa **Llamada SDR** (`1387010726`). Ya exis
 
 ## Estado
 
-- [ ] Paso 1 · Propiedades nuevas de contacto
+- [x] Paso 1 · Propiedades de contacto (revisadas el 22-oct; ver nombres finales abajo)
 - [ ] Paso 2 · Formulario "RWM · Perfil de inversión (web)" y su id en `src/config/hubspot.ts`
 - [ ] Paso 3 · Workflow que crea el negocio
 - [ ] Paso 4 · Prueba de punta a punta
@@ -23,7 +23,14 @@ Pipeline **RWM** (`913042075`) → etapa **Llamada SDR** (`1387010726`). Ya exis
 
 ---
 
-## Paso 1 · Propiedades nuevas de contacto
+## Paso 1 · Propiedades de contacto
+
+**Nombres finales en HubSpot (revisados el 22-oct).** Tres quedaron distintos a la tabla original y la web ya usa estos:
+- `que_harias_si_tu_inversion_pierde_10_en_un_mes` (ya existía; en lugar de `reaccion_perdida_10_rwm`)
+- `te_interesa_custodia_en_eua_gbm_houston` (en lugar de `custodia_eua_rwm`)
+- `tiene_contrato_gbm_rwm` y `tiene_asesor_gbm_rwm` con opción `Si` sin acento: la web muestra "Sí" y envía `Si`.
+
+Tabla original:
 
 Configuración (engrane) → **Propiedades** → Contacto → **Crear propiedad**. Grupo sugerido: "Revolution Wealth".
 El **nombre interno** debe quedar exactamente así (la web envía esos nombres). Las opciones, letra por letra.
@@ -57,8 +64,8 @@ Ya existen y se reusan (sus opciones coinciden con las del Microsoft Form):
 3. Agrega estos campos (todos, aunque la web sea la que pregunta):
    `firstname`, `lastname`, `email`, `phone`, `fecha_de_nacimiento`, `cual_es_tu_edad`,
    `residencia_fiscal_rwm`, `tiene_contrato_gbm_rwm`, `curp_rwm`, `tiene_asesor_gbm_rwm`,
-   `custodia_eua_rwm`, `cual_es_tu_horizonte_de_inversion`, `cual_es_tu_nivel_de_experiencia_en_inversiones`,
-   `reaccion_perdida_10_rwm`, `cual_es_tu_objetivo_principal_de_inversion`,
+   `te_interesa_custodia_en_eua_gbm_houston`, `cual_es_tu_horizonte_de_inversion`, `cual_es_tu_nivel_de_experiencia_en_inversiones`,
+   `que_harias_si_tu_inversion_pierde_10_en_un_mes`, `cual_es_tu_objetivo_principal_de_inversion`,
    `que_porcentaje_de_tus_ingresos_estas_dispuesto_a_invertir`, `situacion_financiera_rwm`,
    `patrimonio_invertible_rwm`, `monto_inicial_rwm`, `message`.
    No marques ninguno como obligatorio en HubSpot: la web valida.
