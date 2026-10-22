@@ -773,7 +773,7 @@ export const perfilPagina = {
       ],
     },
   ] as { titulo: string; campos: Campo[] }[],
-  /* La edad no se pregunta ni se envía: sale de la fecha de nacimiento cuando haga falta (perfil de riesgo). */
+  /* La edad no se pregunta: la web la calcula de la fecha de nacimiento y la envía a `cual_es_tu_edad`. */
   montoMinimo: 1000000,
 };
 

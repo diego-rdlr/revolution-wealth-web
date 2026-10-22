@@ -247,6 +247,11 @@ const endpoint = HUBSPOT.perfilFormId ? hubspotSubmitUrl(HUBSPOT.perfilFormId) :
     atras.addEventListener('click', () => ir(actual - 1));
 
     // ——— Envío a HubSpot ———
+    // Mismos rangos que la propiedad "¿Cuál es tu edad?" de HubSpot (y el Microsoft Form)
+    const rangoEdad = (iso: string) => {
+      const a = edad(iso);
+      return a <= 35 ? 'Menor de 35 años' : a <= 50 ? '36 a 50 años' : 'Más de 50 años';
+    };
     const cookie = (n: string) => document.cookie.match(new RegExp('(?:^|; )' + n + '=([^;]*)'))?.[1];
     const envia = async () => {
       const endpoint = root.dataset.endpoint;
@@ -256,7 +261,10 @@ const endpoint = HUBSPOT.perfilFormId ? hubspotSubmitUrl(HUBSPOT.perfilFormId) :
         if (el.name === 'privacidad' || el.disabled || !visible(el)) continue;
         if (el instanceof HTMLInputElement && el.type === 'radio' && !el.checked) continue;
         let v = el.value.trim();
-        if (el.name === 'fecha_de_nacimiento') v = String(Date.parse(v + 'T00:00:00Z')); // HubSpot: fecha = medianoche UTC en milisegundos
+        if (el.name === 'fecha_de_nacimiento') {
+          add('cual_es_tu_edad', rangoEdad(v)); // la edad no se pregunta: sale de la fecha
+          v = String(Date.parse(v + 'T00:00:00Z')); // HubSpot: fecha = medianoche UTC en milisegundos
+        }
         if (el.name === 'monto_inicial_rwm') v = v.replace(/\D/g, '');
         add(el.name, v);
       }
