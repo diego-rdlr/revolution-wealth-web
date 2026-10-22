@@ -38,6 +38,14 @@ Construida desde el Figma y las capturas de diseño del 20-oct (titulares, boton
 - [ ] CTAs (formulario de vacante y WhatsApp de asesoría): se definen con Vini.
 - [ ] Foto de asesores: el original de Figma mide 708 px (se ve suave en pantallas retina); pedir una de ~1400 px.
 
+## Perfil de inversión (/wealth/perfil)
+
+- [ ] Configurar HubSpot: propiedades, formulario y workflow (docs/HUBSPOT-PERFIL.md) y pegar `perfilFormId`.
+- [ ] **Perfil de riesgo** (no olvidar): el Microsoft Form calificaba en modo cuestionario. Falta que Vini
+      pase cómo puntúa (supuesto: 1a opción = 3, 2a = 2, 3a = 1) y los rangos para Conservador / Moderado /
+      Agresivo. Con eso la web lo calcula y lo guarda en una propiedad `perfil_de_riesgo_rwm`.
+- [ ] Desactivar el Microsoft Form cuando la página esté conectada.
+
 ## Diseño
 
 - [x] **Source Serif 4** (OFL, vía `@fontsource/source-serif-4`) en títulos de tarjeta, nombres de fundadores,

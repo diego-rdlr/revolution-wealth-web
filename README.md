@@ -27,6 +27,7 @@ Es la misma base que `revolution-capital-web` y `wealth-nation-web`.
 | `src/styles/global.css` | Estilos base y utilidades compartidas. |
 | `src/components/` | Un archivo por sección + piezas compartidas (`Kicker`, `Title`, `Button`, `Brand`, `Nav`). |
 | `src/pages/index.astro` | La página principal: junta las secciones en orden. |
+| `src/pages/perfil.astro` | `/wealth/perfil`: formulario "Perfil de inversión" (destino del CTA principal), conectado a HubSpot. Preguntas en `perfilPagina` de `src/data/wealth.ts`; configuración en `src/config/hubspot.ts`; pasos en HubSpot en `docs/HUBSPOT-PERFIL.md`. |
 | `src/pages/carrera.astro` | Subpágina `/carrera` ("Súmate al equipo"); sus secciones viven en `src/components/carrera/` y su texto en `carreraPagina` de `src/data/wealth.ts`. Para abrir o cerrar una vacante: `carreraPagina.oportunidades.vacantes`. |
 | `public/` | Archivos que se sirven tal cual: íconos, robots.txt, fuentes e imágenes. |
 | `docs/PENDIENTES.md` | Lo que falta traer de Figma o decidir. |
