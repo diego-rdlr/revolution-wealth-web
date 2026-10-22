@@ -16,7 +16,7 @@ Pipeline **RWM** (`913042075`) → etapa **Llamada SDR** (`1387010726`). Ya exis
 ## Estado
 
 - [x] Paso 1 · Propiedades de contacto (revisadas el 22-oct; ver nombres finales abajo)
-- [ ] Paso 2 · Formulario "RWM · Perfil de inversión (web)" y su id en `src/config/hubspot.ts`
+- [x] Paso 2 · Formulario en HubSpot (`d5adc9cd-28ec-4562-aebf-1c6f71b72997`), conectado en `src/config/hubspot.ts`. Envío real de prueba OK el 22-oct (19 propiedades).
 - [ ] Paso 3 · Workflow que crea el negocio
 - [ ] Paso 4 · Prueba de punta a punta
 - [ ] Perfil de riesgo calculado (cuando Vini pase la calificación; ver PENDIENTES.md)
