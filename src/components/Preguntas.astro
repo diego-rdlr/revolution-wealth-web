@@ -96,6 +96,10 @@ const faqLd = {
 </script>
 
 <style>
+  /* .section usa overflow: hidden, que anula el sticky del titular; clip recorta igual sin anularlo */
+  .faq {
+    overflow: clip;
+  }
   .faq__grid {
     display: grid;
     grid-template-columns: 440px minmax(0, 1fr);
