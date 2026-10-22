@@ -1,12 +1,11 @@
 ---
 import { u } from '../config/base';
 // Sección 10 · Preguntas frecuentes (Figma 426:536). Tema claro.
-// Izquierda: titular + tarjeta de contacto. Derecha: acordeón con <details>/<summary>
+// Izquierda: titular. Derecha: acordeón con <details>/<summary>
 // (funciona con teclado y sin JavaScript). La 01 va abierta, como en el diseño.
 // Las preguntas sin respuesta en src/data/wealth.ts no se pintan.
 import Kicker from './Kicker.astro';
 import Title from './Title.astro';
-import Button from './Button.astro';
 import { preguntas } from '../data/wealth';
 
 // Se conserva el número original de cada pregunta aunque falten respuestas
@@ -35,14 +34,6 @@ const faqLd = {
       </div>
       <p class="t-body faq__lede" data-reveal>{preguntas.lede}</p>
 
-      <aside class="contact" aria-labelledby="preguntas-contacto" data-reveal>
-        <p class="t-micro contact__kicker">{preguntas.contacto.kicker}</p>
-        <h3 class="contact__title" id="preguntas-contacto">{preguntas.contacto.title}</h3>
-        <p class="t-small contact__text">{preguntas.contacto.text}</p>
-        <div class="contact__cta">
-          <Button href={preguntas.contacto.cta.href} label={preguntas.contacto.cta.label} />
-        </div>
-      </aside>
     </div>
 
     <div class="faq__list" data-faq>
@@ -116,43 +107,9 @@ const faqLd = {
     flex-direction: column;
     align-items: flex-start;
     gap: 28px;
+    position: sticky; /* el titular acompaña la lista mientras se recorre */
+    top: calc(var(--nav-h) + 48px);
   }
-  .faq__lede {
-    padding-bottom: 40px; /* "Espacio" de Figma (12) + separación (28) */
-  }
-
-  /* Tarjeta "¿Tienes otra pregunta?": vidrio azulado claro (colores literales de Figma) */
-  .contact {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 14px;
-    padding: 30px 32px 32px;
-    border: 1px solid #b8ccd8; /* Figma: borde de la tarjeta, sin token */
-    border-radius: var(--radius);
-    background: linear-gradient(146.34deg, #eef3f6, #d5e1e8); /* Figma: sin token */
-    box-shadow: var(--shadow-card);
-  }
-  .contact__kicker {
-    color: var(--gold-ink);
-  }
-  /* Figma: Source Serif 4 Medium 28/32 */
-  .contact__title {
-    font-family: var(--f-serif);
-    font-weight: 500;
-    font-size: 1.75rem;
-    line-height: 1.143;
-    letter-spacing: -0.018em;
-    color: var(--ink);
-  }
-  .contact__text {
-    color: var(--slate);
-  }
-  .contact__cta {
-    padding-top: 10px;
-  }
-
   /* ——— Acordeón ——— */
   .faq__item {
     border-top: 1px solid var(--silver);
@@ -255,24 +212,11 @@ const faqLd = {
       gap: 56px;
     }
     .faq__head {
+      position: static;
       max-width: 640px;
-    }
-    .faq__lede {
-      padding-bottom: 12px;
     }
   }
   @media (max-width: 600px) {
-    .contact {
-      padding: 24px 20px;
-    }
-    .contact__title {
-      font-size: 1.5rem;
-    }
-    .contact__cta,
-    .contact__cta :global(.btn) {
-      width: 100%;
-      justify-content: center;
-    }
     .faq__row {
       gap: 14px;
       padding-block: 20px;
