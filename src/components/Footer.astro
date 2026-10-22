@@ -105,12 +105,16 @@ import { footer } from '../data/wealth';
   .footer__col-title {
     color: var(--steel);
   }
+  /* El espacio entre links vive en su padding: mismo ritmo, área de toque de ~41px en celular */
   .footer__col ul {
     display: flex;
     flex-direction: column;
-    gap: 14px;
+    align-items: flex-start;
+    margin-block: -7px;
   }
   .footer__col a {
+    display: inline-block;
+    padding-block: 7px;
     font-size: var(--t-small);
     line-height: 25px;
     color: var(--silver);

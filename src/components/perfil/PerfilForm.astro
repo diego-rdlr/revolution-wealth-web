@@ -7,6 +7,7 @@ import Button from '../Button.astro';
 import Title from '../Title.astro';
 import { perfilPagina as p } from '../../data/wealth';
 import { HUBSPOT, hubspotSubmitUrl } from '../../config/hubspot';
+import { ladas } from '../../data/ladas';
 
 const total = p.pasos.length;
 const endpoint = HUBSPOT.perfilFormId ? hubspotSubmitUrl(HUBSPOT.perfilFormId) : '';
@@ -56,11 +57,36 @@ const endpoint = HUBSPOT.perfilFormId ? hubspotSubmitUrl(HUBSPOT.perfilFormId) :
                   </label>
                   {c.tipo === 'area' ? (
                     <textarea id={`pf-${c.name}`} name={c.name} rows="3" />
+                  ) : c.tipo === 'tel' ? (
+                    // Lada en lista desplegable + número nacional; al enviar se juntan como "+52 5512345678"
+                    <div class="pf__tel">
+                      <span class="pf__lada">
+                        <select aria-label="Código de país" data-lada>
+                          {ladas.map((l) => (
+                            <option value={l.iso} data-codigo={l.codigo} selected={l.iso === 'MX'}>
+                              {`${l.bandera} ${l.pais} (+${l.codigo})`}
+                            </option>
+                          ))}
+                        </select>
+                        <span class="pf__lada-ver" aria-hidden="true" data-lada-ver>
+                          🇲🇽 +52
+                        </span>
+                      </span>
+                      <input
+                        id={`pf-${c.name}`}
+                        name={c.name}
+                        type="tel"
+                        inputmode="tel"
+                        autocomplete="tel-national"
+                        placeholder={c.placeholder}
+                        data-requerido={c.opcional ? undefined : ''}
+                      />
+                    </div>
                   ) : (
                     <input
                       id={`pf-${c.name}`}
                       name={c.name}
-                      type={c.tipo === 'email' ? 'email' : c.tipo === 'tel' ? 'tel' : c.tipo === 'fecha' ? 'date' : 'text'}
+                      type={c.tipo === 'email' ? 'email' : c.tipo === 'fecha' ? 'date' : 'text'}
                       inputmode={c.tipo === 'monto' ? 'numeric' : undefined}
                       autocomplete={
                         c.name === 'firstname'
@@ -69,11 +95,9 @@ const endpoint = HUBSPOT.perfilFormId ? hubspotSubmitUrl(HUBSPOT.perfilFormId) :
                             ? 'family-name'
                             : c.tipo === 'email'
                               ? 'email'
-                              : c.tipo === 'tel'
-                                ? 'tel'
-                                : c.tipo === 'fecha'
-                                  ? 'bday'
-                                  : 'off'
+                              : c.tipo === 'fecha'
+                                ? 'bday'
+                                : 'off'
                       }
                       placeholder={c.placeholder}
                       maxlength={c.tipo === 'curp' ? 18 : undefined}
@@ -171,6 +195,32 @@ const endpoint = HUBSPOT.perfilFormId ? hubspotSubmitUrl(HUBSPOT.perfilFormId) :
       monto.value = n ? '$' + Number(n).toLocaleString('es-MX') : '';
     });
 
+    // ——— Teléfono: la lista muestra bandera y código; si pegan "+52 …" se mueve a la lada ———
+    const lada = form.querySelector<HTMLSelectElement>('[data-lada]');
+    const ladaVer = form.querySelector<HTMLElement>('[data-lada-ver]');
+    const tel = form.querySelector<HTMLInputElement>('input[name="phone"]');
+    const codigo = () => lada?.selectedOptions[0]?.dataset.codigo ?? '';
+    const pintaLada = () => {
+      if (lada && ladaVer) ladaVer.textContent = `${lada.selectedOptions[0].text.split(' ')[0]} +${codigo()}`;
+    };
+    lada?.addEventListener('change', () => {
+      pintaLada();
+      tel?.focus();
+    });
+    tel?.addEventListener('input', () => {
+      if (/^\s/.test(tel.value)) tel.value = tel.value.trimStart();
+      if (!lada || !tel.value.startsWith('+')) return;
+      const d = tel.value.replace(/\D/g, '');
+      // La lada más larga que coincida (+593 antes que +59); si comparten código (+1) se respeta el país elegido
+      const largo = Math.max(0, ...[...lada.options].map((o) => o.dataset.codigo!).filter((c) => d.startsWith(c)).map((c) => c.length));
+      const cod = d.slice(0, largo);
+      const elegida = codigo() === cod ? lada.selectedOptions[0] : [...lada.options].find((o) => o.dataset.codigo === cod);
+      if (!elegida) return;
+      lada.value = elegida.value;
+      tel.value = d.slice(elegida.dataset.codigo!.length);
+      pintaLada();
+    });
+
     // ——— Validación por paso ———
     // Un campo cuenta si no está oculto por condición (CURP); los pasos ocultos sí cuentan
     const visible = (el: Element) => !el.closest('[data-campo][hidden]');
@@ -206,7 +256,11 @@ const endpoint = HUBSPOT.perfilFormId ? hubspotSubmitUrl(HUBSPOT.perfilFormId) :
           const req = input.hasAttribute('data-requerido');
           if (!v && req) msg = 'Este dato es necesario.';
           else if (v && input.name === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)) msg = 'Revisa tu correo.';
-          else if (v && input.name === 'phone' && v.replace(/\D/g, '').length < 10) msg = 'Incluye lada y número completo (mínimo 10 dígitos).';
+          else if (v && input.name === 'phone') {
+            const n = v.replace(/\D/g, '').length;
+            if (lada?.value === 'MX' ? n !== 10 : n < 6 || n > 14)
+              msg = lada?.value === 'MX' ? 'El número en México tiene 10 dígitos.' : 'Revisa el número.';
+          }
           else if (v && input.name === 'fecha_de_nacimiento') {
             const a = edad(v);
             if (!(a >= 18 && a <= 110)) msg = 'Revisa la fecha: debes ser mayor de edad.';
@@ -258,6 +312,7 @@ const endpoint = HUBSPOT.perfilFormId ? hubspotSubmitUrl(HUBSPOT.perfilFormId) :
         let v = el.value.trim();
         if (el.name === 'fecha_de_nacimiento') v = String(Date.parse(v + 'T00:00:00Z')); // HubSpot: fecha = medianoche UTC en milisegundos
         if (el.name === 'monto_inicial_rwm') v = v.replace(/\D/g, '');
+        if (el.name === 'phone') v = `+${codigo()} ${v.replace(/\D/g, '')}`;
         add(el.name, v);
       }
       if (sinCurp?.checked && visible(sinCurp)) add('curp_rwm', 'Extranjero: apertura por correo');
@@ -402,6 +457,67 @@ const endpoint = HUBSPOT.perfilFormId ? hubspotSubmitUrl(HUBSPOT.perfilFormId) :
   }
   .pf input:disabled {
     opacity: 0.35;
+  }
+  /* Teléfono: lada + número sobre la misma línea. El <select> real queda encima, transparente,
+     para que el sistema abra su lista nativa (en celular, la ruleta) y se vea solo bandera y código */
+  .pf__tel {
+    display: flex;
+    align-items: stretch;
+    gap: 14px;
+  }
+  .pf__lada {
+    position: relative;
+    flex: none;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.22);
+    transition: border-color 0.25s ease;
+  }
+  .pf__lada:focus-within {
+    border-bottom-color: var(--gold);
+  }
+  .pf__lada-ver {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 22px 12px 0;
+    font-size: 18px;
+    line-height: 1.4;
+    color: var(--paper);
+    white-space: nowrap;
+    pointer-events: none;
+  }
+  .pf__lada::after {
+    content: '';
+    position: absolute;
+    right: 4px;
+    top: 50%;
+    width: 7px;
+    height: 7px;
+    border-right: 1px solid var(--mist);
+    border-bottom: 1px solid var(--mist);
+    transform: translateY(-70%) rotate(45deg);
+    pointer-events: none;
+  }
+  .pf__lada select {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    opacity: 0;
+    font-size: 16px; /* evita el zoom de iOS al enfocar */
+    color-scheme: dark;
+    cursor: pointer;
+  }
+  .pf__lada:has(select:focus-visible) {
+    outline: 2px solid var(--steel);
+    outline-offset: 2px;
+  }
+  .pf__tel input {
+    flex: 1;
+    min-width: 0;
+  }
+  .pf__campo:global(.is-error) .pf__lada {
+    border-bottom-color: #e3a08f;
   }
   .pf__ayuda {
     margin-top: 8px;

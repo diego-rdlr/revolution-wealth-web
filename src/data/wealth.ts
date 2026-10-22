@@ -657,7 +657,7 @@ export const perfilPagina = {
         { name: 'firstname', label: 'Nombre(s)', tipo: 'texto' },
         { name: 'lastname', label: 'Apellidos', tipo: 'texto' },
         { name: 'email', label: 'Correo electrónico', tipo: 'email' },
-        { name: 'phone', label: 'Teléfono (con código de país)', tipo: 'tel', placeholder: '+52 55 1234 5678' },
+        { name: 'phone', label: 'Teléfono', tipo: 'tel', placeholder: '55 1234 5678' },
         { name: 'fecha_de_nacimiento', label: 'Fecha de nacimiento', tipo: 'fecha' },
         {
           name: 'residencia_fiscal_rwm',
