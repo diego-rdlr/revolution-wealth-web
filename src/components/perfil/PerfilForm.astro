@@ -86,7 +86,7 @@ const endpoint = HUBSPOT.perfilFormId ? hubspotSubmitUrl(HUBSPOT.perfilFormId) :
                     <input
                       id={`pf-${c.name}`}
                       name={c.name}
-                      type={c.tipo === 'email' ? 'email' : c.tipo === 'tel' ? 'tel' : c.tipo === 'fecha' ? 'date' : 'text'}
+                      type={c.tipo === 'email' ? 'email' : c.tipo === 'fecha' ? 'date' : 'text'}
                       inputmode={c.tipo === 'monto' ? 'numeric' : undefined}
                       autocomplete={
                         c.name === 'firstname'
@@ -95,11 +95,9 @@ const endpoint = HUBSPOT.perfilFormId ? hubspotSubmitUrl(HUBSPOT.perfilFormId) :
                             ? 'family-name'
                             : c.tipo === 'email'
                               ? 'email'
-                              : c.tipo === 'tel'
-                                ? 'tel'
-                                : c.tipo === 'fecha'
-                                  ? 'bday'
-                                  : 'off'
+                              : c.tipo === 'fecha'
+                                ? 'bday'
+                                : 'off'
                       }
                       placeholder={c.placeholder}
                       maxlength={c.tipo === 'curp' ? 18 : undefined}
