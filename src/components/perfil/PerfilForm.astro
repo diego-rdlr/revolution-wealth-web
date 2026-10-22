@@ -36,13 +36,16 @@ const endpoint = HUBSPOT.perfilFormId ? hubspotSubmitUrl(HUBSPOT.perfilFormId) :
               {c.tipo === 'opciones' ? (
                 <fieldset class="pf__grupo" data-requerido>
                   <legend class="pf__label">{c.label}</legend>
-                  <div class:list={['pf__opciones', { 'pf__opciones--cortas': (c.opciones ?? []).every((o) => o.length < 4) }]}>
-                    {(c.opciones ?? []).map((o) => (
-                      <label class="pf__opcion">
-                        <input type="radio" name={c.name} value={o} />
-                        <span>{o}</span>
-                      </label>
-                    ))}
+                  <div class:list={['pf__opciones', { 'pf__opciones--cortas': (c.opciones ?? []).every((o) => (typeof o === 'string' ? o : o.label).length < 4) }]}>
+                    {(c.opciones ?? []).map((o) => {
+                      const { label, value } = typeof o === 'string' ? { label: o, value: o } : o;
+                      return (
+                        <label class="pf__opcion">
+                          <input type="radio" name={c.name} value={value} />
+                          <span>{label}</span>
+                        </label>
+                      );
+                    })}
                   </div>
                 </fieldset>
               ) : (
@@ -244,11 +247,12 @@ const endpoint = HUBSPOT.perfilFormId ? hubspotSubmitUrl(HUBSPOT.perfilFormId) :
     atras.addEventListener('click', () => ir(actual - 1));
 
     // ——— Envío a HubSpot ———
-    const cookie = (n: string) => document.cookie.match(new RegExp('(?:^|; )' + n + '=([^;]*)'))?.[1];
+    // Mismos rangos que la propiedad "¿Cuál es tu edad?" de HubSpot (y el Microsoft Form)
     const rangoEdad = (iso: string) => {
       const a = edad(iso);
       return a <= 35 ? 'Menor de 35 años' : a <= 50 ? '36 a 50 años' : 'Más de 50 años';
     };
+    const cookie = (n: string) => document.cookie.match(new RegExp('(?:^|; )' + n + '=([^;]*)'))?.[1];
     const envia = async () => {
       const endpoint = root.dataset.endpoint;
       const fields: { objectTypeId: string; name: string; value: string }[] = [];
@@ -258,7 +262,7 @@ const endpoint = HUBSPOT.perfilFormId ? hubspotSubmitUrl(HUBSPOT.perfilFormId) :
         if (el instanceof HTMLInputElement && el.type === 'radio' && !el.checked) continue;
         let v = el.value.trim();
         if (el.name === 'fecha_de_nacimiento') {
-          add('cual_es_tu_edad', rangoEdad(v));
+          add('cual_es_tu_edad', rangoEdad(v)); // la edad no se pregunta: sale de la fecha
           v = String(Date.parse(v + 'T00:00:00Z')); // HubSpot: fecha = medianoche UTC en milisegundos
         }
         if (el.name === 'monto_inicial_rwm') v = v.replace(/\D/g, '');

@@ -13,12 +13,9 @@ export type Title = [string, string];
 /** Enlaces que salen del sitio o que todavía están por definir (ver docs/PENDIENTES.md). */
 export const links = {
   /** CTA principal ("Agenda tu sesión", "Comenzar mi análisis patrimonial", "Empieza hoy",
-   *  "Contactar a un asesor"). Por ahora el Microsoft Form del sitio actual.
-   *  PENDIENTE: cambiar a `perfil` en cuanto el formulario esté conectado a HubSpot (docs/HUBSPOT-PERFIL.md). */
-  agenda:
-    'https://forms.office.com/pages/responsepage.aspx?id=SsUEMUpKMked1DTOMJunxEL0r7geOTNOhEcZMIHL08NUMzUxNlhTUk4yVUZURTZGUkZMU09aTEc1TS4u&route=shorturl',
-  /** Formulario "Perfil de inversión" (/wealth/perfil), conectado a HubSpot. Aún sin enlazar. */
-  perfil: u('/perfil'),
+   *  "Contactar a un asesor"): el formulario "Perfil de inversión", conectado a HubSpot
+   *  (contacto + negocio en RWM · Llamada SDR; ver docs/HUBSPOT-PERFIL.md). */
+  agenda: u('/perfil'),
   /** "Ver oportunidades" de la página principal: la subpágina de carrera. */
   carrera: u('/carrera'),
   /** "Ver perfil" de cada vacante: formulario de Google de "Únete al equipo" (el de revolutionwm.com/carrera). */
@@ -453,7 +450,7 @@ export const footer = {
     {
       title: 'CONTACTO',
       links: [
-        { label: 'Agenda tu sesión', href: links.agenda, external: true },
+        { label: 'Agenda tu sesión', href: links.agenda },
         { label: 'Preguntas frecuentes', href: u('/#preguntas') },
         { label: 'Carrera', href: links.carrera },
         { label: 'Aviso de privacidad', href: 'https://revoluciondelariqueza.com/aviso-de-privacidad/', external: true },
@@ -610,10 +607,11 @@ export const inc = {
  * Página /perfil · "Perfil de inversión"
  * Reemplaza al Microsoft Form "Cuestionario de Alta de Cliente y Perfil de Riesgo"
  * (mismas preguntas y opciones). Cada `name` es la propiedad de contacto en HubSpot:
- * las que terminan en _rwm se crean con docs/HUBSPOT-PERFIL.md; las demás ya existían.
+ * todas existen en HubSpot (revisado el 22-oct; ver docs/HUBSPOT-PERFIL.md).
  * —————————————————————————————————————————————————————————————— */
 
-export type Opcion = string;
+/** Opción: texto, o { label, value } cuando lo que se ve no es igual al valor en HubSpot */
+export type Opcion = string | { label: string; value: string };
 export interface Campo {
   name: string;
   label: string;
@@ -672,7 +670,9 @@ export const perfilPagina = {
     {
       titulo: 'Tu relación con GBM',
       campos: [
-        { name: 'tiene_contrato_gbm_rwm', label: '¿Cuentas con un contrato en GBM?', tipo: 'opciones', opciones: ['Sí', 'No'] },
+        // En HubSpot la opción es "Si" (sin acento): se muestra "Sí" y se envía "Si"
+        { name: 'tiene_contrato_gbm_rwm', label: '¿Cuentas con un contrato en GBM?', tipo: 'opciones', opciones: [{ label: 'Sí', value: 'Si' }, 'No'] },
+        // Y la CURP solo a quien no tiene contrato (para generar la liga de apertura)
         {
           name: 'curp_rwm',
           label: 'CURP',
@@ -681,9 +681,16 @@ export const perfilPagina = {
             'Con tu CURP generamos la liga para que abras tu contrato con Revolution WM + GBM directo en la app de GBM. Si eres extranjero con residencia en México, la apertura se hace por correo.',
           si: { campo: 'tiene_contrato_gbm_rwm', valor: 'No' },
         },
-        { name: 'tiene_asesor_gbm_rwm', label: '¿Cuentas con un asesor en GBM?', tipo: 'opciones', opciones: ['Sí', 'No'] },
+        // Igual que el Microsoft Form: el asesor solo se pregunta a quien ya tiene contrato en GBM
         {
-          name: 'custodia_eua_rwm',
+          name: 'tiene_asesor_gbm_rwm',
+          label: '¿Cuentas con un asesor en GBM?',
+          tipo: 'opciones',
+          opciones: [{ label: 'Sí', value: 'Si' }, 'No'],
+          si: { campo: 'tiene_contrato_gbm_rwm', valor: 'Si' },
+        },
+        {
+          name: 'te_interesa_custodia_en_eua_gbm_houston',
           label: '¿Te interesa tener tu cuenta de inversión con custodia en Estados Unidos (a través de GBM Houston)?',
           tipo: 'opciones',
           opciones: ['Sí, me interesa.', 'No, la custodia en México es suficiente.', 'No estoy seguro, necesito más información.'],
@@ -706,7 +713,7 @@ export const perfilPagina = {
           opciones: ['Alta (acciones, derivados, criptomonedas)', 'Media (fondos de inversión, ETFs)', 'Baja o nula (ahorro, CETES, pagarés)'],
         },
         {
-          name: 'reaccion_perdida_10_rwm',
+          name: 'que_harias_si_tu_inversion_pierde_10_en_un_mes',
           label: '¿Qué harías si tu inversión pierde 10% en un mes?',
           tipo: 'opciones',
           opciones: ['Compraría más aprovechando el precio bajo', 'Esperaría a que se recupere', 'Vendería para evitar más pérdidas'],
@@ -763,8 +770,7 @@ export const perfilPagina = {
       ],
     },
   ] as { titulo: string; campos: Campo[] }[],
-  /** La edad ya no se pregunta: se calcula de la fecha de nacimiento con los rangos de HubSpot */
-  edad: { name: 'cual_es_tu_edad', rangos: ['Menor de 35 años', '36 a 50 años', 'Más de 50 años'] },
+  /* La edad no se pregunta: la web la calcula de la fecha de nacimiento y la envía a `cual_es_tu_edad`. */
   montoMinimo: 1000000,
 };
 

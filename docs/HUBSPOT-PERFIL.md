@@ -15,15 +15,22 @@ Pipeline **RWM** (`913042075`) → etapa **Llamada SDR** (`1387010726`). Ya exis
 
 ## Estado
 
-- [ ] Paso 1 · Propiedades nuevas de contacto
-- [ ] Paso 2 · Formulario "RWM · Perfil de inversión (web)" y su id en `src/config/hubspot.ts`
-- [ ] Paso 3 · Workflow que crea el negocio
-- [ ] Paso 4 · Prueba de punta a punta
+- [x] Paso 1 · Propiedades de contacto (revisadas el 22-oct; ver nombres finales abajo)
+- [x] Paso 2 · Formulario en HubSpot (`d5adc9cd-28ec-4562-aebf-1c6f71b72997`), conectado en `src/config/hubspot.ts`. Envío real de prueba OK el 22-oct (19 propiedades).
+- [x] Paso 3 · Workflow "RWM - Form a Llamada SDR" activo (22-oct): crea el negocio en RWM · Llamada SDR con el monto como valor, avisa al equipo RWM y no duplica si ya hay un negocio vivo en RWM. El propietario lo asigna otra automatización ("Revolution Wealth Management").
+- [x] Paso 4 · Prueba de punta a punta (22-oct): contacto con 20 propiedades, negocio creado en <30 s, tercer envío sin duplicar.
 - [ ] Perfil de riesgo calculado (cuando Vini pase la calificación; ver PENDIENTES.md)
 
 ---
 
-## Paso 1 · Propiedades nuevas de contacto
+## Paso 1 · Propiedades de contacto
+
+**Nombres finales en HubSpot (revisados el 22-oct).** Tres quedaron distintos a la tabla original y la web ya usa estos:
+- `que_harias_si_tu_inversion_pierde_10_en_un_mes` (ya existía; en lugar de `reaccion_perdida_10_rwm`)
+- `te_interesa_custodia_en_eua_gbm_houston` (en lugar de `custodia_eua_rwm`)
+- `tiene_contrato_gbm_rwm` y `tiene_asesor_gbm_rwm` con opción `Si` sin acento: la web muestra "Sí" y envía `Si`.
+
+Tabla original:
 
 Configuración (engrane) → **Propiedades** → Contacto → **Crear propiedad**. Grupo sugerido: "Revolution Wealth".
 El **nombre interno** debe quedar exactamente así (la web envía esos nombres). Las opciones, letra por letra.
@@ -45,8 +52,7 @@ El **nombre interno** debe quedar exactamente así (la web envía esos nombres).
 Configuración → Privacidad y consentimiento → Datos sensibles). Así solo la ve quien tenga ese permiso.
 
 Ya existen y se reusan (sus opciones coinciden con las del Microsoft Form):
-`firstname`, `lastname`, `email`, `phone`, `fecha_de_nacimiento` (fecha), `cual_es_tu_edad`
-(la web la calcula de la fecha de nacimiento), `cual_es_tu_horizonte_de_inversion`,
+`firstname`, `lastname`, `email`, `phone`, `fecha_de_nacimiento` (fecha), `cual_es_tu_edad` (la web la calcula de la fecha de nacimiento), `cual_es_tu_horizonte_de_inversion`,
 `cual_es_tu_nivel_de_experiencia_en_inversiones`, `cual_es_tu_objetivo_principal_de_inversion`,
 `que_porcentaje_de_tus_ingresos_estas_dispuesto_a_invertir`, `message`.
 
@@ -55,10 +61,10 @@ Ya existen y se reusan (sus opciones coinciden con las del Microsoft Form):
 1. Marketing → **Formularios** → Crear formulario → **Formulario incrustado**.
 2. Nombre: `RWM · Perfil de inversión (web)`.
 3. Agrega estos campos (todos, aunque la web sea la que pregunta):
-   `firstname`, `lastname`, `email`, `phone`, `fecha_de_nacimiento`, `cual_es_tu_edad`,
-   `residencia_fiscal_rwm`, `tiene_contrato_gbm_rwm`, `curp_rwm`, `tiene_asesor_gbm_rwm`,
-   `custodia_eua_rwm`, `cual_es_tu_horizonte_de_inversion`, `cual_es_tu_nivel_de_experiencia_en_inversiones`,
-   `reaccion_perdida_10_rwm`, `cual_es_tu_objetivo_principal_de_inversion`,
+   `firstname`, `lastname`, `email`, `phone`, `fecha_de_nacimiento`, `cual_es_tu_edad`
+   (como campo **oculto**: la web la calcula de la fecha), `residencia_fiscal_rwm`, `tiene_contrato_gbm_rwm`, `curp_rwm`, `tiene_asesor_gbm_rwm`,
+   `te_interesa_custodia_en_eua_gbm_houston`, `cual_es_tu_horizonte_de_inversion`, `cual_es_tu_nivel_de_experiencia_en_inversiones`,
+   `que_harias_si_tu_inversion_pierde_10_en_un_mes`, `cual_es_tu_objetivo_principal_de_inversion`,
    `que_porcentaje_de_tus_ingresos_estas_dispuesto_a_invertir`, `situacion_financiera_rwm`,
    `patrimonio_invertible_rwm`, `monto_inicial_rwm`, `message`.
    No marques ninguno como obligatorio en HubSpot: la web valida.
