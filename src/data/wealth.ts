@@ -701,6 +701,12 @@ export const perfilPagina = {
       titulo: 'Tu perfil de riesgo',
       campos: [
         {
+          name: 'cual_es_tu_edad',
+          label: '¿Cuál es tu edad?',
+          tipo: 'opciones',
+          opciones: ['Menor de 35 años', '36 a 50 años', 'Más de 50 años'],
+        },
+        {
           name: 'cual_es_tu_horizonte_de_inversion',
           label: '¿Cuál es tu horizonte de inversión?',
           tipo: 'opciones',
@@ -770,7 +776,6 @@ export const perfilPagina = {
       ],
     },
   ] as { titulo: string; campos: Campo[] }[],
-  /* La edad no se pregunta: la web la calcula de la fecha de nacimiento y la envía a `cual_es_tu_edad`. */
   montoMinimo: 1000000,
 };
 
