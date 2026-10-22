@@ -50,7 +50,6 @@ Construida desde el Figma y las capturas de diseño del 20-oct (titulares, boton
 
 - [x] Ecosistema: "Wealth Club · Wealth X" y "Revolution Capital".
 - [x] FAQ: "¿Cuál es el monto mínimo para recibir asesoría?".
-- [ ] FAQ: falta la segunda pregunta que pidió Vini (Marisol solo pasó una).
 - [x] Equipo: foto de Jesús Paz y nueva persona Elena Araoz (Administración & Finanzas).
 
 ## Diseño
