@@ -1,0 +1,250 @@
+---
+import { u } from '../config/base';
+// Sección 03b · "Niveles de servicio" (Figma 655:352). Tema claro.
+// Tabla real (<table>) con encabezado negro y filas alternadas; en celular cada
+// fila se vuelve una tarjeta con su monto y su atención apilados.
+import Kicker from './Kicker.astro';
+import Title from './Title.astro';
+import { niveles } from '../data/wealth';
+---
+
+<section id="niveles" class="section theme-light niveles" aria-labelledby="niveles-title">
+  <div class="container">
+    <header class="niveles__head">
+      <div class="niveles__titular">
+        <Kicker text={niveles.kicker} />
+        <div id="niveles-title"><Title lines={niveles.title} inline /></div>
+      </div>
+      <p class="niveles__lede" data-reveal>{niveles.lede}</p>
+    </header>
+
+    <div class="niveles__cuerpo" data-reveal>
+      <table class="tabla">
+        <thead>
+          <tr>
+            {niveles.columnas.map((c) => <th scope="col">{c}</th>)}
+          </tr>
+        </thead>
+        <tbody>
+          {
+            niveles.items.map((it) => (
+              <tr>
+                <th scope="row" class="tabla__nivel">
+                  <img src={u('/img/niveles-punto.svg')} alt="" width="10" height="10" />
+                  {it.nivel}
+                </th>
+                <td class="tabla__monto" data-col={niveles.columnas[1]}>{it.monto}</td>
+                <td class="tabla__atencion" data-col={niveles.columnas[2]}>{it.atencion}</td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+      <p class="niveles__nota">{niveles.nota}</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .niveles {
+    padding-block: 74px 120px;
+  }
+  .niveles__head {
+    display: flex;
+    align-items: flex-end;
+    gap: 120px;
+  }
+  .niveles__titular {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 28px;
+    min-width: 0;
+  }
+  .niveles__lede {
+    flex: none;
+    width: 600px;
+    font-size: var(--t-lead);
+    line-height: 1.304;
+    color: var(--fg);
+  }
+
+  .niveles__cuerpo {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin-top: 72px;
+  }
+  .niveles__nota {
+    font-size: 1.1875rem; /* Figma: 19/24 */
+    line-height: 1.263;
+    color: var(--slate);
+  }
+
+  /* ——— Tabla ——— */
+  .tabla {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border: 1px solid var(--silver);
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: #ffffff;
+    box-shadow: var(--shadow-card);
+    text-align: left;
+  }
+  .tabla thead th {
+    padding: 24px 32px;
+    background: var(--ink);
+    border-right: 1px solid #242832; /* Figma: divisor del encabezado, sin token */
+    font-family: var(--f-mono);
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 18px;
+    letter-spacing: 0.22em;
+    color: var(--steel);
+    white-space: nowrap;
+  }
+  .tabla thead th:first-child {
+    width: 300px;
+  }
+  .tabla thead th:nth-child(2) {
+    width: 430px;
+  }
+  .tabla thead th:last-child {
+    border-right: 0;
+  }
+  .tabla tbody tr:nth-child(odd) {
+    background: #edeff3; /* Figma: fila alterna, sin token */
+  }
+  .tabla tbody th,
+  .tabla tbody td {
+    padding: 34px 32px;
+    border-right: 1px solid var(--silver);
+    border-bottom: 1px solid var(--silver);
+    vertical-align: middle;
+  }
+  .tabla tbody tr:last-child > * {
+    border-bottom: 0;
+  }
+  .tabla tbody td:last-child {
+    border-right: 0;
+  }
+  /* Figma: Source Serif 4 Medium 28/32 */
+  .tabla__nivel {
+    font-family: var(--f-serif);
+    font-weight: 500;
+    font-size: 1.75rem;
+    line-height: 1.143;
+    letter-spacing: -0.018em;
+    color: var(--ink);
+    white-space: nowrap;
+  }
+  .tabla__nivel img {
+    display: inline-block;
+    margin-right: 14px;
+    vertical-align: middle;
+  }
+  .tabla__monto {
+    font-family: var(--f-mono);
+    font-size: 1.25rem;
+    line-height: 1.2;
+    color: var(--slate);
+    white-space: nowrap;
+  }
+  .tabla__atencion {
+    font-size: 1.25rem;
+    line-height: 1.4;
+    color: var(--ink);
+  }
+
+  @media (max-width: 1180px) {
+    .niveles__head {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 28px;
+    }
+    .niveles__lede {
+      width: auto;
+      max-width: 600px;
+    }
+    .tabla thead th:first-child {
+      width: 26%;
+    }
+    .tabla thead th:nth-child(2) {
+      width: 32%;
+    }
+    .tabla tbody th,
+    .tabla tbody td {
+      padding: 28px 24px;
+    }
+    .tabla__monto,
+    .tabla__atencion {
+      font-size: 1.0625rem;
+    }
+  }
+
+  /* Celular: cada nivel es una tarjeta; la etiqueta de la columna va encima del dato */
+  @media (max-width: 760px) {
+    .niveles {
+      padding-block: 64px 80px;
+    }
+    .niveles__cuerpo {
+      margin-top: 40px;
+    }
+    .tabla,
+    .tabla tbody,
+    .tabla tr,
+    .tabla th,
+    .tabla td {
+      display: block;
+      width: auto;
+    }
+    .tabla thead {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+    }
+    .tabla tbody tr {
+      padding: 24px 22px;
+      border-bottom: 1px solid var(--silver);
+    }
+    .tabla tbody tr:last-child {
+      border-bottom: 0;
+    }
+    .tabla tbody th,
+    .tabla tbody td {
+      padding: 0;
+      border: 0;
+    }
+    .tabla__nivel {
+      font-size: 1.5rem;
+    }
+    .tabla tbody td {
+      margin-top: 16px;
+      white-space: normal;
+    }
+    .tabla tbody td::before {
+      content: attr(data-col);
+      display: block;
+      margin-bottom: 4px;
+      font-family: var(--f-mono);
+      font-weight: 500;
+      font-size: 11px;
+      line-height: 16px;
+      letter-spacing: 0.18em;
+      color: var(--gray);
+    }
+    .tabla__monto,
+    .tabla__atencion {
+      font-size: 1.0625rem;
+    }
+    .niveles__nota {
+      font-size: var(--t-small);
+      line-height: 1.6;
+    }
+  }
+</style>

@@ -125,6 +125,20 @@ export const servicios = {
   ],
 };
 
+/** Figma 655:352 · "03b · Niveles de servicio" (Propuesta de Valor RWM, oct-2026) */
+export const niveles = {
+  kicker: 'NIVELES DE SERVICIO',
+  title: ['Niveles de', 'servicio.'] as Title,
+  lede: 'Asignamos a cada cliente el nivel de atención que su patrimonio requiere.',
+  columnas: ['NIVEL', 'MONTO DE INVERSIÓN (MXN)', 'ATENCIÓN'],
+  items: [
+    { nivel: 'Digital', monto: 'Hasta $999,999', atencion: 'Mesa digital · 1 sesión de asesoría' },
+    { nivel: 'Plus', monto: '$1,000,000 – $9,999,999', atencion: 'Asesor asignado de RWM con revisiones trimestrales del Asset Allocation' },
+    { nivel: 'Private', monto: '$10,000,000 o más', atencion: 'Asesor asignado de RWM con revisiones mensuales del Asset Allocation' },
+  ],
+  nota: 'Nota: el nivel Digital está diseñado para autogestión e incluye una sesión de asesoría al inicio. Todos los niveles conservan los beneficios de RWM, WC y WM.',
+};
+
 /** Figma 424:538 · "04 · Proceso" */
 export const proceso = {
   kicker: '03 · NUESTRO PROCESO',
