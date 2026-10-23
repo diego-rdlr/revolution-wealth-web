@@ -628,7 +628,7 @@ export const perfilPagina = {
   title: ['Comienza tu', 'análisis patrimonial.'] as Title,
   lede: 'Cuéntanos de ti y de tus objetivos. Con esto, un asesor certificado prepara tu primera sesión de estrategia y la apertura de tu contrato con Revolution Wealth + GBM.',
   pasosSiguientes: [
-    'Un asesor revisa tus respuestas y te contacta para agendar tu llamada.',
+    'Nuestro equipo revisa tus respuestas y te contacta para agendar tu llamada.',
     'Definimos tu perfil de riesgo y una propuesta a la medida.',
     'Abres o migras tu contrato en GBM: tus recursos siempre a tu nombre.',
   ],
@@ -639,7 +639,7 @@ export const perfilPagina = {
   },
   gracias: {
     title: ['Gracias.', 'Ya tenemos tu perfil.'] as Title,
-    texto: 'Un asesor de Revolution Wealth revisará tus respuestas y te contactará en las próximas 24 horas hábiles para agendar tu primera sesión de estrategia.',
+    texto: 'Nuestro equipo de asesoría revisará tus respuestas y te contactará en breve para revisar la información y conectarte con un asesor que podrá apoyarte con tu estrategia de inversión.',
     cta: { label: 'Volver a Revolution Wealth', href: u('/') },
   },
   error:
