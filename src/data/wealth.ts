@@ -785,5 +785,45 @@ export const perfilPagina = {
     },
   ] as { titulo: string; campos: Campo[] }[],
   montoMinimo: 1000000,
+  /**
+   * Score de perfil de riesgo (tabla "Score Perfil Riesgo Revolution Wealth", nov-2026).
+   * Cada respuesta del paso "Tu perfil de riesgo" vale de 1 a 3; la suma (7 a 21) da el perfil.
+   * La web lo calcula al enviar y lo manda a dos propiedades del contacto en HubSpot.
+   */
+  scoreRiesgo: {
+    propiedadScore: 'score_perfil_riesgo_rwm',
+    propiedadPerfil: 'perfil_de_riesgo_rwm',
+    /** De mayor a menor: el primer mínimo que alcance el score define el perfil */
+    rangos: [
+      { min: 18, perfil: 'Agresivo' },
+      { min: 12, perfil: 'Moderado' },
+      { min: 7, perfil: 'Conservador' },
+    ],
+    puntos: {
+      cual_es_tu_edad: { 'Menor de 35 años': 3, '36 a 50 años': 2, 'Más de 50 años': 1 },
+      cual_es_tu_horizonte_de_inversion: { 'Más de 5 años': 3, 'Entre 2 y 5 años': 2, 'Menos de 2 años': 1 },
+      cual_es_tu_nivel_de_experiencia_en_inversiones: {
+        'Alta (acciones, derivados, criptomonedas)': 3,
+        'Media (fondos de inversión, ETFs)': 2,
+        'Baja o nula (ahorro, CETES, pagarés)': 1,
+      },
+      que_harias_si_tu_inversion_pierde_10_en_un_mes: {
+        'Compraría más aprovechando el precio bajo': 3,
+        'Esperaría a que se recupere': 2,
+        'Vendería para evitar más pérdidas': 1,
+      },
+      cual_es_tu_objetivo_principal_de_inversion: {
+        'Crecimiento a largo plazo del capital': 3,
+        'Combinar crecimiento con estabilidad': 2,
+        'Preservar el capital y evitar pérdidas': 1,
+      },
+      que_porcentaje_de_tus_ingresos_estas_dispuesto_a_invertir: { 'Más del 30%': 3, 'Entre 10% y 30%': 2, 'Menos del 10%': 1 },
+      situacion_financiera_rwm: {
+        'Estable con excedente y sin deudas': 3,
+        'Equilibrada, con algunas deudas manejables': 2,
+        'Inestable o con alta carga de deuda': 1,
+      },
+    } as Record<string, Record<string, number>>,
+  },
 };
 

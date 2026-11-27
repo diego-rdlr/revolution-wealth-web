@@ -13,7 +13,7 @@ const total = p.pasos.length;
 const endpoint = HUBSPOT.perfilFormId ? hubspotSubmitUrl(HUBSPOT.perfilFormId) : '';
 ---
 
-<div class="pf" data-pf data-endpoint={endpoint} data-minimo={p.montoMinimo}>
+<div class="pf" data-pf data-endpoint={endpoint} data-minimo={p.montoMinimo} data-score={JSON.stringify(p.scoreRiesgo)}>
   <form class="pf__form" novalidate data-pf-form>
     <header class="pf__head">
       <p class="pf__paso" aria-live="polite">
@@ -316,6 +316,21 @@ const endpoint = HUBSPOT.perfilFormId ? hubspotSubmitUrl(HUBSPOT.perfilFormId) :
         add(el.name, v);
       }
       if (sinCurp?.checked && visible(sinCurp)) add('curp_rwm', 'Extranjero: apertura por correo');
+      // Score de perfil de riesgo: suma de los puntos de las 7 respuestas (solo si están todas)
+      const sr = JSON.parse(root.dataset.score ?? '{}') as {
+        propiedadScore: string;
+        propiedadPerfil: string;
+        rangos: { min: number; perfil: string }[];
+        puntos: Record<string, Record<string, number>>;
+      };
+      const valores = Object.entries(sr.puntos ?? {}).map(
+        ([campo, tabla]) => tabla[form.querySelector<HTMLInputElement>(`input[name="${campo}"]:checked`)?.value ?? ''],
+      );
+      if (valores.length && valores.every((n) => n)) {
+        const score = valores.reduce((a, b) => a + b, 0);
+        add(sr.propiedadScore, String(score));
+        add(sr.propiedadPerfil, sr.rangos.find((r) => score >= r.min)?.perfil ?? '');
+      }
       const body = {
         fields,
         context: { hutk: cookie('hubspotutk'), pageUri: location.href, pageName: document.title },
