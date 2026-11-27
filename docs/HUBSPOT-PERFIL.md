@@ -99,3 +99,14 @@ Automatización → Workflows → Crear → **Basado en contactos** → desde ce
 3. Si la web muestra error, abre la consola del navegador: el mensaje de HubSpot dice qué campo
    falló (casi siempre un nombre interno o una opción que no coincide letra por letra).
 4. Borra el contacto y el negocio de prueba.
+
+## Score de perfil de riesgo (nov-2026)
+
+La web calcula el score al enviar el perfil, con la tabla "Score Perfil Riesgo Revolution Wealth": cada una de las 7 preguntas de "Tu perfil de riesgo" vale de 1 a 3 puntos, la suma va de 7 a 21, y da el perfil (Conservador 7 a 11, Moderado 12 a 17, Agresivo 18 a 21). La tabla vive en `src/data/wealth.ts` (`perfilPagina.scoreRiesgo`).
+
+Antes de publicar este cambio hay que crear en HubSpot dos propiedades de **Contacto** (grupo "Información del contacto") y agregarlas al formulario "Cuestionario de Alta de Cliente y Perfil de Riesgo" (`d5adc9cd-28ec-4562-aebf-1c6f71b72997`) como **campos ocultos**:
+
+| Etiqueta | Nombre interno | Tipo | Opciones |
+|---|---|---|---|
+| Score de perfil de riesgo RWM | `score_perfil_riesgo_rwm` | Número | |
+| Perfil de riesgo RWM | `perfil_de_riesgo_rwm` | Lista desplegable | Conservador · Moderado · Agresivo (etiqueta y valor iguales) |
