@@ -104,7 +104,7 @@ Automatización → Workflows → Crear → **Basado en contactos** → desde ce
 
 La web calcula el score al enviar el perfil, con la tabla "Score Perfil Riesgo Revolution Wealth": cada una de las 7 preguntas de "Tu perfil de riesgo" vale de 1 a 3 puntos, la suma va de 7 a 21, y da el perfil (Conservador 7 a 11, Moderado 12 a 17, Agresivo 18 a 21). La tabla vive en `src/data/wealth.ts` (`perfilPagina.scoreRiesgo`).
 
-Antes de publicar este cambio hay que crear en HubSpot dos propiedades de **Contacto** (grupo "Revolution Wealth") y agregarlas al formulario "RWM · Perfil de inversión (web)" como **campos ocultos**:
+Antes de publicar este cambio hay que crear en HubSpot dos propiedades de **Contacto** (grupo "Información del contacto") y agregarlas al formulario "Cuestionario de Alta de Cliente y Perfil de Riesgo" (`d5adc9cd-28ec-4562-aebf-1c6f71b72997`) como **campos ocultos**:
 
 | Etiqueta | Nombre interno | Tipo | Opciones |
 |---|---|---|---|

@@ -14,7 +14,7 @@
 export const HUBSPOT = {
   portalId: '51345487',
   region: 'na1',
-  /** "RWM · Perfil de inversión (web)" (link para compartir: ukifj.share.hsforms.com/21a3JzSjsRWKuvxxvcbcplw) */
+  /** "Cuestionario de Alta de Cliente y Perfil de Riesgo" (link para compartir: ukifj.share.hsforms.com/21a3JzSjsRWKuvxxvcbcplw) */
   perfilFormId: 'd5adc9cd-28ec-4562-aebf-1c6f71b72997',
 };
 
